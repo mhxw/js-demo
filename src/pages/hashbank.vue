@@ -452,11 +452,10 @@ export default {
       }
       let assetAddress
       let assetToken
-      if (tokenName==="FIL"){
-
+      if (tokenName===constants.FIL){
         assetAddress=address.bhp.FIL
         assetToken=address.bhp.eFIL
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetAddress=address.bhp.USDT
         assetToken=address.bhp.eUSDT
       }
@@ -471,9 +470,9 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName==="FIL"){
+        if (tokenName===constants.FIL){
           this.supplyFil.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL)
-        }else if (tokenName==="USDT"){
+        }else if (tokenName===constants.USDT){
           this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT)
         }
       }).catch(err => {
@@ -491,20 +490,17 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName==="FIL"){
+        if (tokenName===constants.FIL){
           this.supplyFil.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10,decimals.eFIL)).toFixed(decimals.FIL)
-        }else if (tokenName==="USDT"){
+        }else if (tokenName===constants.USDT){
           this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10,decimals.eUSDT)).toFixed(decimals.USDT)
         }
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
-      if (tokenName==="FIL"){
-        this.filSupplyDialogVisible = true
-      }else if (tokenName==="USDT"){
-        this.usdtSupplyDialogVisible = true
-      }
+      this.filSupplyDialogVisible = true
+      this.usdtSupplyDialogVisible = true
     },
     openUsdtBorrow() {
       if (!this.verifyConnect()){
@@ -590,20 +586,18 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let mintAmount
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
         assetAddress=address.bhp.FIL
         assetToken=address.bhp.eFIL
         mintAmount=new Decimal(this.supplyFil.mintAmount).times(Decimal.pow(10,decimals.FIL)).toFixed(0)
-        console.log("mintAmount",mintAmount)
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetToken=address.bhp.eUSDT
         assetAddress=address.bhp.USDT
         mintAmount=new Decimal(this.supplyUsdt.mintAmount).times(Decimal.pow(10,decimals.USDT)).toFixed(0)
-        console.log("mintAmount",mintAmount)
       }
+      console.log("mintAmount",mintAmount)
       //先判断是否满足逻辑
       //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
-
 
       this.verifyConnect()
       // 查看是否授权
@@ -642,11 +636,11 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let redeemAmount
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
         assetAddress=address.bhp.FIL
         assetToken=address.bhp.eFIL
         redeemAmount=new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10,decimals.FIL)).toFixed(0,Decimal.ROUND_DOWN)
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetAddress=address.bhp.USDT
         assetToken=address.bhp.eUSDT
         redeemAmount=new Decimal(this.supplyUsdt.redeemAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
@@ -690,10 +684,10 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let borrowAmount
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
         assetToken=address.bhp.eFIL
         borrowAmount=new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10,decimals.FIL)).toNumber().toString()
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetToken=address.bhp.eUSDT
         borrowAmount=new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10,decimals.USDT)).toNumber().toString()
       }
@@ -735,9 +729,9 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let repayAmount
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
 
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetAddress=address.bhp.USDT
         assetToken=address.bhp.eUSDT
         repayAmount=new Decimal(this.borrowUsdt.repayAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
@@ -773,9 +767,9 @@ export default {
         return
       }
       let assetAddress
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
         assetAddress=address.bhp.FIL
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         assetAddress=address.bhp.USDT
       }
       balanceOf(
@@ -789,9 +783,9 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName==="FIL"){
+        if (tokenName===constants.FIL){
           this.supplyFil.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL)
-        }else if (tokenName==="USDT"){
+        }else if (tokenName===constants.USDT){
           this.supplyUsdt.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT)
         }
       }).catch(err => {
@@ -804,14 +798,14 @@ export default {
         return
       }
       let that=this
-      if (tokenName==="FIL"){
+      if (tokenName===constants.FIL){
         //先判断是否有借款金额，没有设置为最大
         if (new Decimal(that.borrowUsdt.alreadyCashPercent).eq(new Decimal(0))===true){
           this.supplyFil.redeemAmount=new Decimal(that.supplyFil.count).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }else{
           this.supplyFil.redeemAmount=new Decimal(that.supplyFil.userCanRedeemCount).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }
-      }else if (tokenName==="USDT"){
+      }else if (tokenName===constants.USDT){
         this.supplyUsdt.redeemAmount=new Decimal(that.supplyUsdt.count).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
       }
     },
@@ -836,10 +830,10 @@ export default {
       }
       let assetAddress
       let assetToken
-      if (tokenName==="FIL"){
-        assetAddress=address.bhp.FIL
+      if (tokenName===constants.FIL){
         assetToken=address.bhp.eFIL
-      }else if (tokenName==="USDT"){
+        assetAddress=address.bhp.FIL
+      }else if (tokenName===constants.USDT){
         assetToken=address.bhp.eUSDT
         assetAddress=address.bhp.USDT
       }
