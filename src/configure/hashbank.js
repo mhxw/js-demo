@@ -1,17 +1,17 @@
 
 export const constants = {
     'Comptroller': 'Comptroller',
-    'cUSDT': 'cUSDT',
-    'cBFIL': 'cBFIL',
-    'BFIL': 'BFIL',
+    'eUSDT': 'eUSDT',
+    'eFIL': 'eFIL',
+    'FIL': 'FIL',
     'USDT': 'USDT',
 }
 
 export const address = {
     "bhp": {
-        "cBFIL": "0x46C131491A28580197e8b97ea82b2C80ad128d0A",
-        "cUSDT": "0x7C0Ea28d4e3fE1A9Af5D56962b61ce76119765a9",
-        "BFIL": "0x6F038322c71831840Fb63c58cC2F2A94d01C9b07",
+        "eFIL": "0x46C131491A28580197e8b97ea82b2C80ad128d0A",
+        "eUSDT": "0x7C0Ea28d4e3fE1A9Af5D56962b61ce76119765a9",
+        "FIL": "0x6F038322c71831840Fb63c58cC2F2A94d01C9b07",
         "USDT": "0xEB6ee31d2365Fb585Ac7Fdb9E94Baad8909Cf205",
         "Comptroller": "0xD1B84DB2215a700331641cc7e0F6bE23b6EfA951",
         "Oracle": "0x87faC5799a68C2d47D1A566672FE9EB104fC4083",
@@ -1775,18 +1775,18 @@ export const abi = {
 }
 
 export const cTokens = [
-    'cBFIL',
-    'cUSDT',
+    'eFIL',
+    'eUSDT',
 ];
 
 export const underlyings = [
-    'BFIL',
+    'FIL',
     'USDT',
 ];
 
 export const decimals = {
-    'cBFIL': 8,
-    'cUSDT': 8,
+    'eFIL': 8,
+    'eUSDT': 8,
     'USDT': 6,
-    'BFIL': 18,
+    'FIL': 18,
 };
