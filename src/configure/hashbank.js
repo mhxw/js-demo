@@ -2,6 +2,7 @@
 export const constants = {
     'Comptroller': 'Comptroller',
     'cUSDT': 'cUSDT',
+    'cBFIL': 'cBFIL',
     'BFIL': 'BFIL',
     'USDT': 'USDT',
 }
@@ -14,7 +15,7 @@ export const address = {
         "USDT": "0xEB6ee31d2365Fb585Ac7Fdb9E94Baad8909Cf205",
         "Comptroller": "0xD1B84DB2215a700331641cc7e0F6bE23b6EfA951",
         "Oracle": "0x87faC5799a68C2d47D1A566672FE9EB104fC4083",
-        "RateModel":"0x673ecEcC900856dd1F86AE8f7e3Ae6EE33FC40D3",
+        "UsdtJumpRateModel":"0x673ecEcC900856dd1F86AE8f7e3Ae6EE33FC40D3",
     }
 }
 
@@ -1523,6 +1524,254 @@ export const abi = {
             "type": "function"
         }
     ],
+    JumpRateModel: [
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "baseRatePerYear",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "multiplierPerYear",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "jumpMultiplierPerYear",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "kink_",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "baseRatePerBlock",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "multiplierPerBlock",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "jumpMultiplierPerBlock",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "kink",
+                    "type": "uint256"
+                }
+            ],
+            "name": "NewInterestParams",
+            "type": "event"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "baseRatePerBlock",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "blocksPerYear",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "cash",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrows",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "reserves",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getBorrowRate",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "cash",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrows",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "reserves",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "reserveFactorMantissa",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getSupplyRate",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "isInterestRateModel",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "jumpMultiplierPerBlock",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "kink",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "multiplierPerBlock",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "cash",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrows",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "reserves",
+                    "type": "uint256"
+                }
+            ],
+            "name": "utilizationRate",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
 }
 
 export const cTokens = [
