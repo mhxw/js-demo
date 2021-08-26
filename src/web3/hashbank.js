@@ -304,3 +304,25 @@ export async function getBorrowRate (wallet,cash,borrows,reserves) {
     const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
     return contract.methods.getBorrowRate(cash,borrows,reserves).call({from: wallet.address})
 }
+
+/**
+ * 获取每一个区块的存款利率
+ * @param wallet
+ * @param asset
+ * @returns {Promise<*>}
+ */
+export async function supplyRatePerBlock (wallet,asset) {
+    const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
+    return contract.methods.supplyRatePerBlock().call({from: wallet.address})
+}
+
+/**
+ * 获取每一个区块的借款利率
+ * @param wallet
+ * @param asset
+ * @returns {Promise<*>}
+ */
+export async function borrowRatePerBlock (wallet,asset) {
+    const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
+    return contract.methods.borrowRatePerBlock().call({from: wallet.address})
+}

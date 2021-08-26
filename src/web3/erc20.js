@@ -24,6 +24,13 @@ export async function erc20Approval(wallet,tokenAddress,contractAddress, callbac
     })
 }
 
+/**
+ *
+ * @param wallet 用户地址
+ * @param tokenAddress cToken合约
+ * @param contractAddress Token合约
+ * @returns {Promise<number>}
+ */
 export async function erc20Allowance(wallet, tokenAddress, contractAddress) {
     const contract = new wallet.web3.eth.Contract(erc20.abi, tokenAddress)
     const balance = await contract.methods.allowance(wallet.address, contractAddress).call({from: wallet.address})

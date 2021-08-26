@@ -13,16 +13,24 @@
               <el-descriptions  direction="vertical" :column="6" border size="medium">
                 <el-descriptions-item label="BFIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
                 <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                <el-descriptions-item label="USDT上次合约触发时的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
-                <el-descriptions-item label="USDT上次合约触发时的储备金">{{ panel.totalReservesInfo }} USDT</el-descriptions-item>
-                <el-descriptions-item label="BFIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
-                <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
                 <el-descriptions-item label="BFIL抵押因子"> {{ panel.filCollateralFactor }} </el-descriptions-item>
                 <el-descriptions-item label="USDT抵押因子"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
-                <el-descriptions-item label="用户存款余额">{{ panel.supplyBalance }}</el-descriptions-item>
-                <el-descriptions-item label="用户借款余额">{{ panel.borrowBalance }}</el-descriptions-item>
                 <el-descriptions-item label="USDT兑换率">{{ panel.usdtExchangeRate }}</el-descriptions-item>
+              </el-descriptions>
+            </el-tab-pane>
+            <el-tab-pane label="节点">
+              <el-descriptions  direction="vertical" :column="6" border size="medium">
                 <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                <el-descriptions-item label="BFIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
+                <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
+              </el-descriptions>
+            </el-tab-pane>
+            <el-tab-pane label="合约">
+              <el-descriptions  direction="vertical" :column="6" border size="medium">
+                <el-descriptions-item label="USDT上次合约触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
+                <el-descriptions-item label="FIL上次合约触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                <el-descriptions-item label="USDT上次合约触发时的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
+                <el-descriptions-item label="USDT上次合约触发时的储备金">{{ panel.totalReservesInfo }} USDT</el-descriptions-item>
               </el-descriptions>
             </el-tab-pane>
             <el-tab-pane label="用户">
@@ -31,12 +39,11 @@
                 <el-descriptions-item label="用户钱包中USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
                 <el-descriptions-item label="用户钱包中eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
                 <el-descriptions-item label="用户钱包中eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
-                <el-descriptions-item label="USDT上次合约触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
-                <el-descriptions-item label="FIL上次合约触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                <el-descriptions-item label="用户存款余额">{{ panel.supplyBalance }}</el-descriptions-item>
+                <el-descriptions-item label="用户借款余额">{{ panel.borrowBalance }}</el-descriptions-item>
               </el-descriptions>
             </el-tab-pane>
           </el-tabs>
-
         </el-card>
       </el-col>
       <!--   2.存取 -->
@@ -45,20 +52,20 @@
           <div slot="header" class="clearfix">
             <span>存取</span>
           </div>
-          <el-descriptions size="medium" border>
+          <el-descriptions size="medium" :column="2"  border>
             <el-descriptions-item label="资产">USDT</el-descriptions-item>
             <el-descriptions-item label="存款数量">{{ supplyUsdt.count }} USDT</el-descriptions-item>
-            <el-descriptions-item label="存款金额">${{ supplyUsdt.balance }}</el-descriptions-item>
-            <el-descriptions-item label="存款APY"> test </el-descriptions-item>
+            <el-descriptions-item label="存款金额">$ {{ supplyUsdt.balance }}</el-descriptions-item>
+            <el-descriptions-item label="存款APY"> {{ panel.supplyApy }} % </el-descriptions-item>
             <el-descriptions-item label="操作">
               <el-button size="small" @click="openSupply(`USDT`)" type="success">存取</el-button>
             </el-descriptions-item>
           </el-descriptions>
           <el-divider></el-divider>
-          <el-descriptions size="medium" border>
+          <el-descriptions size="medium" :column="2" border>
             <el-descriptions-item label="资产">FIL</el-descriptions-item>
             <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL </el-descriptions-item>
-            <el-descriptions-item label="存款金额">${{ supplyFil.balance }} </el-descriptions-item>
+            <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }} </el-descriptions-item>
             <el-descriptions-item label="抵押状态">
               <el-switch
                   v-model="supplyFil.isEnterMarket"
@@ -80,11 +87,11 @@
           <div slot="header" class="clearfix">
             <span>借还</span>
           </div>
-          <el-descriptions size="medium" border>
+          <el-descriptions size="medium" :column="2" border>
             <el-descriptions-item label="资产">USDT</el-descriptions-item>
             <el-descriptions-item label="借款数量">{{ borrowUsdt.count }} USDT</el-descriptions-item>
             <el-descriptions-item label="借款金额">$ {{ borrowUsdt.balance }} </el-descriptions-item>
-            <el-descriptions-item label="借款APY">{{ borrowUsdt.borrowlimit }} </el-descriptions-item>
+            <el-descriptions-item label="借款APY">{{ panel.borrowApy }} % </el-descriptions-item>
             <el-descriptions-item label="操作">
               <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
             </el-descriptions-item>
@@ -320,7 +327,7 @@ import {
   balanceOf,
   borrow,
   borrowBalanceStored,
-  borrowIndex,
+  borrowIndex, borrowRatePerBlock,
   checkMembership,
   enterMarkets,
   exitMarket,
@@ -330,7 +337,7 @@ import {
   markets,
   mint,
   redeem, redeemUnderlying,
-  repayBorrow,
+  repayBorrow, supplyRatePerBlock,
   totalBorrows,
   totalReserves,
   totalSupply,
@@ -357,6 +364,8 @@ export default {
         result: '',
       },
       panel:{
+        supplyApy:0,
+        borrowApy:0,
         filPrice:0,
         usdtPrice:0,
         filCollateralFactor:0,
@@ -863,6 +872,7 @@ export default {
       if (!this.verifyConnect()){
         return
       }
+      this.getApy()
       this.viewPrice()
       this.checkMemberShipPage()
       this.getSupplyPage(constants.cUSDT)
@@ -1330,6 +1340,60 @@ export default {
       }else if (tokenName===constants.cBFIL){
 
       }
+    },
+    async getApy(){
+      //假定bhp主网 每块13.15s
+      let blocksPerDay=6570
+      //一年按照365天计算
+      let daysPerYear=365
+      let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.cUSDT)
+      let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.cUSDT)
+      let one=new Decimal(1)
+      let hundred=new Decimal(100)
+      let supply=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDay).add(one)
+      let borrow=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDay).add(one)
+      let supplyApy=Decimal.pow(supply,daysPerYear).sub(one).mul(hundred)
+      let borrowApy=Decimal.pow(borrow,daysPerYear).sub(one).mul(hundred)
+      this.panel.supplyApy=supplyApy
+      this.panel.borrowApy=borrowApy
+    },
+    async supplyRatePerBlockPage(tokenName){
+      let eTokenAddress
+      if (tokenName==constants.cUSDT){
+        eTokenAddress=address.bhp.cUSDT
+      }else if (tokenName==constants.cBFIL){
+        eTokenAddress=address.bhp.cBFIL
+      }
+      let result=0
+      //获取每一个区块的存款利率
+      await supplyRatePerBlock(
+          this.$store.state.wallet,
+          eTokenAddress,
+      ).then(res =>{
+        result=res
+      }).catch(err=>{
+        this.getErrorInfo(err)
+      })
+      return result
+    },
+    async borrowRatePerBlockPage(tokenName){
+      let eTokenAddress
+      if (tokenName==constants.cUSDT){
+        eTokenAddress=address.bhp.cUSDT
+      }else if (tokenName==constants.cBFIL){
+        eTokenAddress=address.bhp.cBFIL
+      }
+      let result=0
+      //获取每一个区块的借款利率
+      await borrowRatePerBlock(
+          this.$store.state.wallet,
+          eTokenAddress,
+      ).then(res =>{
+        result=res
+      }).catch(err=>{
+        this.getErrorInfo(err)
+      })
+      return result
     },
   },
 };
