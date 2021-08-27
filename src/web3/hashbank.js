@@ -284,6 +284,17 @@ export async function totalReserves (wallet,asset) {
 }
 
 /**
+ * 抵押系数
+ * @param wallet
+ * @param asset
+ * @returns {Promise<*>}
+ */
+export async function reserveFactorMantissa(wallet,asset){
+    const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
+    return contract.methods.reserveFactorMantissa().call({from: wallet.address})
+}
+
+/**
  * 获取当前高度
  * @param wallet
  * @returns {Promise<*>}
