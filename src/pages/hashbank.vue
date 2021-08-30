@@ -12,17 +12,17 @@
             <el-tabs type="card">
               <el-tab-pane label="平台">
                 <el-descriptions  direction="vertical" :column="6" border size="medium">
+                  <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
                   <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
                   <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="FIL抵押因子"> {{ panel.filCollateralFactor }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT抵押因子"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT兑换率"> 1USDT ={{ panel.usdtExchangeRate }} eUSDT </el-descriptions-item>
-                  <el-descriptions-item label="FIL兑换率"> 1FIL ={{ panel.filExchangeRate }} eFIL </el-descriptions-item>
+                  <el-descriptions-item label="FIL兑换率"> 1 eFIL ={{ panel.filExchangeRate }} FIL </el-descriptions-item>
+                  <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT </el-descriptions-item>
                 </el-descriptions>
               </el-tab-pane>
               <el-tab-pane label="节点">
                 <el-descriptions  direction="vertical" :column="6" border size="medium">
-                  <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                  <el-descriptions-item label="FIL抵押因子"> {{ panel.filCollateralFactor }} </el-descriptions-item>
+                  <el-descriptions-item label="USDT抵押因子"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
                   <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
                   <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
                 </el-descriptions>
@@ -32,7 +32,7 @@
                   <el-descriptions-item label="USDT上次合约触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
                   <el-descriptions-item label="FIL上次合约触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
                   <el-descriptions-item label="USDT上次合约触发时的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT上次合约触发时的储备金">{{ panel.totalReservesInfo }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="USDT上次合约触发时的储备金">{{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
                 </el-descriptions>
               </el-tab-pane>
               <el-tab-pane label="用户">
@@ -124,7 +124,7 @@
                     {{'存款数量：'+ supplyFil.count+' FIL'  }}
                   </div>
                   <div  class="text item">
-                    兑换率：1FIL ={{panel.filExchangeRate}} eFIL
+                    FIL兑换率：1 eFIL ={{panel.filExchangeRate}} FIL
                   </div>
                   <div  class="text item">
                     {{'钱包FIL数量：'+panel.filBalance+' FIL'  }}
@@ -162,7 +162,8 @@
                   </div>
                 </el-card>
                 <el-form-item label="" style="margin-top: 20px;">
-                  <el-button type="success" @click="redeemToken(`FIL`)">取款</el-button>
+                  <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
+                  <el-button type="success" @click="redeemAllToken(`FIL`)">取款全部</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -188,7 +189,7 @@
                     {{'USDT存款数量：'+ supplyUsdt.count+' USDT'  }}
                   </div>
                   <div  class="text item">
-                    兑换率：1USDT ={{panel.usdtExchangeRate}} eUSDT
+                    USDT兑换率：1 eUSDT ={{panel.usdtExchangeRate}} USDT
                   </div>
                   <div  class="text item">
                     {{'钱包USDT数量：'+panel.usdtBalance+' USDT'  }}
@@ -216,7 +217,7 @@
                     {{'USDT存款数量：'+ supplyUsdt.count+' USDT'  }}
                   </div>
                   <div  class="text item">
-                    兑换率：1eUSDT ={{panel.usdtExchangeRate}} USDT
+                    兑换率：1 eUSDT ={{panel.usdtExchangeRate}} USDT
                   </div>
                   <div  class="text item">
                     {{'钱包USDT数量：'+panel.usdtBalance+' USDT'  }}
@@ -229,7 +230,8 @@
                   </div>
                 </el-card>
                 <el-form-item label="" style="margin-top: 20px;">
-                  <el-button type="success" @click="redeemToken(`USDT`)">取款</el-button>
+                  <el-button type="success" @click="redeemUnderlying(`USDT`)">取款</el-button>
+                  <el-button type="success" @click="redeemAllToken(`USDT`)">取款全部</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -278,7 +280,7 @@
               <el-form label-position="top" label-width="80px" :model="borrowUsdt">
                 <el-form-item label="还款数量">
                   <el-input v-model="borrowUsdt.repayAmount" placeholder="请输入还款数量" clearable>
-                    <el-button slot="prepend" @click="getRepayBalance(`USDT`)">最大值</el-button>
+                    <el-button slot="prepend" @click="getRepayMaxBalance(`USDT`)">最大值</el-button>
                     <el-button slot="append">USDT</el-button>
                   </el-input>
                 </el-form-item>
@@ -307,6 +309,7 @@
                 <el-form-item label="" style="margin-top: 20px;">
                   <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
                   <el-button type="success" @click="repayToken(`USDT`)">还款</el-button>
+                  <el-button type="success" @click="repayAllToken(`USDT`)">还款全部</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -396,7 +399,8 @@ export default {
         accrualUsdtBlockNumber:0,
         accrualFilBlockNumber:0,
         totalBorrowsInfo:0,
-        totalReservesInfo:0,
+        usdtTotalReservesInfo:0,
+        filTotalReservesInfo:0,
         usdtExchangeRate:0,
         filExchangeRate:0,
       },
@@ -408,7 +412,6 @@ export default {
         mintAmount: 0,
         supplyToken: 0,
         supplyAmount: 0,
-        redeemTokens:0,
         redeemAmount:0,
         isEnterMarket:false,
       },
@@ -419,7 +422,6 @@ export default {
         mintAmount: 0,
         supplyToken: 0,
         supplyAmount: 0,
-        redeemTokens:0,
         redeemAmount:0,
       },
       borrowUsdt: {
@@ -574,6 +576,10 @@ export default {
               result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds balance") !== -1
           ) {
             this.info.result = "余额不足";
+          } else if (
+              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1
+          ) {
+            this.info.result = "授权额度不足或未授权";
           } else {
             this.info.result = result;
           }
@@ -643,7 +649,7 @@ export default {
         this.getErrorInfo(err)
       })
     },
-    redeemToken(tokenName) {
+    redeemUnderlying(tokenName) {
       if (!this.verifyConnect()){
         return
       }
@@ -675,6 +681,54 @@ export default {
       redeemUnderlying(
           this.$store.state.wallet,
           redeemAmount,
+          assetToken,
+          data => {
+            this.$parent.url = bhp + data.message;
+            this.$parent.flag2 = true;
+            this.$parent.flag1 = false;
+            this.$parent.flag3 = false;
+          }
+      ).then(res => {
+        this.$parent.loading = false;
+        this.getSuccessInfo(this.$parent.url)
+
+      }).catch(err => {
+        this.$parent.loading = false;
+        this.getErrorInfo(err)
+      })
+    },
+    redeemAllToken(tokenName) {
+      if (!this.verifyConnect()){
+        return
+      }
+      //先判断是否满足逻辑
+      //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
+
+      let assetAddress
+      let assetToken
+      //获取到存款数量之后转换为小单位wei
+      let redeemToken
+      if (tokenName===constants.FIL){
+        assetAddress=address.bhp.FIL
+        assetToken=address.bhp.eFIL
+        redeemToken=new Decimal(this.panel.efilBalance).mul(Decimal.pow(10,decimals.eFIL)).toFixed(0,Decimal.ROUND_DOWN)
+      }else if (tokenName===constants.USDT){
+        assetAddress=address.bhp.USDT
+        assetToken=address.bhp.eUSDT
+        redeemToken=new Decimal(this.panel.eusdtBalance).mul(Decimal.pow(10,decimals.eUSDT)).toFixed(0,Decimal.ROUND_DOWN)
+      }
+      console.log("redeemToken",redeemToken)
+
+      //获取到存款数量之后转换为小单位wei
+      this.$parent.loading = true;
+      this.$parent.flag1 = true;
+      this.$parent.flag2 = false;
+      this.$parent.flag3 = false;
+      this.filSupplyDialogVisible = false;
+      this.usdtSupplyDialogVisible = false;
+      redeem(
+          this.$store.state.wallet,
+          redeemToken,
           assetToken,
           data => {
             this.$parent.url = bhp + data.message;
@@ -752,7 +806,50 @@ export default {
         assetToken=address.bhp.eUSDT
         repayAmount=new Decimal(this.borrowUsdt.repayAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
       }
-      console.log("repayAmount",repayAmount)
+      console.log("repayAmount",repayAmount.toString())
+      //获取到存款数量之后转换为小单位wei
+      this.$parent.loading = true;
+      this.$parent.flag1 = true;
+      this.$parent.flag2 = false;
+      this.$parent.flag3 = false;
+      this.usdtBorrowDialogVisible = false;
+      repayBorrow(
+          this.$store.state.wallet,
+          repayAmount,
+          assetToken,
+          data => {
+            this.$parent.url = bhp + data.message;
+            this.$parent.flag2 = true;
+            this.$parent.flag1 = false;
+            this.$parent.flag3 = false;
+          }
+      ).then(res => {
+        this.$parent.loading = false;
+        this.getSuccessInfo(this.$parent.url)
+
+      }).catch(err => {
+        this.$parent.loading = false;
+        this.getErrorInfo(err)
+      })
+    },
+    repayAllToken(tokenName) {
+      if (!this.verifyConnect()){
+        return
+      }
+      //先判断是否满足逻辑
+      //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
+
+      let assetAddress
+      let assetToken
+      //获取到存款数量之后转换为小单位wei
+      let repayAmount=new Decimal(Decimal.pow(2,256)).sub(new Decimal(1)).toFixed(0,Decimal.ROUND_DOWN)
+      if (tokenName===constants.FIL){
+
+      }else if (tokenName===constants.USDT){
+        assetAddress=address.bhp.USDT
+        assetToken=address.bhp.eUSDT
+      }
+      console.log("repayAmount",Decimal.pow(2,256).toString())
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
       this.$parent.flag1 = true;
@@ -832,12 +929,12 @@ export default {
       let that=this
       this.borrowUsdt.borrowAmount=new Decimal(that.borrowUsdt.canBorrowCountLimit).toFixed(6, Decimal.ROUND_DOWN)
     },
-    getRepayBalance(tokenName) {
+    getRepayMaxBalance(tokenName) {
       if (!this.verifyConnect()){
         return
       }
       let that=this
-      console.log("getRepayBalance",that.borrowUsdt.count)
+      console.log("getRepayMaxBalance",that.borrowUsdt.count)
       this.borrowUsdt.repayAmount=new Decimal(that.borrowUsdt.count).toString()
     },
     erc20Approve(tokenName) {
@@ -1007,8 +1104,11 @@ export default {
           eTokenAddress,
       ).then(res => {
         result=res
-        let amount=new Decimal(res)
-        this.panel.totalReservesInfo=amount.dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        if (tokenName===constants.eUSDT){
+          this.panel.usdtTotalReservesInfo=new Decimal(res).div(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        }else if (tokenName===constants.eFIL){
+          this.panel.filTotalReservesInfo=new Decimal(res).div(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        }
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1230,10 +1330,10 @@ export default {
         let collateralFactorMantissa=res.collateralFactorMantissa
         if (tokenName===constants.eUSDT){
           result= collateralFactorMantissa
-          this.panel.usdtCollateralFactor= collateralFactorMantissa
+          this.panel.usdtCollateralFactor= new Decimal(collateralFactorMantissa).div(Decimal.pow(10,18))
         }else if (tokenName===constants.eFIL){
           result= collateralFactorMantissa
-          this.panel.filCollateralFactor= collateralFactorMantissa
+          this.panel.filCollateralFactor= new Decimal(collateralFactorMantissa).div(Decimal.pow(10,18))
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1276,7 +1376,7 @@ export default {
       let totalReservesNew=new Decimal(new Decimal(reserveFactorMantissa).mul(interestAccumulated).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).add(new Decimal(totalReserves))
       // 累加借款指数=区块区间内的单位利息x借款指数/1Ether+借款指数
       let borrowIndexNew=new Decimal(simpleInterestFactor.mul(new Decimal(borrowIndex)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).add(new Decimal(borrowIndex))
-      console.log(totalBorrowsNew.toString(),totalReservesNew.toString(),borrowIndexNew.toString(),totalCash.toString())
+      //console.log("totalBorrowsNew",totalBorrowsNew.toString(),totalReservesNew.toString(),borrowIndexNew.toString(),totalCash.toString())
       return {borrowIndex,totalBorrowsNew,totalReservesNew,borrowIndexNew,totalCash}
     },
     async exchangeRatePage(tokenName){
@@ -1287,14 +1387,20 @@ export default {
       let totalSupply=await this.totalSupplyPage(tokenName)
       // 兑换率=(资金池余额+借贷总额-总储备金)*1Ether/总供应量
       let exchangeRate
+      // cToken和标的资产的小数点换算 18+标的资产小数位-cToken资产小数位
+      // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
+      const cTokenDecimals = 8;
+      let mantissa
       if (tokenName===constants.eUSDT){
+        mantissa=18+decimals.USDT-cTokenDecimals
         exchangeRate=cashPlusBorrowsMinusReserves.mul(Decimal.pow(10,18)).div(new Decimal(totalSupply)).toFixed(0,Decimal.ROUND_DOWN)
-        this.panel.usdtExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,10)).div(Decimal.pow(10,decimals.USDT))
+        this.panel.usdtExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,mantissa))
       }else if (tokenName===constants.eFIL){
+        mantissa=18+decimals.FIL-cTokenDecimals
         exchangeRate=cashPlusBorrowsMinusReserves.mul(Decimal.pow(10,18)).div(new Decimal(totalSupply)).toFixed(0,Decimal.ROUND_DOWN)
-        this.panel.filExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,10)).div(Decimal.pow(10,decimals.FIL))
+        this.panel.filExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,mantissa))
       }
-      console.log("exchangeRate",exchangeRate.toString())
+      //console.log("exchangeRate",exchangeRate.toString(),new Decimal(exchangeRate).div(Decimal.pow(10,mantissa)).toString())
       return exchangeRate
     },
     async getSupplyPage(tokenName){
