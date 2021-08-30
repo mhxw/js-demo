@@ -842,14 +842,14 @@ export default {
       let assetAddress
       let assetToken
       //获取到存款数量之后转换为小单位wei
-      let repayAmount=new Decimal(Decimal.pow(2,256)).sub(new Decimal(1)).toFixed(0,Decimal.ROUND_DOWN)
+      //2的256次方-1
+      let repayAmount="115792089237316195423570985008687907853269984665640564039457584007913129639935"
       if (tokenName===constants.FIL){
 
       }else if (tokenName===constants.USDT){
         assetAddress=address.bhp.USDT
         assetToken=address.bhp.eUSDT
       }
-      console.log("repayAmount",Decimal.pow(2,256).toString())
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
       this.$parent.flag1 = true;
