@@ -1,5 +1,5 @@
 <template>
-  <div class="vault" style="margin: 20px 200px 50px 200px">
+  <div class="vault" style="margin: 20px 100px 50px 100px">
     <el-tabs type="card" tab-position="right">
       <el-row :gutter="24">
         <!--   1.面板 -->
@@ -9,7 +9,7 @@
               <span>面板</span>
               <el-button style="float: right; padding: 3px 0" type="text" @click="updatePanel()" >刷新</el-button>
             </div>
-            <el-tabs type="card">
+            <el-tabs type="border-card">
               <el-tab-pane label="平台">
                 <el-descriptions  direction="vertical" :column="6" border size="medium">
                   <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
@@ -595,7 +595,10 @@ export default {
     verifyConnect()  {
       let wallet = this.$store.state.wallet;
       if (!wallet.connected) {
-        alert("请先连接钱包");
+        this.$notify.error({
+          title: '错误',
+          message: '错误的网络：请使用BHP主网或测试网'
+        });
         return false
       }
       return true

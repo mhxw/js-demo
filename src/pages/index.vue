@@ -29,54 +29,41 @@
         </div>
       </div>
     </div>
-
-      <!--        <el-row :gutter="24" >-->
-      <!--            <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">-->
-      <!--              <el-dropdown>-->
-      <!--                <span class="el-dropdown-link">-->
-      <!--                  <div v-show="!hide1">-->
-      <!--                    {{ addressMsg }}-->
-      <!--                  </div>-->
-      <!--                  <div v-show="hide1">-->
-      <!--                    连接钱包-->
-      <!--                  </div>-->
-      <!--                  <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-      <!--                </span>-->
-      <!--                <el-dropdown-menu slot="dropdown">-->
-      <!--                  <el-dropdown-item icon="el-icon-plus" @click="linkWallet()" >连接Metamask</el-dropdown-item>-->
-      <!--                </el-dropdown-menu>-->
-      <!--              </el-dropdown>-->
-      <!--            </el-col>-->
-      <!--        </el-row>-->
       <el-row>
-        <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-col :span="12" style="margin:50px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div style="text-align:center;margin: 0 auto;">
-            <button style="z-index: 999;margin: 10px;" class="connectWalletButton buttonBox">
-              <span>{{ addressMsg }}</span>
-              <div style="z-index: 999;" v-show="hide1" class="selectWalletDiv">
-                <span>选择你的钱包</span>
-                <div class="walletMsg" @click="linkWallet()">
-                  <div class="imgDiv">
-                    <img src="../assets/img/MetaMask.png" alt/>
-                  </div>
-                  MetaMask
-                </div>
-              </div>
-            </button>
-            <button class="buttonBox">
-              <span @click="openAndClose">关闭连接</span>
-            </button>
-          </div>
-        </el-col>
-        <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <div style="text-align:center;margin: 0 auto;">
-            操作地址：{{ OperationAddress }}
+            <el-button type="success" round @click="centerDialogVisible = true" >{{ addressMsg }}</el-button>
+            <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BHPTest`)" >添加并切换到 BHP Testnet</el-button>
+            <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BSCTest`)" >添加并切换到 BSC Testnet</el-button>
+            <el-button type="success" v-show="networkId!==-1" round @click="openAndClose" >退出钱包</el-button>
+            <el-dropdown split-button round type="success" style="margin-left: 12px;" v-show="networkId!==-1">
+              切换网络
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item v-show="networkId!==3476" ><span @click="addNetwork(`BHPTest`)">BHP 测试网</span></el-dropdown-item>
+                <el-dropdown-item v-show="networkId!==97" ><span @click="addNetwork(`BSCTest`)">BSC 测试网</span></el-dropdown-item>
+                <el-dropdown-item v-show="networkId!==56" ><span @click="addNetwork(`BSC`)">BSC 主网</span></el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
             <br/>
             <br/>
-            当前网络：
-            <el-tag type="success">{{ networkId }}</el-tag>
+            操作地址：{{ OperationAddress }} 当前网络：<el-tag type="success">{{networkId | toDesc}}</el-tag>
           </div>
         </el-col>
+        <el-dialog
+            title="选择一个钱包"
+            :visible.sync="centerDialogVisible"
+            width="30%"
+            center>
+          <span>
+            <div style="background-color: #f4f7f8;border-radius: 16px;height: 60px;">
+              <img style="width: 35px;height: 35px;margin-left: 24px;padding-top: 15px;float: left;" src="../assets/img/MetaMask.png" alt/>
+              <span style="margin-left: 12px;font-size: 18px;margin-top: 21px;float: left;font-weight: 500;line-height: 22px;">
+                MetaMask
+              </span>
+              <el-button style="margin-right: 16px;margin-top: 12px;float: right;" type="success" @click="linkWallet()"  round plain>连接</el-button>
+            </div>
+          </span>
+        </el-dialog>
       </el-row>
       <div>
         <router-view ref="son"/>
@@ -87,10 +74,11 @@
 <script>
 import {mapMutations} from "vuex";
 import {connectWallet, disconnectWallet} from "@/web3/index";
-
+import {connectNetwork} from "../web3/wallet";
 export default {
   data() {
     return {
+      centerDialogVisible: false,
       flag1: false,
       flag2: false,
       flag3: false,
@@ -102,7 +90,6 @@ export default {
       screenWidth: "",
       addressMsg: "连接钱包",
       hide: false,
-      hide1: true,
       show: false,
       show1: false,
       msg: "Google Chrome is recommended",
@@ -120,7 +107,6 @@ export default {
       }
     }
   },
-
   created() {
     this.selectValue = "cn";
     this.activeIndex = location.pathname; //下标刷新不变,history模式下
@@ -176,24 +162,45 @@ export default {
         this.show1 = false;
         await connectWallet(this);
       }
+      this.centerDialogVisible=false
     },
-    closeOverlay() {
-      this.show1 = false;
+    addNetwork(networkName){
+      console.log(networkName)
+      connectNetwork(networkName)
     },
     // 改变更新数据
     changeUpdate() {
       if (this.$store.state.wallet.connected) {
-        console.log('启动'+this.$store.state.wallet.networkId)
-        if (!(this.$store.state.wallet.networkId===3476||this.$store.state.wallet.networkId===6779)){
-          alert("错误的网络：请使用BHP主网或测试网")
+        console.log('启动' + this.$store.state.wallet.networkId)
+        if (!(this.$store.state.wallet.networkId === 3476 || this.$store.state.wallet.networkId === 6779 || this.$store.state.wallet.networkId === 56 || this.$store.state.wallet.networkId === 97)) {
+          this.$notify.error({
+            title: '错误',
+            message: '错误的网络：请使用BHP主网或测试网'
+          });
           return
         }
-        this.hide1 = false;
+
         this.OperationAddress = this.$store.state.wallet.address
         this.networkId = this.$store.state.wallet.networkId
         this.addressMsg = this.$store.state.wallet.address.substr(0, 7)
         this.options = this.$store.state.wallet.addressList
       }
+    }
+  },
+  filters:{
+    toDesc(networkId){
+      if (networkId===3476){
+        return "BHP Testnet"
+      }else if (networkId===97){
+        return "BSC Testnet"
+      }else if (networkId===56){
+        return "BSC Mainnet"
+      }else if (networkId===-1){
+        return "-1"
+      }
+    },
+    formatTime:(time)=>{
+      return new Date(parseInt(time) * 1000).toLocaleString();
     }
   },
   updated() {
@@ -297,31 +304,6 @@ export default {
   right: 203px;
 }
 
-.connectWalletButton {
-  position: relative;
-  transform: scale(1);
-  opacity: 1;
-
-}
-
-.selectWalletDiv {
-  transition: all 0.3s ease-in-out;
-  opacity: 0;
-  visibility: hidden;
-  width: 305px;
-  height: 177px;
-  background-color: #d2cfcf;
-  border-radius: 30px;
-  background-size: cover;
-  position: absolute;
-  top: 70px;
-  left: -70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
 .selectWalletDiv span {
   padding: 52px 0 20px 0;
   height: 28px;
@@ -332,52 +314,7 @@ export default {
   line-height: 28px;
 }
 
-.walletMsg {
-  width: 100%;
-  font-size: 20px;
-
-  font-weight: 400;
-  color: #1a1a1a;
-  line-height: 33px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.imgDiv {
-  width: 52px;
-  height: 52px;
-  background: #ffffff;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 21px;
-}
-
 .imgDiv img {
   width: 40px;
-}
-
-.walletMsg:hover {
-  background: rgba(182, 182, 182, 0.3);
-}
-
-.connectWalletButton:hover .selectWalletDiv {
-  visibility: visible;
-  opacity: 1;
-}
-
-.buttonBox {
-  width: 184px;
-  height: 52px;
-  background: #3e3e3e;
-  border-radius: 26px;
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: 400;
-  color: #ff9900;
 }
 </style>

@@ -1,4 +1,10 @@
 
+export const network = {
+    'BHPTest': 'BHPTest',
+    'BSC': 'BSC',
+    'BSCTest': 'BSCTest',
+}
+
 export const constants = {
     'Comptroller': 'Comptroller',
     'eUSDT': 'eUSDT',

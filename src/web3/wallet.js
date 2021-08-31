@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import {network} from "../configure/hashbank";
 
 export async function connectWallet(that) {
 
@@ -33,7 +34,6 @@ export async function connectWallet(that) {
         provider.on("connect", async (chainId) => {
             const web3 = new Web3(provider)
             let account = await web3.eth.getAccounts()
-            console.log("123:"+account)
             that.updateWallet({
                 address: account[0],
                 web3: web3,
@@ -53,13 +53,12 @@ export async function connectWallet(that) {
             // 更新地址
             that.updateAddress(accounts[0]);
             // 更新数据
-            that.changeUpdate();
+            //that.changeUpdate();
         });
         provider.on("networkChanged", async (networkId) => {
             console.log("网络改变："+networkId)
-            if (!(parseInt(networkId) == 3476||parseInt(networkId) == 6779)) {
-                await disconnectWallet(web3, data => {
-                })
+            if (!(parseInt(networkId) === 3476||parseInt(networkId) === 6779||parseInt(networkId) === 97||parseInt(networkId) === 56)) {
+                await disconnectWallet(web3, data => {})
             }
             // 更新地址
             that.updateNetworkId(parseInt(networkId));
@@ -80,6 +79,53 @@ export async function connectWallet(that) {
     that.changeUpdate();
 }
 
+//https://docs.metamask.io/guide/rpc-api.html#other-rpc-methods
+export function connectNetwork(networkName){
+    let params
+    if (networkName===network.BHPTest){
+        params=[{
+            chainId: '0xd94',
+            chainName: 'BHP Testnet',
+            nativeCurrency: {
+                name: 'BHP',
+                symbol: 'BHP',
+                decimals: 18
+            },
+            rpcUrls: ['https://http-testnet.bhpnet.io/'],
+            blockExplorerUrls: ['https://testnet.bhpnet.io']
+        }]
+    }else if (networkName===network.BSCTest){
+        params=[{
+            chainId: '0x61',
+            chainName: 'BSC Testnet',
+            nativeCurrency: {
+                name: 'Binance Coin',
+                symbol: 'BNB',
+                decimals: 18
+            },
+            rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+            blockExplorerUrls: ['https://testnet.bscscan.com']
+        }]
+    }else if (networkName===network.BSC){
+        params=[{
+            chainId: '0x38',
+            chainName: 'Binance Smart Chain',
+            nativeCurrency: {
+                name: 'Binance Coin',
+                symbol: 'BNB',
+                decimals: 18
+            },
+            rpcUrls: ['https://bsc-dataseed.binance.org/'],
+            blockExplorerUrls: ['https://bscscan.com']
+        }]
+    }
+    window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: params
+    }).catch((error) => {
+        console.log(error)
+    })
+}
 
 export function disconnectWallet(web3, callback) {
     return new Promise(async (resolve, reject) => {
