@@ -61,9 +61,9 @@ export async function connectWallet(that) {
                 await disconnectWallet(web3, data => {})
             }
             // 更新地址
-            that.updateNetworkId(parseInt(networkId));
+            that.updateNetworkId(parseInt(networkId,10));
             // 更新数据
-            //that.changeUpdate();
+            that.changeUpdate();
         });
     }
     await subscribeProvider(provider);
@@ -123,7 +123,7 @@ export function connectNetwork(networkName){
         method: 'wallet_addEthereumChain',
         params: params
     }).catch((error) => {
-        console.log(error)
+        that.getErrorInfo()
     })
 }
 

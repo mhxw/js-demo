@@ -21,7 +21,6 @@ export default new Vuex.Store({
             state.wallet.address = address
         },
         updateNetworkId(state, networkId) {
-            console.log("updateNetworkId",networkId)
             state.wallet.networkId = networkId
         },
         clearWallet(state) {

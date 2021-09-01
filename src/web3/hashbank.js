@@ -304,19 +304,6 @@ export async function getBlockNumber (wallet) {
 }
 
 /**
- * 获取借贷利率
- * @param wallet
- * @param cash
- * @param borrows
- * @param reserves
- * @returns {Promise<*>}
- */
-export async function getBorrowRate (wallet,cash,borrows,reserves) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
-    return contract.methods.getBorrowRate(cash,borrows,reserves).call({from: wallet.address})
-}
-
-/**
  * 获取每一个区块的存款利率
  * @param wallet
  * @param asset
@@ -336,4 +323,31 @@ export async function supplyRatePerBlock (wallet,asset) {
 export async function borrowRatePerBlock (wallet,asset) {
     const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
     return contract.methods.borrowRatePerBlock().call({from: wallet.address})
+}
+
+/**
+ * 获取最新的资金使用率
+ * @param wallet
+ * @param cash
+ * @param borrows
+ * @param reserves
+ * @returns {Promise<*>}
+ */
+export async function utilizationRate (wallet,cash,borrows,reserves) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.utilizationRate(cash,borrows,reserves).call({from: wallet.address})
+}
+
+
+/**
+ * 获取借贷利率
+ * @param wallet
+ * @param cash
+ * @param borrows
+ * @param reserves
+ * @returns {Promise<*>}
+ */
+export async function getBorrowRate (wallet,cash,borrows,reserves) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.getBorrowRate(cash,borrows,reserves).call({from: wallet.address})
 }

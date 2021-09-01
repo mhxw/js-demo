@@ -25,6 +25,8 @@
                   <el-descriptions-item label="USDT抵押因子"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
                   <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
                   <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
+                  <el-descriptions-item label="FIL使用率"> {{ panel.filUtilizationRate }} % </el-descriptions-item>
+                  <el-descriptions-item label="USDT使用率"> {{ panel.usdtUtilizationRate }} % </el-descriptions-item>
                 </el-descriptions>
               </el-tab-pane>
               <el-tab-pane label="合约">
@@ -347,6 +349,7 @@ import {
   exitMarket,
   getBlockNumber,
   getBorrowRate,
+  utilizationRate,
   getCash,
   markets,
   mint,
@@ -381,6 +384,8 @@ export default {
         result: '',
       },
       panel:{
+        filUtilizationRate:0,
+        usdtUtilizationRate:0,
         supplyApy:0,
         borrowApy:0,
         filPrice:0,
@@ -1234,6 +1239,21 @@ export default {
       })
       return result
     },
+    async utilizationRatePage(cash,borrows,reserves){
+      let result=0
+      //获取USDT资金池余额
+      await utilizationRate(
+          this.$store.state.wallet,
+          cash,
+          borrows,
+          reserves
+      ).then(res =>{
+        result=res
+      }).catch(err=>{
+        this.getErrorInfo(err)
+      })
+      return result
+    },
     async getPricePage(tokenName){
       let result
       let eTokenAddress
@@ -1363,6 +1383,13 @@ export default {
       let totalBorrows=await this.totalBorrowsPage(tokenName)
       let totalReserves=await this.totalReservesPage(tokenName)
       let borrowIndex=await this.borrowIndexPage(tokenName)
+      if (tokenName===constants.eUSDT){
+        let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
+        this.panel.usdtUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
+      }else if (tokenName===constants.eFIL){
+        let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
+        this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
+      }
       let borrowRate=await this.getBorrowRatePage(totalCash,totalBorrows,totalReserves)
       let reserveFactorMantissa=await this.getReserveFactorMantissaPage(tokenName)
       this.borrowUsdt.borrowRate=borrowRate

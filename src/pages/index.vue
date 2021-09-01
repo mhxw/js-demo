@@ -147,6 +147,41 @@ export default {
     closeMengceng() {
       this.loading = false;
     },
+    getErrorInfo(err) {
+      console.log(err.toString())
+      if (err.code === 4001) {
+        this.info.result = "操作已取消"
+      } else if (
+          err.toString().indexOf("Error: Internal JSON-RPC error.") !== -1
+      ) {
+        let result = JSON.parse(
+            err.toString().replace("Error: Internal JSON-RPC error.", "")
+        );
+        if (result.code === 3) {
+          if (
+              result.message.toString().indexOf("execution reverted: Status error") !== -1
+          ) {
+            this.info.result = "状态错误，请到首页刷新重试";
+          } else if (
+              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds balance") !== -1
+          ) {
+            this.info.result = "余额不足";
+          } else if (
+              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1
+          ) {
+            this.info.result = "授权额度不足或未授权";
+          } else {
+            this.info.result = result;
+          }
+        }else {
+          this.info.result = result;
+        }
+      } else {
+        this.info.result = err.toString();
+      }
+      this.info.title = "错误提示"
+      this.dialogResultVisible = true
+    },
     againTry() {
       this.loading = false;
     },
@@ -182,7 +217,7 @@ export default {
 
         this.OperationAddress = this.$store.state.wallet.address
         this.networkId = this.$store.state.wallet.networkId
-        this.addressMsg = this.$store.state.wallet.address.substr(0, 7)
+        this.addressMsg = this.$store.state.wallet.address.substr(0, 5)+"***"+this.$store.state.wallet.address.substr(39, 3)
         this.options = this.$store.state.wallet.addressList
       }
     }
@@ -197,6 +232,8 @@ export default {
         return "BSC Mainnet"
       }else if (networkId===-1){
         return "-1"
+      }else{
+        return "切换网络"
       }
     },
     formatTime:(time)=>{
