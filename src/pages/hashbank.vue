@@ -11,28 +11,36 @@
                   <span>面板</span>
 <!--                  <el-button style="float: right; padding: 3px 0" type="text" @click="updatePanel()" >刷新</el-button>-->
                 </div>
-                <el-descriptions  direction="vertical" :column="6" border size="medium">
+                <el-descriptions title="合约" direction="vertical" :column="7" border size="medium">
                   <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="FIL兑换率"> 1 eFIL ={{ panel.filExchangeRate }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT </el-descriptions-item>
-                  <el-descriptions-item label="FIL抵押因子"> {{ panel.filCollateralFactor }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT抵押因子"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
                   <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
                   <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
+                  <el-descriptions-item label="eUSDT合约最新触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
+                  <el-descriptions-item label="eFIL合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                  <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="eUSDT合约最新触发的储备金">{{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
+                </el-descriptions>
+                <el-descriptions class="margin-top" title="平台" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
+                  <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
                   <el-descriptions-item label="FIL使用率"> {{ panel.filUtilizationRate }} % </el-descriptions-item>
                   <el-descriptions-item label="USDT使用率"> {{ panel.usdtUtilizationRate }} % </el-descriptions-item>
-                  <el-descriptions-item label="USDT上次合约触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="FIL上次合约触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="USDT上次合约触发时的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT上次合约触发时的储备金">{{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="用户钱包中FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="用户钱包中USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="用户钱包中eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
-                  <el-descriptions-item label="用户钱包中eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
-                  <el-descriptions-item label="用户存款余额">{{ panel.supplyBalance }}</el-descriptions-item>
-                  <el-descriptions-item label="用户借款余额">{{ panel.borrowBalance }}</el-descriptions-item>
+                  <el-descriptions-item label="FIL抵押率"> {{ panel.filCollateralFactor }} </el-descriptions-item>
+                  <el-descriptions-item label="USDT抵押率"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
+                  <el-descriptions-item label="FIL兑换率"> 1 eFIL ={{ panel.filExchangeRate }} FIL </el-descriptions-item>
+                  <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT </el-descriptions-item>
+                  <el-descriptions-item label="FIL借款总数量"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="USDT存款APY"> {{ panel.supplyApy }} </el-descriptions-item>
+                  <el-descriptions-item label="USDT借款APY"> {{ panel.borrowApy }} </el-descriptions-item>
+                </el-descriptions>
+                <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
+                  <el-descriptions-item label="用户钱包FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="用户钱包USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="用户eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
+                  <el-descriptions-item label="用户eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
+                  <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ supplyFil.balance }}+ ${{ supplyUsdt.balance }}</el-descriptions-item>
+                  <el-descriptions-item label="用户借款总额(USDT)"> $ {{ borrowUsdt.balance }}</el-descriptions-item>
                 </el-descriptions>
               </el-card>
             </el-col>
@@ -423,6 +431,8 @@ export default {
         totalBorrowsInfo:0,
         usdtTotalReservesInfo:0,
         filTotalReservesInfo:0,
+        usdtTotalBorrowsInfo:0,
+        filTotalBorrowsInfo:0,
         usdtExchangeRate:0,
         filExchangeRate:0,
       },
@@ -1089,7 +1099,7 @@ export default {
         eTokenAddress=address.bhp.eFIL
       }
       let result=0
-      //获取USDT池子上次计算高度
+      //获取USDT池子最新计算高度
       await accrualBlockNumber(
           this.$store.state.wallet,
           eTokenAddress,
@@ -1153,11 +1163,16 @@ export default {
       //获取最后一次合约触发时的借款总额
       await totalBorrows(
           this.$store.state.wallet,
-          address.bhp.eUSDT,
+          eTokenAddress,
       ).then(res => {
         result=res
         let amount=new Decimal(res)
-        this.panel.totalBorrowsInfo=amount.dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        if (tokenName===constants.eUSDT){
+          this.panel.usdtTotalBorrowsInfo=amount.dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        }else if (tokenName===constants.eFIL){
+          this.panel.filTotalBorrowsInfo=amount.dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        }
+
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1426,6 +1441,7 @@ export default {
         let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.usdtUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }else if (tokenName===constants.eFIL){
+        console.log("totalCash,totalBorrows,totalReserves",totalCash,totalBorrows,totalReserves)
         let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }
