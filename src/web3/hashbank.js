@@ -209,12 +209,13 @@ export async function markets(wallet,asset){
 /**
  * 获取借款金额
  * @param wallet
+ * @param account 借款人地址
  * @param asset
  * @returns {Promise<*>}
  */
-export async function borrowBalanceStored(wallet,asset){
+export async function borrowBalanceStored(wallet,account,asset){
     const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
-    return contract.methods.borrowBalanceStored(wallet.address).call({from: wallet.address})
+    return contract.methods.borrowBalanceStored(account).call({from: wallet.address})
 }
 
 /**
@@ -338,6 +339,11 @@ export async function utilizationRate (wallet,cash,borrows,reserves) {
     return contract.methods.utilizationRate(cash,borrows,reserves).call({from: wallet.address})
 }
 
+
+export async function exchangeRateStored (wallet,asset) {
+    const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)
+    return contract.methods.exchangeRateStored().call({from: wallet.address})
+}
 
 /**
  * 获取借贷利率

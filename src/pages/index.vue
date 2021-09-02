@@ -36,6 +36,7 @@
             <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BHPTest`)" >添加并切换到 BHP Testnet</el-button>
             <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BSCTest`)" >添加并切换到 BSC Testnet</el-button>
             <el-button type="success" v-show="networkId!==-1" round @click="openAndClose" >退出钱包</el-button>
+            <el-button type="success" v-show="networkId!==-1" round @click="$refs.son.updatePanel()" >刷新数据</el-button>
             <el-dropdown split-button round type="success" style="margin-left: 12px;" v-show="networkId!==-1">
               切换网络
               <el-dropdown-menu slot="dropdown">
@@ -52,10 +53,10 @@
         <el-dialog
             title="选择一个钱包"
             :visible.sync="centerDialogVisible"
-            width="30%"
+            width="360px"
             center>
           <span>
-            <div style="background-color: #f4f7f8;border-radius: 16px;height: 60px;">
+            <div style="background-color: #f4f7f8;border-radius: 16px;height: 60px;min-width: 300px">
               <img style="width: 35px;height: 35px;margin-left: 24px;padding-top: 15px;float: left;" src="../assets/img/MetaMask.png" alt/>
               <span style="margin-left: 12px;font-size: 18px;margin-top: 21px;float: left;font-weight: 500;line-height: 22px;">
                 MetaMask

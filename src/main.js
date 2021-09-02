@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI)
+Vue.use('my-component', ElementUI);
 
 Vue.directive('focus', {
   // 当被绑定的元素插入到 DOM 中时……
