@@ -1,8 +1,8 @@
 <template>
-  <div class="vault" style="margin: 20px 100px 50px 100px">
+  <div style="margin:0 2em">
     <el-tabs type="card" tab-position="right">
       <el-row :gutter="24">
-        <el-tabs v-model="activeName" type="card" >
+        <el-tabs v-model="panel.activeName" type="card" >
           <el-tab-pane label="面板" name="third">
             <!--   1.面板 -->
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -29,10 +29,10 @@
                   <el-descriptions-item label="USDT抵押率"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
                   <el-descriptions-item label="FIL兑换率"> 1 eFIL ={{ panel.filExchangeRate }} FIL </el-descriptions-item>
                   <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT </el-descriptions-item>
-                  <el-descriptions-item label="FIL借款总数量"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="FIL借款总数量"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
                   <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT存款APY"> {{ panel.supplyApy }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT借款APY"> {{ panel.borrowApy }} </el-descriptions-item>
+                  <el-descriptions-item label="USDT存款APY"> {{ panel.supplyApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="USDT借款APY"> {{ panel.borrowApy }} % </el-descriptions-item>
                 </el-descriptions>
                 <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
                   <el-descriptions-item label="用户钱包FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
@@ -47,7 +47,7 @@
           </el-tab-pane>
           <el-tab-pane label="借贷" name="first">
             <!--   2.存取 -->
-            <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="12">
+            <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
                   <span>存取</span>
@@ -86,7 +86,7 @@
               </el-card>
             </el-col>
             <!--   3.借还 -->
-            <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="12">
+            <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
                   <span>借还</span>
@@ -108,7 +108,7 @@
                 :visible.sync="filSupplyDialogVisible"
                 width="30%"
                 center>
-              <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tabs v-model="dialogActiveName" >
                 <el-tab-pane label="存款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyFil">
                     <el-form-item label="存款数量">
@@ -173,7 +173,7 @@
                 :visible.sync="usdtSupplyDialogVisible"
                 width="30%"
                 center>
-              <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tabs v-model="dialogActiveName" @tab-click="handleClick">
                 <el-tab-pane label="存款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyUsdt">
                     <el-form-item label="存款数量">
@@ -241,7 +241,7 @@
                 :visible.sync="usdtBorrowDialogVisible"
                 width="30%"
                 center>
-              <el-tabs v-model="activeName" >
+              <el-tabs v-model="dialogActiveName" >
                 <el-tab-pane label="借款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyUsdt">
                     <el-form-item label="借款数量">
@@ -335,6 +335,41 @@
               </el-descriptions>
             </el-card>
           </el-tab-pane>
+          <el-tab-pane label="合约" name="fourth">
+            <el-card class="box-card">
+              <el-tabs v-model="contract.activeName"  tab-position="left">
+                <el-tab-pane label="BHP测试网" name="first">
+                  <el-descriptions title="BHP测试网"  :column="1" border>
+                  <el-descriptions-item label="eFIL">0x267a0234a8432889e5D0a8680509Ed7CEE70744B</el-descriptions-item>
+                  <el-descriptions-item label="eUSDT">0x31Aaa86fA867C586944Ec391b750BD90B0BC85E4</el-descriptions-item>
+                  <el-descriptions-item label="FIL">0x6F038322c71831840Fb63c58cC2F2A94d01C9b07</el-descriptions-item>
+                  <el-descriptions-item label="USDT">0xEB6ee31d2365Fb585Ac7Fdb9E94Baad8909Cf205</el-descriptions-item>
+                  <el-descriptions-item label="Comptroller">0x195090E2C98be4E0f5C9E952879ef640203A2413</el-descriptions-item>
+                  <el-descriptions-item label="Oracle">0x451D8BB2d81D76A14b21d61A3B97Df158da860CF</el-descriptions-item>
+                  <el-descriptions-item label="UsdtJumpRateModel">0x4D1C9992De26394D01081cD7C9290072E0088335</el-descriptions-item>
+                </el-descriptions>
+                </el-tab-pane>
+                <el-tab-pane label="BSC测试网" name="second">
+                  <el-descriptions title="BSC测试网"  :column="1" border >
+                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0 </el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4 </el-descriptions-item>
+                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38 </el-descriptions-item>
+                    <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5 </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28 </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF </el-descriptions-item>
+                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
+                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6</el-descriptions-item>
+                  </el-descriptions>
+                </el-tab-pane>
+                <el-tab-pane label="BSC主网" name="third">
+                  <el-descriptions title="BSC主网"  :column="1" border >
+
+                  </el-descriptions>
+                </el-tab-pane>
+              </el-tabs>
+            </el-card>
+          </el-tab-pane>
         </el-tabs>
       </el-row>
     </el-tabs>
@@ -342,12 +377,12 @@
         :visible.sync="dialogResultVisible"
         width="30%"
         center>
-      <el-result icon="success" :title="info.title " v-if="info.title==='成功提示'" subTitle=".">
+      <el-result icon="success" :title="info.title " v-if="info.title==='成功提示'" :subTitle="info.subTitle">
         <template slot="extra">
           <el-link type="success" :href="info.result" target="_blank" >查看交易</el-link>
         </template>
       </el-result>
-      <el-result icon="error" :title="info.title" v-if="info.title==='错误提示'" subTitle=".">
+      <el-result icon="error" :title="info.title" v-if="info.title==='错误提示'" :subTitle="info.subTitle">
         <template slot="extra">
           <span >{{ info.result }}</span>
         </template>
@@ -392,7 +427,6 @@ export default {
   data() {
     return {
       account:"",
-      activeName: 'first',
       filSupplyDialogVisible: false,
       usdtSupplyDialogVisible:false,
       dialogResultVisible: false,
@@ -403,12 +437,18 @@ export default {
       info:{
         title: '',
         result: '',
+        subTitle:'',
+      },
+      dialogActiveName: 'first',
+      contract:{
+        activeName: 'first',
       },
       liquidity:{
         sumCollateral:0,
         sumBorrowPlusEffects:0,
       },
       panel:{
+        activeName: 'first',
         filUtilizationRate:0,
         usdtUtilizationRate:0,
         supplyApy:0,
@@ -610,8 +650,14 @@ export default {
             this.info.result = "余额不足";
           } else if (
               result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1
-          ) {
+          )
+          {
             this.info.result = "授权额度不足或未授权";
+          }else if (
+              result.message.toString().indexOf("execution reverted: REPAY_BORROW_NEW_ACCOUNT_BORROW_BALANCE_CALCULATION_FAILED") !== -1
+          )
+          {
+            this.info.result = "还款余额计算错误，超出实际还款值";
           } else {
             this.info.result = result;
           }
@@ -677,6 +723,8 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
+        this.info.subTitle=JSON.stringify(res)
+        console.log(JSON.stringify(res))
         this.getSuccessInfo(this.$parent.url)
 
       }).catch(err => {
@@ -725,8 +773,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
-
+        this.verifyContractResult(res,this.$parent.url)
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
@@ -780,6 +827,42 @@ export default {
         this.getErrorInfo(err)
       })
     },
+    getResultInfo(result,info) {
+      this.info.title = "错误提示"
+      this.info.result = info
+      this.dialogResultVisible = true
+      //this.updatePanel()
+    },
+    verifyContractResult(res,url){
+      console.log(JSON.stringify(res.events))
+      if (!(typeof(res.events.Failure)==="undefined")){
+        let returnValues=res.events.Failure.returnValues
+        let result
+        let info
+        switch (returnValues.error){
+          case "14":
+            result="资金池余额不足"
+            break;
+          case "15":
+            result="转账转出失败"
+            break;
+        }
+        switch (returnValues.info){
+          case "9":
+            info="资金池可用余额不足，借款不允许"
+            break;
+          case "15":
+            info="转账转出失败"
+          case "47":
+            info="取款金额错误，超出实际金额"
+            break;
+        }
+        console.log("result,info",result,info)
+        this.getResultInfo(result,info)
+      }else {
+        this.getSuccessInfo(url)
+      }
+    },
     borrowToken(tokenName) {
       //usdt 借款之前先判断是否存入了fil并开启了抵押
       if (!this.verifyConnect()){
@@ -815,7 +898,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
+        this.verifyContractResult(res,this.$parent.url)
 
       }).catch(err => {
         this.$parent.loading = false;
@@ -860,7 +943,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
+        this.verifyContractResult(res,this.$parent.url)
 
       }).catch(err => {
         this.$parent.loading = false;
@@ -1441,7 +1524,6 @@ export default {
         let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.usdtUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }else if (tokenName===constants.eFIL){
-        console.log("totalCash,totalBorrows,totalReserves",totalCash,totalBorrows,totalReserves)
         let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }
