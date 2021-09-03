@@ -50,7 +50,7 @@
             <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                  <span>存取</span>
+                  <span>存款市场</span>
                 </div>
                 <el-descriptions size="medium" :column="2"  border>
                   <el-descriptions-item label="资产" >USDT</el-descriptions-item>
@@ -89,13 +89,13 @@
             <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                  <span>借还</span>
+                  <span>借款市场</span>
                 </div>
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款数量">{{ borrowUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款金额">$ {{ borrowUsdt.balance }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT借款APY">{{ panel.borrowApy }} % </el-descriptions-item>
+                  <el-descriptions-item label="USDT借款数量" >{{ borrowUsdt.count }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="USDT借款金额" >$ {{ borrowUsdt.balance }} </el-descriptions-item>
+                  <el-descriptions-item label="USDT借款APY" >{{ panel.borrowApy }} % </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
                   </el-descriptions-item>
@@ -106,7 +106,7 @@
             <el-dialog
                 title="FIL"
                 :visible.sync="filSupplyDialogVisible"
-                width="30%"
+                width="460px"
                 center>
               <el-tabs v-model="dialogActiveName" >
                 <el-tab-pane label="存款" name="first">
@@ -117,23 +117,13 @@
                         <el-button slot="append">FIL</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card">
-                      <div  class="text item">
-                        {{'存款数量：'+ supplyFil.count+' FIL'  }}
-                      </div>
-                      <div  class="text item">
-                        FIL兑换率：1 eFIL ={{panel.filExchangeRate}} FIL
-                      </div>
-                      <div  class="text item">
-                        {{'钱包FIL数量：'+panel.filBalance+' FIL'  }}
-                      </div>
-                      <div  class="text item" >
-                        {{'钱包eFIL数量：'+panel.efilBalance+' eFIL'  }}
-                      </div>
-                      <div  class="text item" >
-                        {{'FIL资金池余额：'+panel.filTotalCash+' FIL'  }}
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyFil.count}} FIL</el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eFIL ={{panel.filExchangeRate}} FIL</el-descriptions-item>
+                      <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">{{panel.filBalance}} FIL</el-descriptions-item>
+                      <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}" >{{panel.efilBalance}} eFIL</el-descriptions-item>
+                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}" >{{panel.filTotalCash}} FIL</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`FIL`)">{{ supplyButton }}</el-button>
                       <el-button type="success" @click="supplyToken(`FIL`)">存款</el-button>
@@ -148,17 +138,11 @@
                         <el-button slot="append">FIL</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card">
-                      <div  class="text item">
-                        {{'存款数量：'+ supplyFil.count+' FIL'  }}
-                      </div>
-                      <div  class="text item">
-                        借款金额限额：$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </div>
-                      <div  class="text item">
-                        限额已使用： {{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyFil.count}} FIL</el-descriptions-item>
+                      <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}" >$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}</el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
                       <el-button type="success" @click="redeemAllToken(`FIL`)">取款全部</el-button>
@@ -171,7 +155,7 @@
             <el-dialog
                 title="USDT"
                 :visible.sync="usdtSupplyDialogVisible"
-                width="30%"
+                width="460px"
                 center>
               <el-tabs v-model="dialogActiveName" @tab-click="handleClick">
                 <el-tab-pane label="存款" name="first">
@@ -182,20 +166,12 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card" style="margin-bottom: 20px;">
-                      <div  class="text item">
-                        {{'USDT存款数量：'+ supplyUsdt.count+' USDT'  }}
-                      </div>
-                      <div  class="text item">
-                        USDT兑换率：1 eUSDT ={{panel.usdtExchangeRate}} USDT
-                      </div>
-                      <div  class="text item">
-                        {{'钱包USDT数量：'+panel.usdtBalance+' USDT'  }}
-                      </div>
-                      <div  class="text item" >
-                        {{'钱包eUSDT数量：'+panel.eusdtBalance+' eUSDT'  }}
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyUsdt.count}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eUSDT ={{panel.usdtExchangeRate}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">{{panel.usdtBalance}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}" >{{panel.eusdtBalance}} eUSDT</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
                       <el-button type="success" @click="supplyToken(`USDT`)">存款</el-button>
@@ -210,23 +186,13 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card" style="margin-bottom: 20px;">
-                      <div  class="text item">
-                        {{'USDT存款数量：'+ supplyUsdt.count+' USDT'  }}
-                      </div>
-                      <div  class="text item">
-                        兑换率：1 eUSDT ={{panel.usdtExchangeRate}} USDT
-                      </div>
-                      <div  class="text item">
-                        {{'钱包USDT数量：'+panel.usdtBalance+' USDT'  }}
-                      </div>
-                      <div  class="text item" >
-                        {{'钱包eUSDT数量：'+panel.eusdtBalance+' eUSDT'  }}
-                      </div>
-                      <div  class="text item" >
-                        {{'USDT资金池余额：'+panel.usdtTotalCash+' USDT'  }}
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyUsdt.count}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eUSDT ={{panel.usdtExchangeRate}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">{{panel.usdtBalance}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}" >{{panel.eusdtBalance}} eUSDT</el-descriptions-item>
+                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}" >{{panel.usdtTotalCash}} USDT</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="redeemUnderlying(`USDT`)">取款</el-button>
                       <el-button type="success" @click="redeemAllToken(`USDT`)">取款全部</el-button>
@@ -239,7 +205,7 @@
             <el-dialog
                 title="USDT"
                 :visible.sync="usdtBorrowDialogVisible"
-                width="30%"
+                width="460px"
                 center>
               <el-tabs v-model="dialogActiveName" >
                 <el-tab-pane label="借款" name="first">
@@ -250,25 +216,15 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card" style="margin-bottom: 20px;">
-                      <div  class="text item">
-                        借款限额：$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </div>
-                      <div  class="text item">
-                        借款限额： {{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT
-                      </div>
-                      <div  class="text item">
-                        限额已使用： {{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %
-                      </div>
-                    </el-card>
-                    <el-card class="box-card">
-                      <div  class="text item">
-                        目前已借：{{borrowUsdt.count}} USDT
-                      </div>
-                      <div  class="text item">
-                        市场可用余额：{{ panel.usdtTotalCash }} USDT
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border>
+                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }} </el-descriptions-item>
+                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT</el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    </el-descriptions>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.count}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtTotalCash }} USDT</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="borrowToken(`USDT`)">借款</el-button>
                     </el-form-item>
@@ -282,28 +238,16 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-card class="box-card" style="margin-bottom: 20px;">
-                      <div  class="text item">
-                        借款金额限额：$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </div>
-                      <div  class="text item">
-                        借款数量限额： {{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT
-                      </div>
-                      <div  class="text item">
-                        限额已使用： {{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %
-                      </div>
-                    </el-card>
-                    <el-card class="box-card">
-                      <div  class="text item">
-                        目前已借：{{borrowUsdt.count}} USDT
-                      </div>
-                      <div  class="text item">
-                        市场可用余额：{{ panel.usdtTotalCash }} USDT
-                      </div>
-                      <div  class="text item">
-                        钱包USDT余额：{{ panel.usdtBalance }} USDT
-                      </div>
-                    </el-card>
+                    <el-descriptions  :column="1"  size="medium" border>
+                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }} </el-descriptions-item>
+                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT</el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    </el-descriptions>
+                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.count}} USDT</el-descriptions-item>
+                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtTotalCash }} USDT</el-descriptions-item>
+                      <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtBalance }} USDT</el-descriptions-item>
+                    </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
                       <el-button type="success" @click="repayToken(`USDT`)">还款</el-button>
@@ -375,7 +319,7 @@
     </el-tabs>
     <el-dialog
         :visible.sync="dialogResultVisible"
-        width="30%"
+        width="35em"
         center>
       <el-result icon="success" :title="info.title " v-if="info.title==='成功提示'" :subTitle="info.subTitle">
         <template slot="extra">
@@ -723,8 +667,6 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.info.subTitle=JSON.stringify(res)
-        console.log(JSON.stringify(res))
         this.getSuccessInfo(this.$parent.url)
 
       }).catch(err => {
@@ -834,12 +776,16 @@ export default {
       //this.updatePanel()
     },
     verifyContractResult(res,url){
-      console.log(JSON.stringify(res.events))
       if (!(typeof(res.events.Failure)==="undefined")){
         let returnValues=res.events.Failure.returnValues
+        console.log(JSON.stringify(returnValues))
         let result
         let info
+        let detail
         switch (returnValues.error){
+          case "3":
+            result="审计不通过"
+            break;
           case "14":
             result="资金池余额不足"
             break;
@@ -851,13 +797,22 @@ export default {
           case "9":
             info="资金池可用余额不足，借款不允许"
             break;
+          case "14":
+            info="借款被审计合约拒绝"
+            break;
           case "15":
             info="转账转出失败"
+            break;
           case "47":
             info="取款金额错误，超出实际金额"
             break;
         }
-        console.log("result,info",result,info)
+        switch (returnValues.detail){
+          case "4":
+            detail="差额不足"
+            break;
+        }
+        console.log("result,info,detail",result,info,detail)
         this.getResultInfo(result,info)
       }else {
         this.getSuccessInfo(url)

@@ -1,36 +1,34 @@
 <template>
   <div class="indexHome" >
-    <div class="MessageBoxHome" v-show="loading">
-      <div class="MessageBoxIndex">
-        <div class="BoxLoading">
-          <img class="logoImg" src="../assets/img/logo1.png" alt/>
-          <div v-show="flag3" class="box box1">
-            <img src="../assets/img/fail.png" alt/>
-            <span v-text="$t('message.text1')">交易被拒绝</span>
-            <button class="buttonLoading" @click="againTry()" v-text="$t('message.text2')">再试一次</button>
-          </div>
-          <div v-show="flag2" class="box box2">
-            <img src="../assets/img/loading.gif" alt/>
-            <a :href="url" target="_blank">
-              <button class="buttonLoading" v-text="$t('message.text3')">查看交易</button>
-            </a>
-          </div>
-          <div v-show="flag1" class="box box3">
-            <img src="../assets/img/loading.gif" alt/>
-            <button class="buttonLoading" v-text="$t('message.text04')">交易确认中...</button>
-          </div>
-          <img
-              style="cursor:pointer"
-              @click="closeMengceng()"
-              class="deleteImg"
-              src="../assets/img/delete.png"
-              alt
-          />
-        </div>
-      </div>
-    </div>
-      <el-row>
-        <el-col :span="12" style="margin:50px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+    <el-dialog
+        :visible.sync="loading"
+        width="35em"
+        center>
+      <el-result  title="交易详情" v-show="flag2">
+        <template slot="icon">
+          <el-image :src="require('../assets/img/loading.gif')" style="width: 4.5rem;height: 4.5rem;"></el-image>
+        </template>
+        <template slot="extra">
+          <el-link type="success" :href="url" v-text="$t('message.text3')" target="_blank" >查看交易</el-link>
+        </template>
+      </el-result>
+      <el-result title="交易详情" v-show="flag1">
+        <template slot="icon">
+          <el-image :src="require('../assets/img/loading.gif')" style="width: 4.5rem;height: 4.5rem;"></el-image>
+        </template>
+        <template slot="extra">
+          <span v-text="$t('message.text04')">交易确认中...</span>
+        </template>
+      </el-result>
+      <el-result icon="error" title="交易详情" v-show="flag3">
+        <template slot="extra">
+          <span v-text="$t('message.text1')">交易被拒绝</span>
+          <button class="buttonLoading" @click="againTry()" v-text="$t('message.text2')">再试一次</button>
+        </template>
+      </el-result>
+    </el-dialog>
+    <el-row>
+        <el-col :span="12" style="margin:3em auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div style="text-align:center;margin: 0 auto;">
             <el-button type="success" round @click="centerDialogVisible = true" >{{ addressMsg }}</el-button>
             <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BHPTest`)" >添加并切换到 BHP Testnet</el-button>
@@ -66,10 +64,10 @@
           </span>
         </el-dialog>
       </el-row>
-      <div>
-        <router-view ref="son"/>
-      </div>
+    <div>
+      <router-view ref="son"/>
     </div>
+  </div>
 </template>
 
 <script>
