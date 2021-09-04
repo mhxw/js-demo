@@ -260,86 +260,111 @@
           </el-tab-pane>
           <el-tab-pane label="清算" name="second">
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                  <span>我的账户</span>
-                </div>
-                <el-descriptions :column="4" border style="margin-top: 20px;">
-                  <el-descriptions-item label="清算地址" label-class-name="my-label" >
-                    {{ account }}
-                  </el-descriptions-item>
-                  <el-descriptions-item label="FIL价格">$ {{panel.filPrice}}</el-descriptions-item>
-                  <el-descriptions-item label="USDT价格">$ {{panel.usdtPrice}}</el-descriptions-item>
-                  <el-descriptions-item label="FIL抵押率">{{panel.filCollateralFactor }}</el-descriptions-item>
-                  <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{ liquidity.sumCollateral }}</el-descriptions-item>
-                  <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{ liquidity.sumBorrowPlusEffects }}</el-descriptions-item>
-                  <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算 </el-descriptions-item>
-                </el-descriptions>
-              </el-card>
-              <el-card class="box-card" style="margin-top: 1em;">
-                <div slot="header" class="clearfix">
-                  <span>清算池</span>
-                  <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
-                </div>
-                <el-table
-                    :data="liquidity.tableData"
-                    border
-                    style="width: 100%;align-content: center;">
-                  <el-table-column
-                      prop="id"
-                      label="#"
-                      width="180">
-                    <template slot-scope="scope">
-                      # {{ scope.row.id }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      prop="pool"
-                      label="清算池"
-                      width="180">
-                    <template slot-scope="scope">
-                      {{ scope.row.pool }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      prop="assetsValue"
-                      label="资产价值">
-                    <template slot-scope="scope">
-                      $ {{ scope.row.assetsValue }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      prop="borrowValue"
-                      label="借款价值">
-                    <template slot-scope="scope">
-                      $ {{ scope.row.borrowValue }}
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      prop="borrowCount"
-                      :render-header="borrowCount"
-                      label="借款">
-                    <template slot-scope="scope">
-                      {{ scope.row.borrowCount }} USDT
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      prop="riskValue"
-                      :render-header="riskValue"
-                      label="风险值">
-                    <template slot-scope="scope">
-                      {{ scope.row.riskValue }}%
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                      label="操作">
-                    <template slot-scope="scope">
-                      <el-button size="small" type="success" @click="handleLiquid(scope.$index, scope.row)" disabled>清算</el-button>
-                    </template>
-                  </el-table-column>
-                </el-table>
-              </el-card>
+              <el-tabs v-model="liquidity.activeName"  tab-position="left">
+                <el-tab-pane label="我的账户" name="first">
+                  <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                      <span>我的账户</span>
+                    </div>
+                    <el-descriptions :column="4" border style="margin-top: 20px;">
+                      <el-descriptions-item label="清算地址" label-class-name="my-label" >
+                        {{ account }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="FIL价格">$ {{panel.filPrice}}</el-descriptions-item>
+                      <el-descriptions-item label="USDT价格">$ {{panel.usdtPrice}}</el-descriptions-item>
+                      <el-descriptions-item label="FIL抵押率">{{panel.filCollateralFactor }}</el-descriptions-item>
+                      <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
+                      <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{ liquidity.sumCollateral }}</el-descriptions-item>
+                      <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{ liquidity.sumBorrowPlusEffects }}</el-descriptions-item>
+                      <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算 </el-descriptions-item>
+                    </el-descriptions>
+                  </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="清算列表" name="second">
+                  <el-card class="box-card" >
+                    <div slot="header" class="clearfix">
+                      <span>清算池</span>
+                      <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
+                    </div>
+                    <el-table
+                        :data="liquidity.tableData"
+                        border
+                        style="width: 100%;align-content: center;">
+                      <el-table-column
+                          prop="id"
+                          label="#"
+                          width="180">
+                        <template slot-scope="scope">
+                          # {{ scope.row.id }}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          prop="pool"
+                          label="清算池"
+                          width="180">
+                        <template slot-scope="scope">
+                          {{ scope.row.pool }}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          prop="assetsValue"
+                          label="资产价值">
+                        <template slot-scope="scope">
+                          $ {{ scope.row.assetsValue }}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          prop="borrowValue"
+                          label="借款价值">
+                        <template slot-scope="scope">
+                          $ {{ scope.row.borrowValue }}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          prop="borrowCount"
+                          :render-header="borrowCount"
+                          label="借款">
+                        <template slot-scope="scope">
+                          {{ scope.row.borrowCount }} USDT
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          prop="riskValue"
+                          :render-header="riskValue"
+                          label="风险值">
+                        <template slot-scope="scope">
+                          {{ scope.row.riskValue }}%
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                          label="操作">
+                        <template slot-scope="scope">
+                          <el-button size="small" type="success" @click="handleLiquid(scope.$index, scope.row)" disabled>清算</el-button>
+                        </template>
+                      </el-table-column>
+                    </el-table>
+                  </el-card>
+                </el-tab-pane>
+                <el-tab-pane label="FAQ" name="third">
+                  <el-card class="box-card" >
+                    <div slot="header" class="clearfix">
+                      <span>FAQ</span>
+                      <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
+                    </div>
+                    <el-collapse >
+                      <el-collapse-item title="什么是清算？" name="1">
+                        <div>当借款人的未偿债务超过其质押物价值一定比例时，其质押物将被智能合约扣押，进入清算流程。此时，允许套利者调用清算合约，按照一定的折价比例进行清算。</div>
+                      </el-collapse-item>
+                      <el-collapse-item title="如何参与清算？" name="2">
+                        <div>任何人都可以参与清算。平台提供清算接口给专业清算套利者使用，同时也提供清算界面方便一般用户参与，以获得清算奖励。</div>
+                      </el-collapse-item>
+                      <el-collapse-item title="参与清算的收益及风险？" name="3">
+                        <div>清算人将被允许以一定折扣兑换被清算代币，再以市场价格出让的方式获利。但是，由于数字资产价格波动较大，以及潜在的流动性风险，清算人需在充分了解风险后参与清算。</div>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </el-card>
+                </el-tab-pane>
+              </el-tabs>
             </el-col>
           </el-tab-pane>
           <el-tab-pane label="合约" name="fourth">
@@ -451,6 +476,7 @@ export default {
         activeName: 'first',
       },
       liquidity:{
+        activeName: 'first',
         sumCollateral:0,
         sumBorrowPlusEffects:0,
         tableData:[
