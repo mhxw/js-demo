@@ -8,7 +8,7 @@
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                  <span>面板</span>
+                  <span>市场概况</span>
 <!--                  <el-button style="float: right; padding: 3px 0" type="text" @click="updatePanel()" >刷新</el-button>-->
                 </div>
                 <el-descriptions title="合约" direction="vertical" :column="7" border size="medium">
@@ -54,11 +54,11 @@
                 </div>
                 <el-descriptions size="medium" :column="2"  border>
                   <el-descriptions-item label="资产" >USDT</el-descriptions-item>
+                  <el-descriptions-item label="存款数量">{{ supplyUsdt.count }} USDT</el-descriptions-item>
                   <el-descriptions-item label="钱包USDT数量"> {{ panel.usdtBalance }} USDT </el-descriptions-item>
-                  <el-descriptions-item label="USDT存款数量">{{ supplyUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT存款金额">$ {{ supplyUsdt.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="USDT存款APY"> {{ panel.supplyApy }} % </el-descriptions-item>
+                  <el-descriptions-item label="存款金额">$ {{ supplyUsdt.balance }}</el-descriptions-item>
                   <el-descriptions-item label="钱包eUSDT数量"> {{ panel.eusdtBalance }} eUSDT </el-descriptions-item>
+                  <el-descriptions-item label="存款APY"> {{ panel.supplyApy }} % </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`USDT`)" type="success">存取</el-button>
                   </el-descriptions-item>
@@ -66,21 +66,21 @@
                 <el-divider></el-divider>
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">FIL</el-descriptions-item>
+                  <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL </el-descriptions-item>
                   <el-descriptions-item label="钱包FIL数量"> {{ panel.filBalance }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="FIL存款数量">{{ supplyFil.count }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="FIL存款金额">$ {{ supplyFil.balance }} </el-descriptions-item>
-                  <el-descriptions-item label="FIL抵押开关">
+                  <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }} </el-descriptions-item>
+                  <el-descriptions-item label="钱包eFIL数量"> {{ panel.efilBalance }} eFiL </el-descriptions-item>
+                  <el-descriptions-item label="抵押开关">
                     <el-switch
                         v-model="supplyFil.isEnterMarket"
                         disabled
                     >
                     </el-switch>
                   </el-descriptions-item>
-                  <el-descriptions-item label="钱包eFIL数量"> {{ panel.efilBalance }} eFiL </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`FIL`)" type="success">存取</el-button>
-                    <el-button size="small" @click="switchMarketStatus()" type="success">开启抵押</el-button>
-                    <el-button size="small" @click="switchMarketStatus()" type="success">关闭抵押</el-button>
+                    <el-button size="small" v-show="!supplyFil.isEnterMarket" @click="switchMarketStatus()" type="success">开启抵押</el-button>
+                    <el-button size="small" v-show="supplyFil.isEnterMarket" @click="switchMarketStatus()" type="success">关闭抵押</el-button>
                   </el-descriptions-item>
                 </el-descriptions>
               </el-card>
@@ -93,9 +93,9 @@
                 </div>
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款数量" >{{ borrowUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款金额" >$ {{ borrowUsdt.balance }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT借款APY" >{{ panel.borrowApy }} % </el-descriptions-item>
+                  <el-descriptions-item label="借款数量" >{{ borrowUsdt.count }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="借款APY" >{{ panel.borrowApy }} % </el-descriptions-item>
+                  <el-descriptions-item label="借款金额" >$ {{ borrowUsdt.balance }} </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
                   </el-descriptions-item>
@@ -259,25 +259,88 @@
             </el-dialog>
           </el-tab-pane>
           <el-tab-pane label="清算" name="second">
-            <el-card class="box-card">
-              <div style="max-width: 450px;">
-<!--                <el-input placeholder="请输入借款人地址查询是否满足清算条件" v-model="account" >
-                  <el-button slot="append" @click="searchLiquidity()" >查询</el-button>
-                </el-input>-->
-              </div>
-              <el-descriptions title="计算过程"  :column="4" border style="margin-top: 20px;">
-                <el-descriptions-item label="清算地址" label-class-name="my-label" >
-                  {{ account }}
-                </el-descriptions-item>
-                <el-descriptions-item label="FIL价格">$ {{panel.filPrice}}</el-descriptions-item>
-                <el-descriptions-item label="USDT价格">$ {{panel.usdtPrice}}</el-descriptions-item>
-                <el-descriptions-item label="FIL抵押率">{{panel.filCollateralFactor }}</el-descriptions-item>
-                <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
-                <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{ liquidity.sumCollateral }}</el-descriptions-item>
-                <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{ liquidity.sumBorrowPlusEffects }}</el-descriptions-item>
-                <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算 </el-descriptions-item>
-              </el-descriptions>
-            </el-card>
+            <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                  <span>我的账户</span>
+                </div>
+                <el-descriptions :column="4" border style="margin-top: 20px;">
+                  <el-descriptions-item label="清算地址" label-class-name="my-label" >
+                    {{ account }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="FIL价格">$ {{panel.filPrice}}</el-descriptions-item>
+                  <el-descriptions-item label="USDT价格">$ {{panel.usdtPrice}}</el-descriptions-item>
+                  <el-descriptions-item label="FIL抵押率">{{panel.filCollateralFactor }}</el-descriptions-item>
+                  <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
+                  <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{ liquidity.sumCollateral }}</el-descriptions-item>
+                  <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{ liquidity.sumBorrowPlusEffects }}</el-descriptions-item>
+                  <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算 </el-descriptions-item>
+                </el-descriptions>
+              </el-card>
+              <el-card class="box-card" style="margin-top: 1em;">
+                <div slot="header" class="clearfix">
+                  <span>清算池</span>
+                  <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
+                </div>
+                <el-table
+                    :data="liquidity.tableData"
+                    border
+                    style="width: 100%;align-content: center;">
+                  <el-table-column
+                      prop="id"
+                      label="#"
+                      width="180">
+                    <template slot-scope="scope">
+                      # {{ scope.row.id }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      prop="pool"
+                      label="清算池"
+                      width="180">
+                    <template slot-scope="scope">
+                      {{ scope.row.pool }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      prop="assetsValue"
+                      label="资产价值">
+                    <template slot-scope="scope">
+                      $ {{ scope.row.assetsValue }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      prop="borrowValue"
+                      label="借款价值">
+                    <template slot-scope="scope">
+                      $ {{ scope.row.borrowValue }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      prop="borrowCount"
+                      :render-header="borrowCount"
+                      label="借款">
+                    <template slot-scope="scope">
+                      {{ scope.row.borrowCount }} USDT
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      prop="riskValue"
+                      :render-header="riskValue"
+                      label="风险值">
+                    <template slot-scope="scope">
+                      {{ scope.row.riskValue }}%
+                    </template>
+                  </el-table-column>
+                  <el-table-column
+                      label="操作">
+                    <template slot-scope="scope">
+                      <el-button size="small" type="success" @click="handleLiquid(scope.$index, scope.row)" disabled>清算</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-card>
+            </el-col>
           </el-tab-pane>
           <el-tab-pane label="合约" name="fourth">
             <el-card class="box-card">
@@ -390,6 +453,24 @@ export default {
       liquidity:{
         sumCollateral:0,
         sumBorrowPlusEffects:0,
+        tableData:[
+          {
+            id:51487,
+            pool:"USDT",
+            assetsValue:"5000",
+            borrowValue:"4500",
+            borrowCount:"4500.000000",
+            riskValue:"90"
+          },
+          {
+            id:52683,
+            pool:"USDT",
+            assetsValue:"5000",
+            borrowValue:"4000",
+            borrowCount:"4000.000000",
+            riskValue:"80"
+          }
+        ],
       },
       panel:{
         activeName: 'first',
@@ -638,11 +719,11 @@ export default {
       if (tokenName===constants.FIL){
         assetAddress=address.bhp.FIL
         assetToken=address.bhp.eFIL
-        mintAmount=new Decimal(this.supplyFil.mintAmount).times(Decimal.pow(10,decimals.FIL)).toFixed(0,Decimal.ROUND_DOWN)
+        mintAmount=new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10,decimals.FIL)).toFixed(0,Decimal.ROUND_DOWN)
       }else if (tokenName===constants.USDT){
         assetToken=address.bhp.eUSDT
         assetAddress=address.bhp.USDT
-        mintAmount=new Decimal(this.supplyUsdt.mintAmount).times(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
+        mintAmount=new Decimal(this.supplyUsdt.mintAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
       }
       console.log("mintAmount",mintAmount)
       //先判断是否满足逻辑
@@ -1658,16 +1739,50 @@ export default {
       this.account=that.$store.state.wallet.address
       this.liquidity.sumCollateral=new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor))
       this.liquidity.sumBorrowPlusEffects=that.borrowUsdt.balance
-    }
+    },
+    handleLiquid(index, row) {
+      console.log(index, row);
+    },
+    riskValue(h, { column }) {
+      return h(
+          'div',[
+            h('span', column.label),
+            h('el-tooltip',{
+              props:{
+                effect:'dark',
+                content:' 风险值超过100%将会被进行清算，请尽量控制风险值在85%以内 ',
+                placement:'top'
+              },
+            },[
+              h('i', {
+                class:'el-icon-question',
+                style:'margin-left:5px;'
+              })
+            ])
+          ]
+      );
+    },
+    borrowCount(h, { column }) {
+      return h(
+          'div',[
+            h('span', column.label),
+            h('el-tooltip',{
+              props:{
+                effect:'dark',
+                content:'借款代币数量',
+                placement:'top'
+              },
+            },[
+              h('i', {
+                class:'el-icon-question',
+                style:'margin-left:5px;'
+              })
+            ])
+          ]
+      );
+    },
   },
 };
 </script>
 <style>
-.my-label {
-  background: #E1F3D8;
-}
-
-.my-content {
-  background: #FDE2E2;
-}
 </style>

@@ -9,7 +9,7 @@
           <el-image :src="require('../assets/img/loading.gif')" style="width: 4.5rem;height: 4.5rem;"></el-image>
         </template>
         <template slot="extra">
-          <el-link type="success" :href="url" v-text="$t('message.text3')" target="_blank" >查看交易</el-link>
+          <el-link type="success" :href="url"  v-text="$t('message.text3')" target="_blank" >查看交易</el-link>
         </template>
       </el-result>
       <el-result title="交易详情" v-show="flag1">
@@ -246,111 +246,5 @@ export default {
   },
 };
 </script>
-
 <style lang="less">
-
-.MessageBoxHome {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1002;
-}
-.MessageBoxIndex {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.BoxLoading {
-  width: 458px;
-  height: 621px;
-  box-sizing: border-box;
-  background: url("../assets/img/traLoading.png") no-repeat;
-  padding-left: 32px;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  position: relative;
-}
-.box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 375px;
-  height: 310px;
-
-}
-.box img {
-  width: 88px;
-  height: 88px;
-  margin: 60px 0 20px;
-}
-
-.box span {
-  height: 44px;
-  font-size: 24px;
-  font-weight: 400;
-  color: #ff3d3d;
-  line-height: 44px;
-}
-
-.box3 button {
-  background: #ff9900;
-  opacity: 0.39;
-}
-
-.box2,.box3 img {
-  width: 100px;
-  height: 100px;
-}
-
-.logoImg {
-  width: 265px;
-  height: 65px;
-  padding-top: 92px;
-  padding-bottom: 40px;
-}
-
-.buttonLoading {
-  width: 375px;
-  height: 50px;
-  margin-top: 44px;
-  background: #ff9900;
-  border-radius: 31px;
-  font-size: 24px;
-
-  font-weight: 400;
-  color: #ffffff;
-  border: none;
-  padding: 0;
-  outline: none;
-}
-
-.deleteImg {
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  bottom: 23px;
-  right: 203px;
-}
-
-.selectWalletDiv span {
-  padding: 52px 0 20px 0;
-  height: 28px;
-  font-size: 20px;
-
-  font-weight: 400;
-  color: #1a1a1a;
-  line-height: 28px;
-}
-
-.imgDiv img {
-  width: 40px;
-}
 </style>
