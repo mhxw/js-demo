@@ -372,13 +372,13 @@
               <el-tabs v-model="contract.activeName"  tab-position="left">
                 <el-tab-pane label="BHP测试网" name="first">
                   <el-descriptions title="BHP测试网"  :column="1" border>
-                  <el-descriptions-item label="eFIL">0x267a0234a8432889e5D0a8680509Ed7CEE70744B</el-descriptions-item>
-                  <el-descriptions-item label="eUSDT">0x31Aaa86fA867C586944Ec391b750BD90B0BC85E4</el-descriptions-item>
-                  <el-descriptions-item label="FIL">0x6F038322c71831840Fb63c58cC2F2A94d01C9b07</el-descriptions-item>
-                  <el-descriptions-item label="USDT">0xEB6ee31d2365Fb585Ac7Fdb9E94Baad8909Cf205</el-descriptions-item>
-                  <el-descriptions-item label="Comptroller">0x195090E2C98be4E0f5C9E952879ef640203A2413</el-descriptions-item>
-                  <el-descriptions-item label="Oracle">0x451D8BB2d81D76A14b21d61A3B97Df158da860CF</el-descriptions-item>
-                  <el-descriptions-item label="UsdtJumpRateModel">0x4D1C9992De26394D01081cD7C9290072E0088335</el-descriptions-item>
+                  <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
+                  <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D</el-descriptions-item>
+                  <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                  <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
+                  <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb</el-descriptions-item>
+                  <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0</el-descriptions-item>
+                  <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C</el-descriptions-item>
                 </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC测试网" name="second">
@@ -1577,19 +1577,26 @@ export default {
     },
     async accrueInterestPage(tokenName) {
       let currentBlockNumber=await this.getBlockNumberPage()
+      console.log("最新高度：",currentBlockNumber)
       let accrualBlockNumber=await this.accrualBlockNumberPage(tokenName)
       let totalCash=await this.getCashPage(tokenName)
       let totalBorrows=await this.totalBorrowsPage(tokenName)
       let totalReserves=await this.totalReservesPage(tokenName)
       let borrowIndex=await this.borrowIndexPage(tokenName)
+      let utilizationRate
       if (tokenName===constants.eUSDT){
-        let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
+        utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.usdtUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }else if (tokenName===constants.eFIL){
-        let utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
+        utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }
       let borrowRate=await this.getBorrowRatePage(totalCash,totalBorrows,totalReserves)
+      if (tokenName===constants.eFIL){
+        console.log("原来totalCash,totalBorrows,totalReserves",totalCash.toString(),totalBorrows.toString(),totalReserves.toString())
+        console.log("borrowRate",borrowRate.toString())
+        console.log("utilizationRate",utilizationRate.toString())
+      }
       let reserveFactorMantissa=await this.getReserveFactorMantissaPage(tokenName)
       this.borrowUsdt.borrowRate=borrowRate
       // 当前区块和 accrualBlockNumberPrior 之间的区块数
@@ -1620,6 +1627,7 @@ export default {
         exchangeRate=await this.exchangeRateStoredPage(tokenName)
         return exchangeRate
       }
+
       // cToken和标的资产的小数点换算 18+标的资产小数位-cToken资产小数位
       // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
       const cTokenDecimals = 8;
@@ -1633,7 +1641,10 @@ export default {
         exchangeRate=cashPlusBorrowsMinusReserves.mul(Decimal.pow(10,18)).div(new Decimal(totalSupply)).toFixed(0,Decimal.ROUND_DOWN)
         this.panel.filExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,mantissa))
       }
-      //console.log("exchangeRate",exchangeRate.toString(),new Decimal(exchangeRate).div(Decimal.pow(10,mantissa)).toString())
+      if (tokenName===constants.eFIL){
+        console.log("新的 totalCash totalBorrowsNew totalReservesNew",list.totalCash.toString(),list.totalBorrowsNew.toString(),list.totalReservesNew.toString())
+        console.log("exchangeRate cashPlusBorrowsMinusReserves",exchangeRate.toString(),cashPlusBorrowsMinusReserves.toString())
+      }
       return exchangeRate
     },
     async getSupplyPage(tokenName){
@@ -1654,7 +1665,13 @@ export default {
         this.supplyUsdt.balance=redeemBalance.toDecimalPlaces(8,Decimal.ROUND_DOWN)
       }else if (tokenName===constants.eFIL){
         //存款金额=兑换率*存款数量/1Ether （取整数值）
+        //console.log("redeemTokensIn",redeemTokensIn)
+/*       let ex=new Decimal(1500).div(new Decimal(redeemTokensIn)).mul(Decimal.pow(10,36)).toFixed(0,Decimal.ROUND_DOWN)
+        console.log("真实：ex",ex.toString())
+        console.log("计算：exchangeRateMantissa",exchangeRateMantissa)
+        exchangeRateMantissa=ex*/
         redeemAmount=new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).div(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        //console.log("redeemAmount",redeemAmount)
         this.supplyFil.count=redeemAmount.toString()
         redeemBalance=new Decimal(redeemAmount).mul(new Decimal(price))
         this.supplyFil.balance=redeemBalance.toDecimalPlaces(8,Decimal.ROUND_DOWN)

@@ -91,7 +91,7 @@ export function connectNetwork(networkName){
                 symbol: 'BHP',
                 decimals: 18
             },
-            rpcUrls: ['https://http-testnet.bhpnet.io/'],
+            rpcUrls: ['https://rpcpeg.bhpnet.io/'],
             blockExplorerUrls: ['https://testnet.bhpnet.io']
         }]
     }else if (networkName===network.BSCTest){
