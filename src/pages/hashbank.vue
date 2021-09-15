@@ -435,6 +435,7 @@ import {
   exitMarket,
   getBlockNumber,
   getBorrowRate,
+  getSupplyRate,
   utilizationRate,
   getCash,
   markets,
@@ -1162,7 +1163,7 @@ export default {
       if (!this.verifyConnect()){
         return
       }
-      this.getApy()
+      this.getApy(constants.eUSDT)
       this.viewPrice()
       this.checkMemberShipPage()
       this.getSupplyPage(constants.eUSDT)
@@ -1423,14 +1424,42 @@ export default {
       })
       return result
     },
-    async getBorrowRatePage(cash,borrows,reserves){
+    async getBorrowRatePage(tokenName,cash,borrows,reserves){
+      let contractAddress
+      if (tokenName===constants.eUSDT){
+        contractAddress=address.bhp.UsdtJumpRateModel
+      }
+      contractAddress=address.bhp.UsdtJumpRateModel
       let result=0
       //获取USDT资金池余额
       await getBorrowRate(
           this.$store.state.wallet,
+          contractAddress,
           cash,
           borrows,
           reserves
+      ).then(res =>{
+        result=res
+      }).catch(err=>{
+        this.getErrorInfo(err)
+      })
+      return result
+    },
+    async getSupplyRatePage(tokenName,cash, borrows, reserves, reserveFactor){
+      let contractAddress
+      if (tokenName===constants.eUSDT){
+
+      }
+      contractAddress=address.bhp.UsdtJumpRateModel
+      let result=0
+      //获取USDT资金池余额
+      await getSupplyRate(
+          this.$store.state.wallet,
+          contractAddress,
+          cash,
+          borrows,
+          reserves,
+          reserveFactor
       ).then(res =>{
         result=res
       }).catch(err=>{
@@ -1591,7 +1620,7 @@ export default {
         utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
         this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
       }
-      let borrowRate=await this.getBorrowRatePage(totalCash,totalBorrows,totalReserves)
+      let borrowRate=await this.getBorrowRatePage(tokenName,totalCash,totalBorrows,totalReserves)
       if (tokenName===constants.eFIL){
         console.log("原来totalCash,totalBorrows,totalReserves",totalCash.toString(),totalBorrows.toString(),totalReserves.toString())
         console.log("borrowRate",borrowRate.toString())
@@ -1648,6 +1677,9 @@ export default {
       return exchangeRate
     },
     async getSupplyPage(tokenName){
+      if (!this.verifyConnect()){
+        return
+      }
       //用户的eToken存款数量
       let redeemTokensIn=await this.getUserSupplyTokenPage(tokenName)
       // 最新兑换率
@@ -1711,6 +1743,9 @@ export default {
       return {redeemAmount,redeemBalance}
     },
     async getBorrowPage(tokenName){
+      if (!this.verifyConnect()){
+        return
+      }
       let list=await this.accrueInterestPage(tokenName)
       let borrowBalance=await this.getUserBorrowTokenPage(this.$store.state.wallet.address,tokenName)
       // principalTimesIndex=borrower.borrowBalance * market.borrowIndex
@@ -1723,13 +1758,22 @@ export default {
 
       }
     },
-    async getApy(){
+    async getApy(tokenName){
+      if (!this.verifyConnect()){
+        return
+      }
       //假定bhp主网 每块13.15s
       let blocksPerDay=6570
       //一年按照365天计算
       let daysPerYear=365
-      let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.eUSDT)
-      let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.eUSDT)
+
+      //合约最后一次触发
+      //let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.eUSDT)
+      //let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.eUSDT)
+      //实时
+      let list=await this.accrueInterestPage(tokenName)
+      let borrowRatePerBlock=await this.getBorrowRatePage(tokenName,list.totalCash,list.totalBorrowsNew.toNumber(),list.totalReservesNew.toNumber())
+      let supplyRatePerBlock=await this.getSupplyRatePage(tokenName,list.totalCash,list.totalBorrowsNew.toNumber(),list.totalReservesNew.toNumber(),"0")
       let one=new Decimal(1)
       let hundred=new Decimal(100)
       let supply=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDay).add(one)
