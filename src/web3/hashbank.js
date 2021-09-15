@@ -354,13 +354,11 @@ export async function exchangeRateStored (wallet,asset) {
  * @returns {Promise<*>}
  */
 export async function getBorrowRate (wallet,contractAddress,cash,borrows,reserves) {
-    console.log("112")
     const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, contractAddress)
     return contract.methods.getBorrowRate(cash,borrows,reserves).call({from: wallet.address})
 }
 
 export async function getSupplyRate (wallet,contractAddress,cash, borrows, reserves, reserveFactor) {
-    console.log("111")
     const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, contractAddress)
     return contract.methods.getSupplyRate(cash,borrows,reserves,reserveFactor).call({from: wallet.address})
 }
