@@ -1164,6 +1164,7 @@ export default {
         return
       }
       this.getApy(constants.eUSDT)
+      this.getBSCApy()
       this.viewPrice()
       this.checkMemberShipPage()
       this.getSupplyPage(constants.eUSDT)
@@ -1782,6 +1783,66 @@ export default {
       let borrowApy=Decimal.pow(borrow,daysPerYear).sub(one).mul(hundred)
       this.panel.supplyApy=supplyApy
       this.panel.borrowApy=borrowApy
+    },
+    async getBSCApy() {
+      if (!this.verifyConnect()) {
+        return
+      }
+      console.log("")
+      //bsc supply test
+      let blocksPerDayBsc=28800
+      let daysPerYearBsc=365
+      let one=new Decimal(1)
+      let hundred=new Decimal(100)
+      let baseRatePerBlock=new Decimal(1902587519)
+      let multiplierPerBlock=33295281582
+      let jumpMultiplierPerBlock=new Decimal(570776255707)
+      //储备金系数=25%
+      let reserveFactor=new Decimal(0.25)
+      //当 U ≤ Ukink :
+      // 当U=0
+      console.log("利用率为0%时")
+      let u=new Decimal(0)
+      let borrowRatePerBlock=u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0,Decimal.ROUND_DOWN)
+      let supplyRatePerBlock=new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
+      let borrowInfo=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      let supplyInfo=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      let borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
+      let supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock",borrowRatePerBlock.toString())
+      console.log("supplyRatePerBlock",supplyRatePerBlock.toString())
+      console.log("borrowApy",borrowApy.toString())
+      console.log("supplyApy",supplyApy.toString())
+
+      //当u=80%
+      console.log("利用率为80%时")
+      u=new Decimal(0.8)
+      borrowRatePerBlock=u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0,Decimal.ROUND_DOWN)
+      supplyRatePerBlock=new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
+      borrowInfo=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      supplyInfo=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
+      supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock",borrowRatePerBlock.toString())
+      console.log("supplyRatePerBlock",supplyRatePerBlock.toString())
+      console.log("borrowApy",borrowApy.toString())
+      console.log("supplyApy",supplyApy.toString())
+
+      //当u=100%
+      console.log("利用率为100%时")
+      u=new Decimal(1)
+      let normalRate=borrowRatePerBlock
+      let borrowRatePerBlock100=new Decimal(0.2).mul(jumpMultiplierPerBlock).add(new Decimal(normalRate))
+      let supplyRatePerBlock100=new Decimal(borrowRatePerBlock100).mul(u).mul(one.sub(reserveFactor))
+      borrowInfo=new Decimal(borrowRatePerBlock100).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      supplyInfo=new Decimal(supplyRatePerBlock100).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
+      borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
+      supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock",borrowRatePerBlock100.toString())
+      console.log("supplyRatePerBlock",supplyRatePerBlock100.toString())
+      console.log("borrowApy",borrowApy.toString())
+      console.log("supplyApy",supplyApy.toString())
+      console.log("")
     },
     async supplyRatePerBlockPage(tokenName){
       let eTokenAddress
