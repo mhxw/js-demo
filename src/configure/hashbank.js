@@ -15,8 +15,8 @@ export const constants = {
 
 export const address = {
     //bsc-t
-    "bsc": {
-        //bsc
+    "bhp1": {
+        //bsc 测试网 在线版
         "eFIL": "0xF673099cae8EC04FF524d38924cb3BB5040503a0",
         "eUSDT": "0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
@@ -25,8 +25,31 @@ export const address = {
         "Oracle": "0x394078A417D16a0a0A611B38fc80084b8562cB28",
         "UsdtJumpRateModel":"0x00182c24a9D279B0E6f5c2815956E5f4816371BF",
     },
-    "bhp": {
-        //bhp
+    "bhp2":{
+        // bsc test mhxw deploy
+        "Comptroller": '0x9e8830275a1A5d12e346a9d22A62be9a3f9CaEDA',
+        "Unitroller": '0x66BdA36bDe4BD43b4f13e6Cc9d2730636a1dAE3d',
+        "UsdtJumpRateModel": '0xb67877E787c266CBB1e8D569Bf750642e687b00C',
+        "Oracle": '0xA074c7A4eac4BEd6588597C220D966739221d2F6',
+        "USDT": '0xDF23a7Da5995B2e501dCAb2a9A901C91799aaB7a',
+        "eUSDT": '0x7712920cC915eB9A8f1392791ED0598167a8AE6C',
+        "FIL": '0xf120638637B49b230E2c2D36e144362cfC060089',
+        "eFIL": '0xd82956a16443788e86231b1eC9C7191fd2185347'
+    },
+    "bhp":{
+        // bsc wepiggy
+        "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
+        "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
+        "UsdtJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
+        "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
+        "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
+        "USDT": '0x55d398326f99059fF775485246999027B3197955',
+        "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
+        "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
+        "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32'
+    },
+    "bsctest": {
+        //bhp 测试网
         "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
         "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",

@@ -199,11 +199,23 @@ export async function viewPrice(wallet,asset){
  * 获取抵押因子
  * @param wallet 钱包地址
  * @param asset cToken合约
+ * @param comptrollerAddr comptroller代理合约地址
  * @returns {Promise<*>}
  */
-export async function markets(wallet,asset){
-    const contract = new wallet.web3.eth.Contract(abi.Comptroller, address.bhp.Comptroller)
+export async function markets(wallet,asset,comptrollerAddr){
+    const contract = new wallet.web3.eth.Contract(abi.Comptroller, comptrollerAddr)
     return contract.methods.markets(asset).call({from: wallet.address})
+}
+
+/**
+ * 获取清算系数
+ * @param wallet 钱包地址
+ * @param comptrollerAddr comptroller代理合约地址
+ * @returns {Promise<*>}
+ */
+export async function closeFactorMantissa(wallet,comptrollerAddr){
+    const contract = new wallet.web3.eth.Contract(abi.Comptroller, comptrollerAddr)
+    return contract.methods.closeFactorMantissa().call({from: wallet.address})
 }
 
 /**
@@ -339,6 +351,30 @@ export async function utilizationRate (wallet,cash,borrows,reserves) {
     return contract.methods.utilizationRate(cash,borrows,reserves).call({from: wallet.address})
 }
 
+export async function baseRatePerBlock (wallet) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.baseRatePerBlock().call({from: wallet.address})
+}
+
+export async function multiplierPerBlock (wallet) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.multiplierPerBlock().call({from: wallet.address})
+}
+
+export async function jumpMultiplierPerBlock (wallet) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.jumpMultiplierPerBlock().call({from: wallet.address})
+}
+
+export async function kink (wallet) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.kink().call({from: wallet.address})
+}
+
+export async function blocksPerYear (wallet) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+    return contract.methods.blocksPerYear().call({from: wallet.address})
+}
 
 export async function exchangeRateStored (wallet,asset) {
     const contract = new wallet.web3.eth.Contract(abi.cErc20, asset)

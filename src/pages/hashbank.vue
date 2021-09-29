@@ -2,63 +2,85 @@
   <div style="margin:0 2em">
     <el-tabs type="card" tab-position="right">
       <el-row :gutter="24">
-        <el-tabs v-model="panel.activeName" type="card" >
+        <el-tabs v-model="panel.activeName" type="card">
           <el-tab-pane label="面板" name="third">
             <!--   1.面板 -->
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
                   <span>市场概况</span>
-<!--                  <el-button style="float: right; padding: 3px 0" type="text" @click="updatePanel()" >刷新</el-button>-->
                 </div>
-                <el-descriptions title="合约" direction="vertical" :column="7" border size="medium">
-                  <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }} </el-descriptions-item>
-                  <el-descriptions-item label="eUSDT合约最新触发高度">{{ panel.accrualUsdtBlockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="eFIL合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
-                  <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="eUSDT合约最新触发的储备金">{{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
-                </el-descriptions>
-                <el-descriptions class="margin-top" title="平台" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
-                  <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="FIL使用率"> {{ panel.filUtilizationRate }} % </el-descriptions-item>
-                  <el-descriptions-item label="USDT使用率"> {{ panel.usdtUtilizationRate }} % </el-descriptions-item>
-                  <el-descriptions-item label="FIL抵押率"> {{ panel.filCollateralFactor }} </el-descriptions-item>
-                  <el-descriptions-item label="USDT抵押率"> {{ panel.usdtCollateralFactor }} </el-descriptions-item>
-                  <el-descriptions-item label="FIL兑换率"> 1 eFIL ={{ panel.filExchangeRate }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT </el-descriptions-item>
-                  <el-descriptions-item label="FIL借款总数量"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="USDT存款APY"> {{ panel.supplyApy }} %</el-descriptions-item>
-                  <el-descriptions-item label="USDT借款APY"> {{ panel.borrowApy }} % </el-descriptions-item>
-                </el-descriptions>
-                <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
-                  <el-descriptions-item label="用户钱包FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="用户钱包USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="用户eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
-                  <el-descriptions-item label="用户eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
-                  <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ supplyFil.balance }}+ ${{ supplyUsdt.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="用户借款总额(USDT)"> $ {{ borrowUsdt.balance }}</el-descriptions-item>
-                </el-descriptions>
+                <el-col :span="24" style="margin-bottom: 20px;">
+                  <el-descriptions title="其他" direction="vertical" :column="5" border size="medium" >
+                    <el-descriptions-item label="每年的区块数">{{ panel.blocksPerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="基准区块利率">{{ panel.baseRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点">{{ panel.kink }}</el-descriptions-item>
+                    <el-descriptions-item label="区块斜率">{{ panel.multiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点后区块斜率">{{ panel.jumpMultiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="清算系数">{{ panel.closeFactorMantissa }}</el-descriptions-item>
+                    <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT合约最新触发高度">{{ panel.accrualUsdtBlockNumber}}</el-descriptions-item>
+                    <el-descriptions-item label="eFIL合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
+                  </el-descriptions>
+                </el-col>
+                <el-col :span="12">
+                  <el-descriptions title="USDT" direction="horizontal" :column="1" border size="medium" >
+                    <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }}</el-descriptions-item>
+                    <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="USDT储备金"> {{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="USDT利用率"> {{ panel.usdtUtilizationRate }} %</el-descriptions-item>
+                    <el-descriptions-item label="USDT每个区块存款利率">{{ panel.supplyUsdtRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="USDT每个区块借款利率">{{ panel.borrowUsdtRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="USDT存款年APY">{{ panel.supplyUsdtApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="USDT借款年APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="USDT兑换率"> 1 eUSDT ={{ panel.usdtExchangeRate }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="USDT最大抵押系数(没有)"> {{ panel.usdtCollateralFactor }} %</el-descriptions-item>
+                  </el-descriptions>
+                </el-col>
+                <el-col :span="12">
+                  <el-descriptions title="FIL" direction="horizontal" :column="1" border size="medium">
+                    <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
+                    <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
+                    <el-descriptions-item label="FIL借款总数量(没有)"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
+                    <el-descriptions-item label="FIL储备金(没有)"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
+                    <el-descriptions-item label="FIL利用率(没有)"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
+                    <el-descriptions-item label="FIL每个区块存款利率(没有)">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="FIL每个区块借款利率(没有,假值)">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="FIL存款年APY(没有)">{{ panel.supplyFilApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="FIL借款年APY(没有,假值)">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="FIL兑换率(保持恒定)"> 1 eFIL ={{ panel.filExchangeRate }} FIL</el-descriptions-item>
+                    <el-descriptions-item label="FIL最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
+                  </el-descriptions>
+                </el-col>
               </el-card>
             </el-col>
           </el-tab-pane>
           <el-tab-pane label="借贷" name="first">
             <!--   2.存取 -->
+            <el-col :span="24">
+              <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
+                <el-descriptions-item label="用户钱包FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
+                <el-descriptions-item label="用户钱包USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
+                <el-descriptions-item label="用户eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
+                <el-descriptions-item label="用户eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
+                <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ supplyFil.balance }}+ ${{ supplyUsdt.balance}}</el-descriptions-item>
+                <el-descriptions-item label="用户借款总额(USDT)"> $ {{ borrowUsdt.balance }}</el-descriptions-item>
+              </el-descriptions>
+            </el-col>
             <el-col :span="24" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="12" :xl="12">
               <el-card class="box-card">
                 <div slot="header" class="clearfix">
                   <span>存款市场</span>
                 </div>
-                <el-descriptions size="medium" :column="2"  border>
-                  <el-descriptions-item label="资产" >USDT</el-descriptions-item>
+                <el-descriptions size="medium" :column="2" border>
+                  <el-descriptions-item label="资产">USDT</el-descriptions-item>
                   <el-descriptions-item label="存款数量">{{ supplyUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="钱包USDT数量"> {{ panel.usdtBalance }} USDT </el-descriptions-item>
+                  <el-descriptions-item label="钱包USDT数量"> {{ panel.usdtBalance }} USDT</el-descriptions-item>
                   <el-descriptions-item label="存款金额">$ {{ supplyUsdt.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="钱包eUSDT数量"> {{ panel.eusdtBalance }} eUSDT </el-descriptions-item>
-                  <el-descriptions-item label="存款APY"> {{ panel.supplyApy }} % </el-descriptions-item>
+                  <el-descriptions-item label="钱包eUSDT数量"> {{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
+                  <el-descriptions-item label="存款APY"> {{ panel.supplyFilApy }} %</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`USDT`)" type="success">存取</el-button>
                   </el-descriptions-item>
@@ -66,10 +88,10 @@
                 <el-divider></el-divider>
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">FIL</el-descriptions-item>
-                  <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="钱包FIL数量"> {{ panel.filBalance }} FIL </el-descriptions-item>
-                  <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }} </el-descriptions-item>
-                  <el-descriptions-item label="钱包eFIL数量"> {{ panel.efilBalance }} eFiL </el-descriptions-item>
+                  <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="钱包FIL数量"> {{ panel.filBalance }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }}</el-descriptions-item>
+                  <el-descriptions-item label="钱包eFIL数量"> {{ panel.efilBalance }} eFiL</el-descriptions-item>
                   <el-descriptions-item label="抵押开关">
                     <el-switch
                         v-model="supplyFil.isEnterMarket"
@@ -79,8 +101,12 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`FIL`)" type="success">存取</el-button>
-                    <el-button size="small" v-show="!supplyFil.isEnterMarket" @click="switchMarketStatus()" type="success">开启抵押</el-button>
-                    <el-button size="small" v-show="supplyFil.isEnterMarket" @click="switchMarketStatus()" type="success">关闭抵押</el-button>
+                    <el-button size="small" v-show="!supplyFil.isEnterMarket" @click="switchMarketStatus()"
+                               type="success">开启抵押
+                    </el-button>
+                    <el-button size="small" v-show="supplyFil.isEnterMarket" @click="switchMarketStatus()"
+                               type="success">关闭抵押
+                    </el-button>
                   </el-descriptions-item>
                 </el-descriptions>
               </el-card>
@@ -93,9 +119,9 @@
                 </div>
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">USDT</el-descriptions-item>
-                  <el-descriptions-item label="借款数量" >{{ borrowUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="借款APY" >{{ panel.borrowApy }} % </el-descriptions-item>
-                  <el-descriptions-item label="借款金额" >$ {{ borrowUsdt.balance }} </el-descriptions-item>
+                  <el-descriptions-item label="借款数量">{{ borrowUsdt.count }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="借款APY">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="借款金额">$ {{ borrowUsdt.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
                   </el-descriptions-item>
@@ -108,21 +134,31 @@
                 :visible.sync="filSupplyDialogVisible"
                 width="460px"
                 center>
-              <el-tabs v-model="dialogActiveName" >
+              <el-tabs v-model="dialogActiveName">
                 <el-tab-pane label="存款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyFil">
                     <el-form-item label="存款数量">
-                      <el-input v-model="supplyFil.mintAmount" placeholder="请输入存款数量" clearable >
+                      <el-input v-model="supplyFil.mintAmount" placeholder="请输入存款数量" clearable>
                         <el-button slot="prepend" @click="getSupplyBalance(`FIL`)">最大值</el-button>
                         <el-button slot="append">FIL</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyFil.count}} FIL</el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eFIL ={{panel.filExchangeRate}} FIL</el-descriptions-item>
-                      <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">{{panel.filBalance}} FIL</el-descriptions-item>
-                      <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}" >{{panel.efilBalance}} eFIL</el-descriptions-item>
-                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}" >{{panel.filTotalCash}} FIL</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
+                        FIL
+                      </el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eFIL
+                        ={{ panel.filExchangeRate }} FIL
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.filBalance }} FIL
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.efilBalance }} eFIL
+                      </el-descriptions-item>
+                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.filTotalCash }} FIL
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`FIL`)">{{ supplyButton }}</el-button>
@@ -138,10 +174,17 @@
                         <el-button slot="append">FIL</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyFil.count}} FIL</el-descriptions-item>
-                      <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}" >$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}</el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
+                        FIL
+                      </el-descriptions-item>
+                      <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}">$ {{
+                          borrowUsdt.balance
+                        }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
@@ -161,16 +204,24 @@
                 <el-tab-pane label="存款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyUsdt">
                     <el-form-item label="存款数量">
-                      <el-input v-model="supplyUsdt.mintAmount" placeholder="请输入存款数量" clearable >
+                      <el-input v-model="supplyUsdt.mintAmount" placeholder="请输入存款数量" clearable>
                         <el-button slot="prepend" @click="getSupplyBalance(`USDT`)">最大值</el-button>
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyUsdt.count}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eUSDT ={{panel.usdtExchangeRate}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">{{panel.usdtBalance}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}" >{{panel.eusdtBalance}} eUSDT</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
+                        USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eUSDT
+                        ={{ panel.usdtExchangeRate }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.usdtBalance }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.eusdtBalance }} eUSDT
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
@@ -186,12 +237,22 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{supplyUsdt.count}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}" >1 eUSDT ={{panel.usdtExchangeRate}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">{{panel.usdtBalance}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}" >{{panel.eusdtBalance}} eUSDT</el-descriptions-item>
-                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}" >{{panel.usdtTotalCash}} USDT</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
+                        USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eUSDT
+                        ={{ panel.usdtExchangeRate }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.usdtBalance }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.eusdtBalance }} eUSDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.usdtTotalCash }} USDT
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="redeemUnderlying(`USDT`)">取款</el-button>
@@ -207,23 +268,34 @@
                 :visible.sync="usdtBorrowDialogVisible"
                 width="460px"
                 center>
-              <el-tabs v-model="dialogActiveName" >
+              <el-tabs v-model="dialogActiveName">
                 <el-tab-pane label="借款" name="first">
                   <el-form label-position="top" label-width="80px" :model="supplyUsdt">
                     <el-form-item label="借款数量">
-                      <el-input v-model="borrowUsdt.borrowAmount" placeholder="请输入借款数量" clearable >
+                      <el-input v-model="borrowUsdt.borrowAmount" placeholder="请输入借款数量" clearable>
                         <el-button slot="prepend" @click="getBorrowBalance(`USDT`)">（80%限制）</el-button>
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border>
-                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }} </el-descriptions-item>
-                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT</el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border>
+                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                        {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                          borrowUsdt.count
+                        }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+                      </el-descriptions-item>
                     </el-descriptions>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.count}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtTotalCash }} USDT</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
+                        USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.usdtTotalCash }} USDT
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="borrowToken(`USDT`)">借款</el-button>
@@ -238,15 +310,28 @@
                         <el-button slot="append">USDT</el-button>
                       </el-input>
                     </el-form-item>
-                    <el-descriptions  :column="1"  size="medium" border>
-                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$ {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }} </el-descriptions-item>
-                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }} USDT ->  {{ borrowUsdt.borrowCountLimit }} USDT</el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.alreadyCashPercent+' %'  }} -> {{borrowUsdt.borrowlimitPercent}} %</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border>
+                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                        {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                          borrowUsdt.count
+                        }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+                      </el-descriptions-item>
                     </el-descriptions>
-                    <el-descriptions  :column="1"  size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{borrowUsdt.count}} USDT</el-descriptions-item>
-                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                      <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}" >{{ panel.usdtBalance }} USDT</el-descriptions-item>
+                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
+                        USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                        {{ panel.usdtTotalCash }} USDT
+                      </el-descriptions-item>
+                      <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}">{{ panel.usdtBalance }}
+                        USDT
+                      </el-descriptions-item>
                     </el-descriptions>
                     <el-form-item label="" style="margin-top: 20px;">
                       <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
@@ -260,28 +345,34 @@
           </el-tab-pane>
           <el-tab-pane label="清算" name="second">
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <el-tabs v-model="liquidity.activeName"  tab-position="left">
+              <el-tabs v-model="liquidity.activeName" tab-position="left">
                 <el-tab-pane label="我的账户" name="first">
                   <el-card class="box-card">
                     <div slot="header" class="clearfix">
                       <span>我的账户</span>
                     </div>
                     <el-descriptions :column="4" border style="margin-top: 20px;">
-                      <el-descriptions-item label="清算地址" label-class-name="my-label" >
+                      <el-descriptions-item label="清算地址" label-class-name="my-label">
                         {{ account }}
                       </el-descriptions-item>
-                      <el-descriptions-item label="FIL价格">$ {{panel.filPrice}}</el-descriptions-item>
-                      <el-descriptions-item label="USDT价格">$ {{panel.usdtPrice}}</el-descriptions-item>
-                      <el-descriptions-item label="FIL抵押率">{{panel.filCollateralFactor }}</el-descriptions-item>
+                      <el-descriptions-item label="FIL价格">$ {{ panel.filPrice }}</el-descriptions-item>
+                      <el-descriptions-item label="USDT价格">$ {{ panel.usdtPrice }}</el-descriptions-item>
+                      <el-descriptions-item label="FIL抵押率">{{ panel.filCollateralFactor }}</el-descriptions-item>
                       <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
-                      <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{ liquidity.sumCollateral }}</el-descriptions-item>
-                      <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{ liquidity.sumBorrowPlusEffects }}</el-descriptions-item>
-                      <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算 </el-descriptions-item>
+                      <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{
+                          liquidity.sumCollateral
+                        }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{
+                          liquidity.sumBorrowPlusEffects
+                        }}
+                      </el-descriptions-item>
+                      <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算</el-descriptions-item>
                     </el-descriptions>
                   </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="清算列表" name="second">
-                  <el-card class="box-card" >
+                  <el-card class="box-card">
                     <div slot="header" class="clearfix">
                       <span>清算池</span>
                       <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
@@ -339,19 +430,21 @@
                       <el-table-column
                           label="操作">
                         <template slot-scope="scope">
-                          <el-button size="small" type="success" @click="handleLiquid(scope.$index, scope.row)" disabled>清算</el-button>
+                          <el-button size="small" type="success" @click="handleLiquid(scope.$index, scope.row)"
+                                     disabled>清算
+                          </el-button>
                         </template>
                       </el-table-column>
                     </el-table>
                   </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="FAQ" name="third">
-                  <el-card class="box-card" >
+                  <el-card class="box-card">
                     <div slot="header" class="clearfix">
                       <span>FAQ</span>
                       <el-button style="float: right; padding: 3px 0" type="text">刷新</el-button>
                     </div>
-                    <el-collapse >
+                    <el-collapse>
                       <el-collapse-item title="什么是清算？" name="1">
                         <div>当借款人的未偿债务超过其质押物价值一定比例时，其质押物将被智能合约扣押，进入清算流程。此时，允许套利者调用清算合约，按照一定的折价比例进行清算。</div>
                       </el-collapse-item>
@@ -369,33 +462,91 @@
           </el-tab-pane>
           <el-tab-pane label="合约" name="fourth">
             <el-card class="box-card">
-              <el-tabs v-model="contract.activeName"  tab-position="left">
+              <el-tabs v-model="contract.activeName" tab-position="left">
                 <el-tab-pane label="BHP测试网" name="first">
-                  <el-descriptions title="BHP测试网"  :column="1" border>
-                  <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
-                  <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D</el-descriptions-item>
-                  <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
-                  <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
-                  <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb</el-descriptions-item>
-                  <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0</el-descriptions-item>
-                  <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C</el-descriptions-item>
-                </el-descriptions>
+                  <el-descriptions title="BHP测试网" :column="1" border>
+                    <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                    <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0
+                    </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C
+                    </el-descriptions-item>
+                  </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC测试网" name="second">
-                  <el-descriptions title="BSC测试网"  :column="1" border >
-                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0 </el-descriptions-item>
-                    <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4 </el-descriptions-item>
-                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38 </el-descriptions-item>
+                  <el-descriptions title="BSC测试网" :column="1" border>
+                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
                     <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
-                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5 </el-descriptions-item>
-                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28 </el-descriptions-item>
-                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF </el-descriptions-item>
-                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
-                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6</el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28
+                    </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0
+                    </el-descriptions-item>
+                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6
+                    </el-descriptions-item>
+                  </el-descriptions>
+                </el-tab-pane>
+                <el-tab-pane label="BSC测试网-MHXW" name="four">
+                  <el-descriptions title="BSC测试网-MHXW" :column="1" border>
+                    <el-descriptions-item label="eFIL">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.eFIL]" target="_blank">{{
+                          addressInfo.bhp.eFIL
+                        }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.eUSDT]" target="_blank">{{
+                          addressInfo.bhp.eUSDT
+                        }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.FIL]" target="_blank">{{
+                          addressInfo.bhp.FIL
+                        }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="USDT">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.USDT]" target="_blank">{{
+                          addressInfo.bhp.USDT
+                        }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.Comptroller]" target="_blank">
+                        {{ addressInfo.bhp.Comptroller }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.Oracle]" target="_blank">
+                        {{ addressInfo.bhp.Oracle }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.UsdtJumpRateModel]" target="_blank">
+                        {{ addressInfo.bhp.UsdtJumpRateModel }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FILPriceSource">
+                      <el-link :href="[addressInfo.url+addressInfo.bhp.FilChainlink]" target="_blank">
+                        {{ addressInfo.bhp.FilChainlink }}
+                      </el-link>
+                    </el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC主网" name="third">
-                  <el-descriptions title="BSC主网"  :column="1" border >
+                  <el-descriptions title="BSC主网" :column="1" border>
 
                   </el-descriptions>
                 </el-tab-pane>
@@ -411,12 +562,12 @@
         center>
       <el-result icon="success" :title="info.title " v-if="info.title==='成功提示'" :subTitle="info.subTitle">
         <template slot="extra">
-          <el-link type="success" :href="info.result" target="_blank" >查看交易</el-link>
+          <el-link type="success" :href="info.result" target="_blank">查看交易</el-link>
         </template>
       </el-result>
       <el-result icon="error" :title="info.title" v-if="info.title==='错误提示'" :subTitle="info.subTitle">
         <template slot="extra">
-          <span >{{ info.result }}</span>
+          <span>{{ info.result }}</span>
         </template>
       </el-result>
     </el-dialog>
@@ -426,29 +577,30 @@
 <script>
 import {
   accrualBlockNumber,
-  balanceOf,
+  balanceOf, baseRatePerBlock, blocksPerYear,
   borrow,
   borrowBalanceStored,
-  borrowIndex, borrowRatePerBlock,
-  checkMembership,
+  borrowIndex,
+  borrowRatePerBlock,
+  checkMembership, closeFactorMantissa,
   enterMarkets,
+  exchangeRateStored,
   exitMarket,
   getBlockNumber,
   getBorrowRate,
-  getSupplyRate,
-  utilizationRate,
   getCash,
+  getSupplyRate, jumpMultiplierPerBlock, kink,
   markets,
-  mint,
+  mint, multiplierPerBlock,
   redeem,
   redeemUnderlying,
   repayBorrow,
   reserveFactorMantissa,
-  exchangeRateStored,
   supplyRatePerBlock,
   totalBorrows,
   totalReserves,
   totalSupply,
+  utilizationRate,
   viewPrice,
 } from "../web3/hashbank";
 import Decimal from 'decimal.js';
@@ -459,114 +611,141 @@ import {bhp, exp} from "../configure/conf";
 export default {
   data() {
     return {
-      account:"",
+      account: "",
       filSupplyDialogVisible: false,
-      usdtSupplyDialogVisible:false,
+      usdtSupplyDialogVisible: false,
       dialogResultVisible: false,
-      usdtBorrowDialogVisible:false,
+      usdtBorrowDialogVisible: false,
       dialogWidth: 0,
       address: '',
       supplyButton: '授权',
-      info:{
+      info: {
         title: '',
         result: '',
-        subTitle:'',
+        subTitle: '',
       },
       dialogActiveName: 'first',
-      contract:{
+      contract: {
         activeName: 'first',
       },
-      liquidity:{
+      liquidity: {
         activeName: 'first',
-        sumCollateral:0,
-        sumBorrowPlusEffects:0,
-        tableData:[
+        sumCollateral: 0,
+        sumBorrowPlusEffects: 0,
+        tableData: [
           {
-            id:51487,
-            pool:"USDT",
-            assetsValue:"5000",
-            borrowValue:"4500",
-            borrowCount:"4500.000000",
-            riskValue:"90"
+            id: 51487,
+            pool: "USDT",
+            assetsValue: "5000",
+            borrowValue: "4500",
+            borrowCount: "4500.000000",
+            riskValue: "90"
           },
           {
-            id:52683,
-            pool:"USDT",
-            assetsValue:"5000",
-            borrowValue:"4000",
-            borrowCount:"4000.000000",
-            riskValue:"80"
+            id: 52683,
+            pool: "USDT",
+            assetsValue: "5000",
+            borrowValue: "4000",
+            borrowCount: "4000.000000",
+            riskValue: "80"
           }
         ],
       },
-      panel:{
+      panel: {
+        blocksPerYear:0,
+        jumpMultiplierPerBlock:0,
+        multiplierPerBlock:0,
+        baseRatePerBlock:0,
+        kink:0,
+        closeFactorMantissa:0,
         activeName: 'first',
-        filUtilizationRate:0,
-        usdtUtilizationRate:0,
-        supplyApy:0,
-        borrowApy:0,
-        filPrice:0,
-        usdtPrice:0,
-        filCollateralFactor:0,
-        usdtCollateralFactor:0,
-        supplyBalance:0,
-        borrowBalance:0,
-        blockNumber:0,
-        usdtTotalCash:0,
-        filTotalCash:0,
-        filBalance:0,
-        usdtBalance:0,
-        efilBalance:0,
-        eusdtBalance:0,
-        accrualUsdtBlockNumber:0,
-        accrualFilBlockNumber:0,
-        totalBorrowsInfo:0,
-        usdtTotalReservesInfo:0,
-        filTotalReservesInfo:0,
-        usdtTotalBorrowsInfo:0,
-        filTotalBorrowsInfo:0,
-        usdtExchangeRate:0,
-        filExchangeRate:0,
+        filUtilizationRate: 0,
+        usdtUtilizationRate: 0,
+        supplyFilApy: 0,
+        borrowFilApy: 0,
+        supplyUsdtApy: 0,
+        borrowUsdtRatePerBlock:0,
+        supplyUsdtRatePerBlock:0,
+        borrowFilRatePerBlock:0,
+        supplyFilRatePerBlock:0,
+        borrowUsdtApy: 0,
+        filPrice: 0,
+        usdtPrice: 0,
+        filCollateralFactor: 0,
+        usdtCollateralFactor: 0,
+        supplyBalance: 0,
+        borrowBalance: 0,
+        blockNumber: 0,
+        usdtTotalCash: 0,
+        filTotalCash: 0,
+        filBalance: 0,
+        usdtBalance: 0,
+        efilBalance: 0,
+        eusdtBalance: 0,
+        accrualUsdtBlockNumber: 0,
+        accrualFilBlockNumber: 0,
+        totalBorrowsInfo: 0,
+        usdtTotalReservesInfo: 0,
+        filTotalReservesInfo: 0,
+        usdtTotalBorrowsInfo: 0,
+        filTotalBorrowsInfo: 0,
+        usdtExchangeRate: 0,
+        filExchangeRate: 0,
       },
       supplyFil: {
-        userCanRedeemCount:0,
+        userCanRedeemCount: 0,
         borrowRate: '',
-        balance:0,
-        count:0,
+        balance: 0,
+        count: 0,
         mintAmount: 0,
         supplyToken: 0,
         supplyAmount: 0,
-        redeemAmount:0,
-        isEnterMarket:false,
+        redeemAmount: 0,
+        isEnterMarket: false,
       },
       supplyUsdt: {
         borrowRate: '',
-        count:0,
-        balance:0,
+        count: 0,
+        balance: 0,
         mintAmount: 0,
         supplyToken: 0,
         supplyAmount: 0,
-        redeemAmount:0,
+        redeemAmount: 0,
       },
       borrowUsdt: {
         //借款最大值
-        borrowAmountLimit:0,
-        borrowCountLimit:0,
-        borrowlimitPercent:0,
+        borrowAmountLimit: 0,
+        borrowCountLimit: 0,
+        borrowlimitPercent: 0,
         //剩余可借额度
         //还款额度
-        repayAmount:0,
-        canBorrowCountLimit:0,
-        alreadyCashPercent:0,
+        repayAmount: 0,
+        canBorrowCountLimit: 0,
+        alreadyCashPercent: 0,
         borrowRate: '',
-        count:0,
-        balance:0,
+        count: 0,
+        balance: 0,
         borrowAmount: 0,
         supplyToken: 0,
         supplyAmount: 0,
-        redeemTokens:0,
-        redeemAmount:0,
+        redeemTokens: 0,
+        redeemAmount: 0,
       },
+      addressInfo: {
+        "url": "https://testnet.bscscan.com/address/",
+        "bhp": {
+          // bsc test mhxw deploy
+          "Comptroller": '0x9e8830275a1A5d12e346a9d22A62be9a3f9CaEDA',
+          "Unitroller": '0x66BdA36bDe4BD43b4f13e6Cc9d2730636a1dAE3d',
+          "UsdtJumpRateModel": '0xb67877E787c266CBB1e8D569Bf750642e687b00C',
+          "Oracle": '0xA074c7A4eac4BEd6588597C220D966739221d2F6',
+          "USDT": '0xDF23a7Da5995B2e501dCAb2a9A901C91799aaB7a',
+          "eUSDT": '0x7712920cC915eB9A8f1392791ED0598167a8AE6C',
+          "FIL": '0xf120638637B49b230E2c2D36e144362cfC060089',
+          "eFIL": '0xd82956a16443788e86231b1eC9C7191fd2185347',
+          "FilChainlink": "0x17308A18d4a50377A4E1C37baaD424360025C74D"
+        },
+      }
     };
   },
   beforeDestroy() {
@@ -583,21 +762,23 @@ export default {
   },
   created() {
     if (this.$store.state.wallet.connected) {
+
     }
+    this.addressInfo.bhp=address.bhp
   },
   methods: {
     openSupply(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       let assetAddress
       let assetToken
-      if (tokenName===constants.FIL){
-        assetAddress=address.bhp.FIL
-        assetToken=address.bhp.eFIL
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
-        assetToken=address.bhp.eUSDT
+      if (tokenName === constants.FIL) {
+        assetAddress = address.bhp.FIL
+        assetToken = address.bhp.eFIL
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
+        assetToken = address.bhp.eUSDT
       }
       erc20BalanceOf(
           this.$store.state.wallet,
@@ -610,10 +791,10 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName===constants.FIL){
-          this.supplyFil.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.USDT){
-          this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        if (tokenName === constants.FIL) {
+          this.supplyFil.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.USDT) {
+          this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.$parent.loading = false;
@@ -630,23 +811,23 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName===constants.FIL){
-          this.supplyFil.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10,decimals.eFIL)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.USDT){
-          this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10,decimals.eUSDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        if (tokenName === constants.FIL) {
+          this.supplyFil.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.USDT) {
+          this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
-      if (tokenName===constants.FIL){
+      if (tokenName === constants.FIL) {
         this.filSupplyDialogVisible = true
-      }else if (tokenName===constants.USDT){
+      } else if (tokenName === constants.USDT) {
         this.usdtSupplyDialogVisible = true
       }
     },
     openUsdtBorrow() {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       erc20BalanceOf(
@@ -660,7 +841,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(18)
+        this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(18)
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
@@ -669,7 +850,7 @@ export default {
           this.$store.state.wallet,
           address.bhp.eFIL,
       ).then(res => {
-        this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10,decimals.eFIL)).toFixed(18)
+        this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(18)
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -702,18 +883,16 @@ export default {
             this.info.result = "余额不足";
           } else if (
               result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1
-          )
-          {
+          ) {
             this.info.result = "授权额度不足或未授权";
-          }else if (
+          } else if (
               result.message.toString().indexOf("execution reverted: REPAY_BORROW_NEW_ACCOUNT_BORROW_BALANCE_CALCULATION_FAILED") !== -1
-          )
-          {
+          ) {
             this.info.result = "还款余额计算错误，超出实际还款值";
           } else {
             this.info.result = result;
           }
-        }else {
+        } else {
           this.info.result = result;
         }
       } else {
@@ -721,8 +900,9 @@ export default {
       }
       this.info.title = "错误提示"
       this.dialogResultVisible = true
+      return
     },
-    verifyConnect()  {
+    verifyConnect() {
       let wallet = this.$store.state.wallet;
       if (!wallet.connected) {
         this.$notify.error({
@@ -734,7 +914,7 @@ export default {
       return true
     },
     supplyToken(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       this.filSupplyDialogVisible = false;
@@ -743,16 +923,16 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let mintAmount
-      if (tokenName===constants.FIL){
-        assetAddress=address.bhp.FIL
-        assetToken=address.bhp.eFIL
-        mintAmount=new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10,decimals.FIL)).toFixed(0,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.USDT){
-        assetToken=address.bhp.eUSDT
-        assetAddress=address.bhp.USDT
-        mintAmount=new Decimal(this.supplyUsdt.mintAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
+      if (tokenName === constants.FIL) {
+        assetAddress = address.bhp.FIL
+        assetToken = address.bhp.eFIL
+        mintAmount = new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
+        assetToken = address.bhp.eUSDT
+        assetAddress = address.bhp.USDT
+        mintAmount = new Decimal(this.supplyUsdt.mintAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("mintAmount",mintAmount)
+      console.log("mintAmount", mintAmount)
       //先判断是否满足逻辑
       //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
 
@@ -783,7 +963,7 @@ export default {
       })
     },
     redeemUnderlying(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       //先判断是否满足逻辑
@@ -793,16 +973,16 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let redeemAmount
-      if (tokenName===constants.FIL){
-        assetAddress=address.bhp.FIL
-        assetToken=address.bhp.eFIL
-        redeemAmount=new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10,decimals.FIL)).toFixed(0,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
-        assetToken=address.bhp.eUSDT
-        redeemAmount=new Decimal(this.supplyUsdt.redeemAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
+      if (tokenName === constants.FIL) {
+        assetAddress = address.bhp.FIL
+        assetToken = address.bhp.eFIL
+        redeemAmount = new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
+        assetToken = address.bhp.eUSDT
+        redeemAmount = new Decimal(this.supplyUsdt.redeemAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("redeemAmount",redeemAmount)
+      console.log("redeemAmount", redeemAmount)
 
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
@@ -823,14 +1003,14 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.verifyContractResult(res,this.$parent.url)
+        this.verifyContractResult(res, this.$parent.url)
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
     },
     redeemAllToken(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       //先判断是否满足逻辑
@@ -840,16 +1020,16 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let redeemToken
-      if (tokenName===constants.FIL){
-        assetAddress=address.bhp.FIL
-        assetToken=address.bhp.eFIL
-        redeemToken=new Decimal(this.panel.efilBalance).mul(Decimal.pow(10,decimals.eFIL)).toFixed(0,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
-        assetToken=address.bhp.eUSDT
-        redeemToken=new Decimal(this.panel.eusdtBalance).mul(Decimal.pow(10,decimals.eUSDT)).toFixed(0,Decimal.ROUND_DOWN)
+      if (tokenName === constants.FIL) {
+        assetAddress = address.bhp.FIL
+        assetToken = address.bhp.eFIL
+        redeemToken = new Decimal(this.panel.efilBalance).mul(Decimal.pow(10, decimals.eFIL)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
+        assetToken = address.bhp.eUSDT
+        redeemToken = new Decimal(this.panel.eusdtBalance).mul(Decimal.pow(10, decimals.eUSDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("redeemToken",redeemToken)
+      console.log("redeemToken", redeemToken)
 
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
@@ -877,72 +1057,72 @@ export default {
         this.getErrorInfo(err)
       })
     },
-    getResultInfo(result,info) {
+    getResultInfo(result, info) {
       this.info.title = "错误提示"
       this.info.result = info
       this.dialogResultVisible = true
       //this.updatePanel()
     },
-    verifyContractResult(res,url){
-      if (!(typeof(res.events.Failure)==="undefined")){
-        let returnValues=res.events.Failure.returnValues
+    verifyContractResult(res, url) {
+      if (!(typeof (res.events.Failure) === "undefined")) {
+        let returnValues = res.events.Failure.returnValues
         console.log(JSON.stringify(returnValues))
         let result
         let info
         let detail
-        switch (returnValues.error){
+        switch (returnValues.error) {
           case "3":
-            result="审计不通过"
+            result = "审计不通过"
             break;
           case "14":
-            result="资金池余额不足"
+            result = "资金池余额不足"
             break;
           case "15":
-            result="转账转出失败"
+            result = "转账转出失败"
             break;
         }
-        switch (returnValues.info){
+        switch (returnValues.info) {
           case "9":
-            info="资金池可用余额不足，借款不允许"
+            info = "资金池可用余额不足，借款不允许"
             break;
           case "14":
-            info="借款被审计合约拒绝"
+            info = "借款被审计合约拒绝"
             break;
           case "15":
-            info="转账转出失败"
+            info = "转账转出失败"
             break;
           case "47":
-            info="取款金额错误，超出实际金额"
+            info = "取款金额错误，超出实际金额"
             break;
         }
-        switch (returnValues.detail){
+        switch (returnValues.detail) {
           case "4":
-            detail="差额不足"
+            detail = "差额不足"
             break;
         }
-        console.log("result,info,detail",result,info,detail)
-        this.getResultInfo(result,info)
-      }else {
+        console.log("result,info,detail", result, info, detail)
+        this.getResultInfo(result, info)
+      } else {
         this.getSuccessInfo(url)
       }
     },
     borrowToken(tokenName) {
       //usdt 借款之前先判断是否存入了fil并开启了抵押
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
 
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let borrowAmount
-      if (tokenName===constants.FIL){
-        assetToken=address.bhp.eFIL
-        borrowAmount=new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10,decimals.FIL)).toNumber().toString()
-      }else if (tokenName===constants.USDT){
-        assetToken=address.bhp.eUSDT
-        borrowAmount=new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10,decimals.USDT)).toNumber().toString()
+      if (tokenName === constants.FIL) {
+        assetToken = address.bhp.eFIL
+        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.FIL)).toNumber().toString()
+      } else if (tokenName === constants.USDT) {
+        assetToken = address.bhp.eUSDT
+        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toNumber().toString()
       }
-      console.log("borrowAmount",borrowAmount)
+      console.log("borrowAmount", borrowAmount)
       this.verifyConnect()
       // 查看是否授权
       this.$parent.loading = true;
@@ -961,7 +1141,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.verifyContractResult(res,this.$parent.url)
+        this.verifyContractResult(res, this.$parent.url)
 
       }).catch(err => {
         this.$parent.loading = false;
@@ -970,7 +1150,7 @@ export default {
       this.usdtBorrowDialogVisible = false;
     },
     repayToken(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       //先判断是否满足逻辑
@@ -980,14 +1160,14 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let repayAmount
-      if (tokenName===constants.FIL){
+      if (tokenName === constants.FIL) {
 
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
-        assetToken=address.bhp.eUSDT
-        repayAmount=new Decimal(this.borrowUsdt.repayAmount).mul(Decimal.pow(10,decimals.USDT)).toFixed(0,Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
+        assetToken = address.bhp.eUSDT
+        repayAmount = new Decimal(this.borrowUsdt.repayAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("repayAmount",repayAmount.toString())
+      console.log("repayAmount", repayAmount.toString())
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
       this.$parent.flag1 = true;
@@ -1006,7 +1186,7 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.verifyContractResult(res,this.$parent.url)
+        this.verifyContractResult(res, this.$parent.url)
 
       }).catch(err => {
         this.$parent.loading = false;
@@ -1014,7 +1194,7 @@ export default {
       })
     },
     repayAllToken(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       //先判断是否满足逻辑
@@ -1024,14 +1204,14 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       //2的256次方-1
-      let repayAmount=(BigInt(Math.pow(2,256))-1n).toString()
-      console.log("repayAmount：",repayAmount)
+      let repayAmount = (BigInt(Math.pow(2, 256)) - 1n).toString()
+      console.log("repayAmount：", repayAmount)
       //let repayAmount="115792089237316195423570985008687907853269984665640564039457584007913129639935"
-      if (tokenName===constants.FIL){
+      if (tokenName === constants.FIL) {
 
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
-        assetToken=address.bhp.eUSDT
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
+        assetToken = address.bhp.eUSDT
       }
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
@@ -1059,14 +1239,14 @@ export default {
       })
     },
     getSupplyBalance(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       let assetAddress
-      if (tokenName===constants.FIL){
-        assetAddress=address.bhp.FIL
-      }else if (tokenName===constants.USDT){
-        assetAddress=address.bhp.USDT
+      if (tokenName === constants.FIL) {
+        assetAddress = address.bhp.FIL
+      } else if (tokenName === constants.USDT) {
+        assetAddress = address.bhp.USDT
       }
       balanceOf(
           this.$store.state.wallet,
@@ -1079,10 +1259,10 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName===constants.FIL){
-          this.supplyFil.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.USDT){
-          this.supplyUsdt.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        if (tokenName === constants.FIL) {
+          this.supplyFil.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.USDT) {
+          this.supplyUsdt.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.$parent.loading = false;
@@ -1090,50 +1270,50 @@ export default {
       })
     },
     getRedeemBalance(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
-      let that=this
-      if (tokenName===constants.FIL){
+      let that = this
+      if (tokenName === constants.FIL) {
         //先判断是否有借款金额，没有设置为最大
-        if (new Decimal(that.borrowUsdt.alreadyCashPercent).eq(new Decimal(0))===true){
-          this.supplyFil.redeemAmount=new Decimal(that.supplyFil.count).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        }else{
-          this.supplyFil.redeemAmount=new Decimal(that.supplyFil.userCanRedeemCount).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        if (new Decimal(that.borrowUsdt.alreadyCashPercent).eq(new Decimal(0)) === true) {
+          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.count).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        } else {
+          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.userCanRedeemCount).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }
-      }else if (tokenName===constants.USDT){
-        this.supplyUsdt.redeemAmount=new Decimal(that.supplyUsdt.count).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
+        this.supplyUsdt.redeemAmount = new Decimal(that.supplyUsdt.count).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
       }
     },
     getBorrowBalance(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
-      let that=this
-      this.borrowUsdt.borrowAmount=new Decimal(that.borrowUsdt.canBorrowCountLimit).toFixed(6, Decimal.ROUND_DOWN)
+      let that = this
+      this.borrowUsdt.borrowAmount = new Decimal(that.borrowUsdt.canBorrowCountLimit).toFixed(6, Decimal.ROUND_DOWN)
     },
     getRepayMaxBalance(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
-      let that=this
-      console.log("getRepayMaxBalance",that.borrowUsdt.count)
-      this.borrowUsdt.repayAmount=new Decimal(that.borrowUsdt.count).toString()
+      let that = this
+      console.log("getRepayMaxBalance", that.borrowUsdt.count)
+      this.borrowUsdt.repayAmount = new Decimal(that.borrowUsdt.count).toString()
     },
     erc20Approve(tokenName) {
-      if (!this.verifyConnect()){
+      if (!this.verifyConnect()) {
         return
       }
       let assetAddress
       let assetToken
-      if (tokenName===constants.FIL){
-        assetToken=address.bhp.eFIL
-        assetAddress=address.bhp.FIL
-      }else if (tokenName===constants.USDT){
-        assetToken=address.bhp.eUSDT
-        assetAddress=address.bhp.USDT
+      if (tokenName === constants.FIL) {
+        assetToken = address.bhp.eFIL
+        assetAddress = address.bhp.FIL
+      } else if (tokenName === constants.USDT) {
+        assetToken = address.bhp.eUSDT
+        assetAddress = address.bhp.USDT
       }
-      console.log("tokenName",tokenName,assetAddress)
+      console.log("tokenName", tokenName, assetAddress)
       // 查看是否授权
       this.$parent.loading = true;
       this.$parent.flag1 = true;
@@ -1159,14 +1339,21 @@ export default {
         this.getErrorInfo(err)
       })
     },
-    updatePanel(){
-      if (!this.verifyConnect()){
+    updatePanel() {
+      if (!this.verifyConnect()) {
         return
       }
       this.getApy(constants.eUSDT)
+      this.getApy(constants.eFIL)
       this.getBSCApy()
       this.viewPrice()
       this.checkMemberShipPage()
+      this.closeFactorMantissaPage()
+      this.blocksPerYearPage()
+      this.baseRatePerBlockPage()
+      this.multiplierPerBlockPage()
+      this.jumpMultiplierPerBlockPage()
+      this.kinkPage()
       this.getSupplyPage(constants.eUSDT)
       this.getBorrowPage(constants.eUSDT)
       this.getSupplyPage(constants.eFIL)
@@ -1177,8 +1364,8 @@ export default {
           this.$store.state.wallet,
           address.bhp.USDT,
       ).then(res => {
-          let amount=new Decimal(res)
-          this.panel.usdtBalance=amount.dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        let amount = new Decimal(res)
+        this.panel.usdtBalance = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1187,137 +1374,137 @@ export default {
           this.$store.state.wallet,
           address.bhp.FIL,
       ).then(res => {
-        let amount=new Decimal(res)
-        this.panel.filBalance=amount.dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        let amount = new Decimal(res)
+        this.panel.filBalance = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
       }).catch(err => {
         this.getErrorInfo(err)
       })
     },
-    async getUserBorrowTokenPage(account,tokenName){
+    async getUserBorrowTokenPage(account, tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取用户USDT借贷金额
       await borrowBalanceStored(
           this.$store.state.wallet,
           account,
           eTokenAddress,
       ).then(res => {
-        result=res
+        result = res
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getUserSupplyTokenPage(tokenName){
+    async getUserSupplyTokenPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取用户eUSDT余额
       await balanceOf(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
-        result=res
-        let amount=new Decimal(res)
-        if (tokenName===constants.eUSDT){
-          this.panel.eusdtBalance=amount.dividedBy(Decimal.pow(10,decimals.eUSDT)).toFixed(decimals.eUSDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.eFIL){
-          this.panel.efilBalance=amount.dividedBy(Decimal.pow(10,decimals.eFIL)).toFixed(decimals.eFIL,Decimal.ROUND_DOWN)
+        result = res
+        let amount = new Decimal(res)
+        if (tokenName === constants.eUSDT) {
+          this.panel.eusdtBalance = amount.dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.efilBalance = amount.dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async accrualBlockNumberPage(tokenName){
+    async accrualBlockNumberPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取USDT池子最新计算高度
       await accrualBlockNumber(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
-        result=res
-        if (tokenName===constants.eUSDT){
-          this.panel.accrualUsdtBlockNumber=res
-        }else if (tokenName===constants.eFIL){
-          this.panel.accrualFilBlockNumber=res
+        result = res
+        if (tokenName === constants.eUSDT) {
+          this.panel.accrualUsdtBlockNumber = res
+        } else if (tokenName === constants.eFIL) {
+          this.panel.accrualFilBlockNumber = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getBlockNumberPage(){
-      let result=0
+    async getBlockNumberPage() {
+      let result = 0
       //获取当前高度
       await getBlockNumber(
           this.$store.state.wallet,
-      ).then(res =>{
-        result=res
-        this.panel.blockNumber=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+        this.panel.blockNumber = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async totalReservesPage(tokenName){
+    async totalReservesPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取最后一次合约触发时的总储备金
       await totalReserves(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
-        result=res
-        if (tokenName===constants.eUSDT){
-          this.panel.usdtTotalReservesInfo=new Decimal(res).div(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.eFIL){
-          this.panel.filTotalReservesInfo=new Decimal(res).div(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        result = res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async totalBorrowsPage(tokenName){
+    async totalBorrowsPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取最后一次合约触发时的借款总额
       await totalBorrows(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
-        result=res
-        let amount=new Decimal(res)
-        if (tokenName===constants.eUSDT){
-          this.panel.usdtTotalBorrowsInfo=amount.dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.eFIL){
-          this.panel.filTotalBorrowsInfo=amount.dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        result = res
+        let amount = new Decimal(res)
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1325,113 +1512,113 @@ export default {
       })
       return result
     },
-    async borrowIndexPage(tokenName){
+    async borrowIndexPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取最后一次合约触发时的借款总额
       await borrowIndex(
           this.$store.state.wallet,
           address.bhp.eUSDT,
       ).then(res => {
-        result=res
+        result = res
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getCashPage(tokenName){
+    async getCashPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取USDT资金池余额
       await getCash(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-        if (tokenName===constants.eUSDT){
-          this.panel.usdtTotalCash=new Decimal(res).dividedBy(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        }else if (tokenName===constants.eFIL){
-          this.panel.filTotalCash=new Decimal(res).dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+      ).then(res => {
+        result = res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtTotalCash = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.filTotalCash = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
-      }).catch(err=>{
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async exchangeRateStoredPage(tokenName){
+    async exchangeRateStoredPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取USDT资金池余额
       await exchangeRateStored(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getReserveFactorMantissaPage(tokenName){
+    async getReserveFactorMantissaPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取USDT资金池余额
       await reserveFactorMantissa(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async totalSupplyPage(tokenName){
+    async totalSupplyPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取eUSDT供应量
       await totalSupply(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getBorrowRatePage(tokenName,cash,borrows,reserves){
+    async getBorrowRatePage(tokenName, cash, borrows, reserves) {
       let contractAddress
-      if (tokenName===constants.eUSDT){
-        contractAddress=address.bhp.UsdtJumpRateModel
+      if (tokenName === constants.eUSDT) {
+        contractAddress = address.bhp.UsdtJumpRateModel
       }
-      contractAddress=address.bhp.UsdtJumpRateModel
-      let result=0
+      contractAddress = address.bhp.UsdtJumpRateModel
+      let result = 0
       //获取USDT资金池余额
       await getBorrowRate(
           this.$store.state.wallet,
@@ -1439,20 +1626,20 @@ export default {
           cash,
           borrows,
           reserves
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getSupplyRatePage(tokenName,cash, borrows, reserves, reserveFactor){
+    async getSupplyRatePage(tokenName, cash, borrows, reserves, reserveFactor) {
       let contractAddress
-      if (tokenName===constants.eUSDT){
+      if (tokenName === constants.eUSDT) {
 
       }
-      contractAddress=address.bhp.UsdtJumpRateModel
-      let result=0
+      contractAddress = address.bhp.UsdtJumpRateModel
+      let result = 0
       //获取USDT资金池余额
       await getSupplyRate(
           this.$store.state.wallet,
@@ -1461,55 +1648,56 @@ export default {
           borrows,
           reserves,
           reserveFactor
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async utilizationRatePage(cash,borrows,reserves){
-      let result=0
+    async utilizationRatePage(cash, borrows, reserves) {
+      let result = 0
       //获取USDT资金池余额
       await utilizationRate(
           this.$store.state.wallet,
           cash,
           borrows,
           reserves
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async getPricePage(tokenName){
+    async getPricePage(tokenName) {
       let result
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
       await viewPrice(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
         let balance = new Decimal(res)
-        if (tokenName===constants.eUSDT){
-          result= balance.dividedBy(Decimal.pow(10,30))
-          this.panel.usdtPrice= balance.dividedBy(Decimal.pow(10,30)).toFixed(4)
-        }else if (tokenName===constants.eFIL){
-          result= balance.dividedBy(Decimal.pow(10,decimals.FIL))
-          this.panel.filPrice= balance.dividedBy(Decimal.pow(10,decimals.FIL)).toFixed(4)
+        if (tokenName === constants.eUSDT) {
+          result = balance.dividedBy(Decimal.pow(10, 30))
+          this.panel.usdtPrice = balance.dividedBy(Decimal.pow(10, 30)).toFixed(4)
+        } else if (tokenName === constants.eFIL) {
+          result = balance.dividedBy(Decimal.pow(10, decimals.FIL))
+          this.panel.filPrice = balance.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(4)
         }
       }).catch(err => {
+        console.log("error viewPrice")
         this.getErrorInfo(err)
       })
       return result
     },
-    switchMarketStatus(){
-      if (!this.verifyConnect()){
+    switchMarketStatus() {
+      if (!this.verifyConnect()) {
         return
       }
       this.$parent.loading = true;
@@ -1518,14 +1706,14 @@ export default {
       this.$parent.flag3 = false;
       this.filSupplyDialogVisible = false;
       this.usdtSupplyDialogVisible = false;
-      let assetToken=address.bhp.eFIL
-      let assetArray=new Array(assetToken)
+      let assetToken = address.bhp.eFIL
+      let assetArray = new Array(assetToken)
       //先判断当前是开启抵押还是关闭抵押
       //如果开启，查看用户是否抵押
       //如果抵押计算另一个币种是否满足借款
       //如果满足
-      this.checkMemberShipPage().then(result=>{
-        if (!result){
+      this.checkMemberShipPage().then(result => {
+        if (!result) {
           console.log("enterMarkets")
           enterMarkets(
               this.$store.state.wallet,
@@ -1538,13 +1726,13 @@ export default {
               }
           ).then(res => {
             this.$parent.loading = false;
-            this.supplyFil.isEnterMarket=true;
+            this.supplyFil.isEnterMarket = true;
             this.getSuccessInfo(this.$parent.url)
           }).catch(err => {
             this.$parent.loading = false;
             this.getErrorInfo(err)
           })
-        }else{
+        } else {
           console.log("exitMarket")
           exitMarket(
               this.$store.state.wallet,
@@ -1557,7 +1745,7 @@ export default {
               }
           ).then(res => {
             this.$parent.loading = false;
-            this.supplyFil.isEnterMarket=false;
+            this.supplyFil.isEnterMarket = false;
             this.getSuccessInfo(this.$parent.url)
           }).catch(err => {
             this.$parent.loading = false;
@@ -1566,95 +1754,154 @@ export default {
         }
       })
     },
-    async getCollateralFactor(tokenName){
+    async getCollateralFactor(tokenName) {
       let result
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
       //获取抵押因子 用于计算抵押存款
       await markets(
           this.$store.state.wallet,
           eTokenAddress,
+          address.bhp.Unitroller
       ).then(res => {
-        let collateralFactorMantissa=res.collateralFactorMantissa
-        if (tokenName===constants.eUSDT){
-          result= collateralFactorMantissa
-          this.panel.usdtCollateralFactor= new Decimal(collateralFactorMantissa).div(Decimal.pow(10,18))
-        }else if (tokenName===constants.eFIL){
-          result= collateralFactorMantissa
-          this.panel.filCollateralFactor= new Decimal(collateralFactorMantissa).div(Decimal.pow(10,18))
+        let collateralFactorMantissa = res.collateralFactorMantissa
+
+        if (tokenName === constants.eUSDT) {
+          result = collateralFactorMantissa
+          this.panel.usdtCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 18))
+        } else if (tokenName === constants.eFIL) {
+          result = collateralFactorMantissa
+          this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 18))
         }
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async checkMemberShipPage(){
-      let isSuccess=false;
+    async checkMemberShipPage() {
+      let isSuccess = false;
       await checkMembership(
           this.$store.state.wallet,
           address.bhp.eFIL,
       ).then(res => {
-        this.supplyFil.isEnterMarket= res
-        isSuccess=res
+        this.supplyFil.isEnterMarket = res
+        isSuccess = res
       }).catch(err => {
         this.getErrorInfo(err)
       })
       return isSuccess
     },
+    async kinkPage() {
+      await kink(
+          this.$store.state.wallet,
+          address.bhp.Comptroller,
+      ).then(res => {
+        this.panel.kink = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
+    async blocksPerYearPage() {
+      await blocksPerYear(
+          this.$store.state.wallet,
+          address.bhp.Comptroller,
+      ).then(res => {
+        this.panel.blocksPerYear = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
+    async closeFactorMantissaPage() {
+      await closeFactorMantissa(
+          this.$store.state.wallet,
+          address.bhp.Unitroller,
+      ).then(res => {
+        this.panel.closeFactorMantissa = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
+    async jumpMultiplierPerBlockPage() {
+      await jumpMultiplierPerBlock(
+          this.$store.state.wallet,
+      ).then(res => {
+        this.panel.jumpMultiplierPerBlock = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
+    async multiplierPerBlockPage() {
+      await multiplierPerBlock(
+          this.$store.state.wallet,
+      ).then(res => {
+        this.panel.multiplierPerBlock = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
+    async baseRatePerBlockPage() {
+      await baseRatePerBlock(
+          this.$store.state.wallet,
+      ).then(res => {
+        this.panel.baseRatePerBlock = res
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+    },
     async accrueInterestPage(tokenName) {
-      let currentBlockNumber=await this.getBlockNumberPage()
-      console.log("最新高度：",currentBlockNumber)
-      let accrualBlockNumber=await this.accrualBlockNumberPage(tokenName)
-      let totalCash=await this.getCashPage(tokenName)
-      let totalBorrows=await this.totalBorrowsPage(tokenName)
-      let totalReserves=await this.totalReservesPage(tokenName)
-      let borrowIndex=await this.borrowIndexPage(tokenName)
+      let currentBlockNumber = await this.getBlockNumberPage()
+      console.log("最新高度：", currentBlockNumber)
+      let accrualBlockNumber = await this.accrualBlockNumberPage(tokenName)
+      let totalCash = await this.getCashPage(tokenName)
+      let totalBorrows = await this.totalBorrowsPage(tokenName)
+      let totalReserves = await this.totalReservesPage(tokenName)
+      let borrowIndex = await this.borrowIndexPage(tokenName)
       let utilizationRate
-      if (tokenName===constants.eUSDT){
-        utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
-        this.panel.usdtUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.eFIL){
-        utilizationRate=await this.utilizationRatePage(totalCash,totalBorrows,totalReserves)
-        this.panel.filUtilizationRate=new Decimal(utilizationRate).div(Decimal.pow(10,16)).toFixed(16,Decimal.ROUND_DOWN)
+      if (tokenName === constants.eUSDT) {
+        utilizationRate = await this.utilizationRatePage(totalCash, totalBorrows, totalReserves)
+        this.panel.usdtUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.eFIL) {
+        utilizationRate = await this.utilizationRatePage(totalCash, totalBorrows, totalReserves)
+        this.panel.filUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       }
-      let borrowRate=await this.getBorrowRatePage(tokenName,totalCash,totalBorrows,totalReserves)
-      if (tokenName===constants.eFIL){
-        console.log("原来totalCash,totalBorrows,totalReserves",totalCash.toString(),totalBorrows.toString(),totalReserves.toString())
-        console.log("borrowRate",borrowRate.toString())
-        console.log("utilizationRate",utilizationRate.toString())
+      let borrowRate = await this.getBorrowRatePage(tokenName, totalCash, totalBorrows, totalReserves)
+      if (tokenName === constants.eFIL) {
+        console.log("原来totalCash,totalBorrows,totalReserves", totalCash.toString(), totalBorrows.toString(), totalReserves.toString())
+        console.log("borrowRate", borrowRate.toString())
+        console.log("utilizationRate", utilizationRate.toString())
       }
-      let reserveFactorMantissa=await this.getReserveFactorMantissaPage(tokenName)
-      this.borrowUsdt.borrowRate=borrowRate
+      let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
+      this.borrowUsdt.borrowRate = borrowRate
       // 当前区块和 accrualBlockNumberPrior 之间的区块数
-      let blockDelta=new Decimal(currentBlockNumber).sub(new Decimal(accrualBlockNumber))
+      let blockDelta = new Decimal(currentBlockNumber).sub(new Decimal(accrualBlockNumber))
       // 区块区间内的单位利息=借贷利率*区块数
-      let simpleInterestFactor=new Decimal(borrowRate).mul(new Decimal(blockDelta))
+      let simpleInterestFactor = new Decimal(borrowRate).mul(new Decimal(blockDelta))
       // 总借款在该区块区间内产生的总利息=区块区间内的单位利息*总借款/1Ether(最后取整数值)
-      let interestAccumulated=simpleInterestFactor.mul(new Decimal(totalBorrows)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)
+      let interestAccumulated = simpleInterestFactor.mul(new Decimal(totalBorrows)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)
       // 新的借款总额：总利息累加到总借款中=总借款在该区块区间内产生的总利息+总借款
-      let totalBorrowsNew=new Decimal(interestAccumulated).add(new Decimal(totalBorrows))
+      let totalBorrowsNew = new Decimal(interestAccumulated).add(new Decimal(totalBorrows))
       // 原来的链上储备资金 * interestAccumulated +现在获取到的
       // totalReservesNew = reserveFactorMantissa * interestAccumulated / 1Ether (取整数值) + totalReserves，根据储备金率将部分利息累加到储备金中
-      let totalReservesNew=new Decimal(new Decimal(reserveFactorMantissa).mul(interestAccumulated).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).add(new Decimal(totalReserves))
+      let totalReservesNew = new Decimal(new Decimal(reserveFactorMantissa).mul(interestAccumulated).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).add(new Decimal(totalReserves))
       // 累加借款指数=区块区间内的单位利息x借款指数/1Ether+借款指数
-      let borrowIndexNew=new Decimal(simpleInterestFactor.mul(new Decimal(borrowIndex)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).add(new Decimal(borrowIndex))
+      let borrowIndexNew = new Decimal(simpleInterestFactor.mul(new Decimal(borrowIndex)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).add(new Decimal(borrowIndex))
       //console.log("totalBorrowsNew",totalBorrowsNew.toString(),totalReservesNew.toString(),borrowIndexNew.toString(),totalCash.toString())
-      return {borrowIndex,totalBorrowsNew,totalReservesNew,borrowIndexNew,totalCash}
+      return {borrowIndex, totalBorrowsNew, totalReservesNew, borrowIndexNew, totalCash}
     },
-    async exchangeRatePage(tokenName){
-      let list=await this.accrueInterestPage(tokenName)
+    async exchangeRatePage(tokenName) {
+      let list = await this.accrueInterestPage(tokenName)
       //exchangeRate = (totalCash + totalBorrows - totalReserves) / totalSupply
-      let cashPlusBorrowsMinusReserves=new Decimal(list.totalCash).add(new Decimal(list.totalBorrowsNew)).sub(new Decimal(list.totalReservesNew))
+      let cashPlusBorrowsMinusReserves = new Decimal(list.totalCash).add(new Decimal(list.totalBorrowsNew)).sub(new Decimal(list.totalReservesNew))
       // 兑换率=(资金池余额+借贷总额-总储备金)*1Ether/总供应量
       let exchangeRate
       // 总供应量
-      let totalSupply=await this.totalSupplyPage(tokenName)
-      if (new Decimal(totalSupply).cmp(new Decimal(0))===0){
-        exchangeRate=await this.exchangeRateStoredPage(tokenName)
+      let totalSupply = await this.totalSupplyPage(tokenName)
+      if (new Decimal(totalSupply).cmp(new Decimal(0)) === 0) {
+        exchangeRate = await this.exchangeRateStoredPage(tokenName)
         return exchangeRate
       }
 
@@ -1662,127 +1909,171 @@ export default {
       // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
       const cTokenDecimals = 8;
       let mantissa
-      if (tokenName===constants.eUSDT){
-        mantissa=18+decimals.USDT-cTokenDecimals
-        exchangeRate=cashPlusBorrowsMinusReserves.mul(Decimal.pow(10,18)).div(new Decimal(totalSupply)).toFixed(0,Decimal.ROUND_DOWN)
-        this.panel.usdtExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,mantissa))
-      }else if (tokenName===constants.eFIL){
-        mantissa=18+decimals.FIL-cTokenDecimals
-        exchangeRate=cashPlusBorrowsMinusReserves.mul(Decimal.pow(10,18)).div(new Decimal(totalSupply)).toFixed(0,Decimal.ROUND_DOWN)
-        this.panel.filExchangeRate=new Decimal(exchangeRate).div(Decimal.pow(10,mantissa))
+      if (tokenName === constants.eUSDT) {
+        mantissa = 18 + decimals.USDT - cTokenDecimals
+        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+        this.panel.usdtExchangeRate = new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))
+      } else if (tokenName === constants.eFIL) {
+        mantissa = 18 + decimals.FIL - cTokenDecimals
+        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+        this.panel.filExchangeRate = new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))
       }
-      if (tokenName===constants.eFIL){
-        console.log("新的 totalCash totalBorrowsNew totalReservesNew",list.totalCash.toString(),list.totalBorrowsNew.toString(),list.totalReservesNew.toString())
-        console.log("exchangeRate cashPlusBorrowsMinusReserves",exchangeRate.toString(),cashPlusBorrowsMinusReserves.toString())
+      if (tokenName === constants.eFIL) {
+        console.log("新的 totalCash totalBorrowsNew totalReservesNew", list.totalCash.toString(), list.totalBorrowsNew.toString(), list.totalReservesNew.toString())
+        console.log("exchangeRate cashPlusBorrowsMinusReserves", exchangeRate.toString(), cashPlusBorrowsMinusReserves.toString())
       }
       return exchangeRate
     },
-    async getSupplyPage(tokenName){
-      if (!this.verifyConnect()){
+    async getSupplyPage(tokenName) {
+      if (!this.verifyConnect()) {
         return
       }
       //用户的eToken存款数量
-      let redeemTokensIn=await this.getUserSupplyTokenPage(tokenName)
+      let redeemTokensIn = await this.getUserSupplyTokenPage(tokenName)
       // 最新兑换率
-      let exchangeRateMantissa=await this.exchangeRatePage(tokenName)
+      let exchangeRateMantissa = await this.exchangeRatePage(tokenName)
       let redeemBalance
       let redeemAmount
-      let price=await this.getPricePage(tokenName)
-      let collateralFactor=await this.getCollateralFactor(tokenName)
-      if (tokenName===constants.eUSDT){
+      let price = await this.getPricePage(tokenName)
+      let collateralFactor = await this.getCollateralFactor(tokenName)
+      if (tokenName === constants.eUSDT) {
         //存款金额=兑换率*存款数量/1Ether （取整数值）
-        redeemAmount=new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).div(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        this.supplyUsdt.count=redeemAmount.toString()
-        redeemBalance=new Decimal(redeemAmount).mul(new Decimal(price))
+        redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        this.supplyUsdt.count = redeemAmount.toString()
+
+        redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         //金额保留8位
-        this.supplyUsdt.balance=redeemBalance.toDecimalPlaces(8,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.eFIL){
+
+        this.supplyUsdt.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
+
+      } else if (tokenName === constants.eFIL) {
         //存款金额=兑换率*存款数量/1Ether （取整数值）
         //console.log("redeemTokensIn",redeemTokensIn)
-/*       let ex=new Decimal(1500).div(new Decimal(redeemTokensIn)).mul(Decimal.pow(10,36)).toFixed(0,Decimal.ROUND_DOWN)
-        console.log("真实：ex",ex.toString())
-        console.log("计算：exchangeRateMantissa",exchangeRateMantissa)
-        exchangeRateMantissa=ex*/
-        redeemAmount=new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10,18)).toFixed(0,Decimal.ROUND_DOWN)).div(Decimal.pow(10,decimals.FIL)).toFixed(decimals.FIL,Decimal.ROUND_DOWN)
+        /*       let ex=new Decimal(1500).div(new Decimal(redeemTokensIn)).mul(Decimal.pow(10,36)).toFixed(0,Decimal.ROUND_DOWN)
+                console.log("真实：ex",ex.toString())
+                console.log("计算：exchangeRateMantissa",exchangeRateMantissa)
+                exchangeRateMantissa=ex*/
+        redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         //console.log("redeemAmount",redeemAmount)
-        this.supplyFil.count=redeemAmount.toString()
-        redeemBalance=new Decimal(redeemAmount).mul(new Decimal(price))
-        this.supplyFil.balance=redeemBalance.toDecimalPlaces(8,Decimal.ROUND_DOWN)
+        this.supplyFil.count = redeemAmount.toString()
+        redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
+        this.supplyFil.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
         // 计算FIL可抵押多少FIL=FIL余额*FIL抵押因子/1Ether
         // 存款数量xfil价格x0.6
-        let enterCash=redeemBalance.mul(new Decimal(collateralFactor).div(Decimal.pow(10,18)))
+        let enterCash = redeemBalance.mul(new Decimal(collateralFactor).div(Decimal.pow(10, 18)))
         // 用户最少存多少FIL的数量=当前借贷总额/（FIL抵押因子/1Ether）/fil价格
-        let limitPercent=new Decimal(0.8)
+        let limitPercent = new Decimal(0.8)
         // 借款USDT最大额度金额(80%限额)
-        let borrowAmountLimit=enterCash.mul(limitPercent)
-        this.borrowUsdt.borrowAmountLimit=borrowAmountLimit.toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        let borrowAmountLimit = enterCash.mul(limitPercent)
+        this.borrowUsdt.borrowAmountLimit = borrowAmountLimit.toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         // 借款USDT最大额度数量(80%限额)
         //获取usdt价格
-        let usdtPrice=await this.getPricePage(constants.eUSDT)
+        let usdtPrice = await this.getPricePage(constants.eUSDT)
         //最大金额/价格=最大数量
-        let borrowCountLimit=enterCash.mul(limitPercent).div(new Decimal(usdtPrice))
-        this.borrowUsdt.borrowCountLimit=borrowCountLimit.toFixed(decimals.USDT,Decimal.ROUND_DOWN)
+        let borrowCountLimit = enterCash.mul(limitPercent).div(new Decimal(usdtPrice))
+        this.borrowUsdt.borrowCountLimit = borrowCountLimit.toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         // usdt剩余可借额度(判断是否大于0，不是设置为0)
-        let canBorrowCountLimit=borrowAmountLimit.sub(this.borrowUsdt.count)
-        if (canBorrowCountLimit.lt(new Decimal(0))===true){
-          canBorrowCountLimit=0
+        let canBorrowCountLimit = borrowAmountLimit.sub(this.borrowUsdt.count)
+        if (canBorrowCountLimit.lt(new Decimal(0)) === true) {
+          canBorrowCountLimit = 0
         }
-        this.borrowUsdt.canBorrowCountLimit=canBorrowCountLimit
+        this.borrowUsdt.canBorrowCountLimit = canBorrowCountLimit
         // 借款限制百分比
-        this.borrowUsdt.borrowlimitPercent=limitPercent.mul(new Decimal(100)).toString()
+        this.borrowUsdt.borrowlimitPercent = limitPercent.mul(new Decimal(100)).toString()
         // 目前借款
-        let alreadyCashPercent=new Decimal(this.borrowUsdt.balance).div(enterCash)
-        this.borrowUsdt.alreadyCashPercent=alreadyCashPercent.mul(new Decimal(100)).toFixed(4)
+        let alreadyCashPercent = new Decimal(this.borrowUsdt.balance).div(enterCash)
+        this.borrowUsdt.alreadyCashPercent = alreadyCashPercent.mul(new Decimal(100)).toFixed(4)
         //剩余FIL可取80%-已使用的百分比
         // 最多可贷-已经贷的=可取的
-        let userCanRedeem=enterCash.sub(new Decimal(this.borrowUsdt.balance))
+        let userCanRedeem = enterCash.sub(new Decimal(this.borrowUsdt.balance))
         //用户可取的金额/fil价格=可取的fil数量
-        let userCanRedeemCount=userCanRedeem.div(new Decimal(price))
-        this.supplyFil.userCanRedeemCount=userCanRedeemCount
+        let userCanRedeemCount = userCanRedeem.div(new Decimal(price))
+        this.supplyFil.userCanRedeemCount = userCanRedeemCount
       }
       await this.searchLiquidity()
-      return {redeemAmount,redeemBalance}
+      return {redeemAmount, redeemBalance}
     },
-    async getBorrowPage(tokenName){
-      if (!this.verifyConnect()){
+    async getBorrowPage(tokenName) {
+      if (!this.verifyConnect()) {
         return
       }
-      let list=await this.accrueInterestPage(tokenName)
-      let borrowBalance=await this.getUserBorrowTokenPage(this.$store.state.wallet.address,tokenName)
+      let list = await this.accrueInterestPage(tokenName)
+      let borrowBalance = await this.getUserBorrowTokenPage(this.$store.state.wallet.address, tokenName)
       // principalTimesIndex=borrower.borrowBalance * market.borrowIndex
-      let price=await this.getPricePage(tokenName)
-      if (tokenName===constants.eUSDT){
-        let recentBorrowBalance=new Decimal(borrowBalance).mul(list.borrowIndexNew).div(list.borrowIndex).div(Decimal.pow(10,decimals.USDT)).toFixed(decimals.USDT,Decimal.ROUND_DOWN)
-        this.borrowUsdt.count=recentBorrowBalance
-        this.borrowUsdt.balance=new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8,Decimal.ROUND_DOWN)
-      }else if (tokenName===constants.eFIL){
+      let price = await this.getPricePage(tokenName)
+      if (tokenName === constants.eUSDT) {
+        let recentBorrowBalance = new Decimal(borrowBalance).mul(list.borrowIndexNew).div(list.borrowIndex).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        this.borrowUsdt.count = recentBorrowBalance
+        this.borrowUsdt.balance = new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.eFIL) {
 
       }
     },
-    async getApy(tokenName){
-      if (!this.verifyConnect()){
+    async getApy(tokenName) {
+      if (!this.verifyConnect()) {
         return
       }
-      //假定bhp主网 每块13.15s
-      let blocksPerDay=6570
-      //一年按照365天计算
-      let daysPerYear=365
+      if (this.$store.state.wallet.networkId === 97) {
+        //bhp主网测试 每3s一个区块
+        let blocksPerDay = 28800
+        //一年按照365天计算
+        let daysPerYear = 365
 
-      //合约最后一次触发
-      //let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.eUSDT)
-      //let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.eUSDT)
-      //实时
-      let list=await this.accrueInterestPage(tokenName)
-      let borrowRatePerBlock=await this.getBorrowRatePage(tokenName,list.totalCash,list.totalBorrowsNew.toNumber(),list.totalReservesNew.toNumber())
-      let supplyRatePerBlock=await this.getSupplyRatePage(tokenName,list.totalCash,list.totalBorrowsNew.toNumber(),list.totalReservesNew.toNumber(),"0")
-      let one=new Decimal(1)
-      let hundred=new Decimal(100)
-      let supply=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDay).add(one)
-      let borrow=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDay).add(one)
-      let supplyApy=Decimal.pow(supply,daysPerYear).sub(one).mul(hundred)
-      let borrowApy=Decimal.pow(borrow,daysPerYear).sub(one).mul(hundred)
-      this.panel.supplyApy=supplyApy
-      this.panel.borrowApy=borrowApy
+        //合约最后一次触发
+        //let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.eUSDT)
+        //let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.eUSDT)
+        //实时
+        let list = await this.accrueInterestPage(tokenName)
+        let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toNumber(), list.totalReservesNew.toNumber())
+        let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toNumber(), list.totalReservesNew.toNumber(), "0")
+        let one = new Decimal(1)
+        let hundred = new Decimal(100)
+        let supply = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let borrow = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let supplyApy = Decimal.pow(supply, daysPerYear).sub(one).mul(hundred)
+        let borrowApy = Decimal.pow(borrow, daysPerYear).sub(one).mul(hundred)
+        if (tokenName===constants.eUSDT){
+          this.panel.borrowUsdtRatePerBlock=borrowRatePerBlock
+          this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
+          this.panel.supplyUsdtApy = supplyApy
+          this.panel.borrowUsdtApy = borrowApy
+        }else if (tokenName===constants.eFIL){
+          this.panel.borrowFilRatePerBlock=borrowRatePerBlock
+          this.panel.supplyFilRatePerBlock=supplyRatePerBlock
+          this.panel.supplyFilApy = supplyApy
+          this.panel.borrowFilApy = borrowApy
+        }
+      } else if (this.$store.state.wallet.networkId === 3476) {
+        //假定bhp主网 每块13.15s
+        let blocksPerDay = 6570
+        //一年按照365天计算
+        let daysPerYear = 365
+
+        //合约最后一次触发
+        //let supplyRatePerBlock=await this.supplyRatePerBlockPage(constants.eUSDT)
+        //let borrowRatePerBlock=await this.borrowRatePerBlockPage(constants.eUSDT)
+        //实时
+        let list = await this.accrueInterestPage(tokenName)
+        let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toNumber(), list.totalReservesNew.toNumber())
+        let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toNumber(), list.totalReservesNew.toNumber(), "0")
+        let one = new Decimal(1)
+        let hundred = new Decimal(100)
+        let supply = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let borrow = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let supplyApy = Decimal.pow(supply, daysPerYear).sub(one).mul(hundred)
+        let borrowApy = Decimal.pow(borrow, daysPerYear).sub(one).mul(hundred)
+        if (tokenName===constants.eUSDT){
+          this.panel.borrowUsdtRatePerBlock=borrowRatePerBlock
+          this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
+          this.panel.supplyUsdtApy = supplyApy
+          this.panel.borrowUsdtApy = borrowApy
+        }else if (tokenName===constants.eFIL){
+          this.panel.borrowFilRatePerBlock=borrowRatePerBlock
+          this.panel.supplyFilRatePerBlock=supplyRatePerBlock
+          this.panel.supplyFilApy = supplyApy
+          this.panel.borrowFilApy = borrowApy
+        }
+      }
     },
     async getBSCApy() {
       if (!this.verifyConnect()) {
@@ -1790,140 +2081,140 @@ export default {
       }
       console.log("")
       //bsc supply test
-      let blocksPerDayBsc=28800
-      let daysPerYearBsc=365
-      let one=new Decimal(1)
-      let hundred=new Decimal(100)
-      let baseRatePerBlock=new Decimal(1902587519)
-      let multiplierPerBlock=33295281582
-      let jumpMultiplierPerBlock=new Decimal(570776255707)
+      let blocksPerDayBsc = 28800
+      let daysPerYearBsc = 365
+      let one = new Decimal(1)
+      let hundred = new Decimal(100)
+      let baseRatePerBlock = new Decimal(1902587519)
+      let multiplierPerBlock = 33295281582
+      let jumpMultiplierPerBlock = new Decimal(570776255707)
       //储备金系数=25%
-      let reserveFactor=new Decimal(0.25)
+      let reserveFactor = new Decimal(0.25)
       //当 U ≤ Ukink :
       // 当U=0
       console.log("利用率为0%时")
-      let u=new Decimal(0)
-      let borrowRatePerBlock=u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0,Decimal.ROUND_DOWN)
-      let supplyRatePerBlock=new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
-      let borrowInfo=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      let supplyInfo=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      let borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
-      let supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
-      console.log("borrowRatePerBlock",borrowRatePerBlock.toString())
-      console.log("supplyRatePerBlock",supplyRatePerBlock.toString())
-      console.log("borrowApy",borrowApy.toString())
-      console.log("supplyApy",supplyApy.toString())
+      let u = new Decimal(0)
+      let borrowRatePerBlock = u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0, Decimal.ROUND_DOWN)
+      let supplyRatePerBlock = new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
+      let borrowInfo = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      let supplyInfo = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      let borrowApy = Decimal.pow(borrowInfo, daysPerYearBsc).sub(one).mul(hundred)
+      let supplyApy = Decimal.pow(supplyInfo, daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock", borrowRatePerBlock.toString())
+      console.log("supplyRatePerBlock", supplyRatePerBlock.toString())
+      console.log("borrowApy", borrowApy.toString())
+      console.log("supplyApy", supplyApy.toString())
 
       //当u=80%
       console.log("利用率为80%时")
-      u=new Decimal(0.8)
-      borrowRatePerBlock=u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0,Decimal.ROUND_DOWN)
-      supplyRatePerBlock=new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
-      borrowInfo=new Decimal(borrowRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      supplyInfo=new Decimal(supplyRatePerBlock).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
-      supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
-      console.log("borrowRatePerBlock",borrowRatePerBlock.toString())
-      console.log("supplyRatePerBlock",supplyRatePerBlock.toString())
-      console.log("borrowApy",borrowApy.toString())
-      console.log("supplyApy",supplyApy.toString())
+      u = new Decimal(0.8)
+      borrowRatePerBlock = u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0, Decimal.ROUND_DOWN)
+      supplyRatePerBlock = new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
+      borrowInfo = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      supplyInfo = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      borrowApy = Decimal.pow(borrowInfo, daysPerYearBsc).sub(one).mul(hundred)
+      supplyApy = Decimal.pow(supplyInfo, daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock", borrowRatePerBlock.toString())
+      console.log("supplyRatePerBlock", supplyRatePerBlock.toString())
+      console.log("borrowApy", borrowApy.toString())
+      console.log("supplyApy", supplyApy.toString())
 
       //当u=100%
       console.log("利用率为100%时")
-      u=new Decimal(1)
-      let normalRate=borrowRatePerBlock
-      let borrowRatePerBlock100=new Decimal(0.2).mul(jumpMultiplierPerBlock).add(new Decimal(normalRate))
-      let supplyRatePerBlock100=new Decimal(borrowRatePerBlock100).mul(u).mul(one.sub(reserveFactor))
-      borrowInfo=new Decimal(borrowRatePerBlock100).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      supplyInfo=new Decimal(supplyRatePerBlock100).div(Decimal.pow(10,18)).mul(blocksPerDayBsc).add(one)
-      borrowApy=Decimal.pow(borrowInfo,daysPerYearBsc).sub(one).mul(hundred)
-      supplyApy=Decimal.pow(supplyInfo,daysPerYearBsc).sub(one).mul(hundred)
-      console.log("borrowRatePerBlock",borrowRatePerBlock100.toString())
-      console.log("supplyRatePerBlock",supplyRatePerBlock100.toString())
-      console.log("borrowApy",borrowApy.toString())
-      console.log("supplyApy",supplyApy.toString())
+      u = new Decimal(1)
+      let normalRate = borrowRatePerBlock
+      let borrowRatePerBlock100 = new Decimal(0.2).mul(jumpMultiplierPerBlock).add(new Decimal(normalRate))
+      let supplyRatePerBlock100 = new Decimal(borrowRatePerBlock100).mul(u).mul(one.sub(reserveFactor))
+      borrowInfo = new Decimal(borrowRatePerBlock100).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      supplyInfo = new Decimal(supplyRatePerBlock100).div(Decimal.pow(10, 18)).mul(blocksPerDayBsc).add(one)
+      borrowApy = Decimal.pow(borrowInfo, daysPerYearBsc).sub(one).mul(hundred)
+      supplyApy = Decimal.pow(supplyInfo, daysPerYearBsc).sub(one).mul(hundred)
+      console.log("borrowRatePerBlock", borrowRatePerBlock100.toString())
+      console.log("supplyRatePerBlock", supplyRatePerBlock100.toString())
+      console.log("borrowApy", borrowApy.toString())
+      console.log("supplyApy", supplyApy.toString())
       console.log("")
     },
-    async supplyRatePerBlockPage(tokenName){
+    async supplyRatePerBlockPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取每一个区块的存款利率
       await supplyRatePerBlock(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async borrowRatePerBlockPage(tokenName){
+    async borrowRatePerBlockPage(tokenName) {
       let eTokenAddress
-      if (tokenName===constants.eUSDT){
-        eTokenAddress=address.bhp.eUSDT
-      }else if (tokenName===constants.eFIL){
-        eTokenAddress=address.bhp.eFIL
+      if (tokenName === constants.eUSDT) {
+        eTokenAddress = address.bhp.eUSDT
+      } else if (tokenName === constants.eFIL) {
+        eTokenAddress = address.bhp.eFIL
       }
-      let result=0
+      let result = 0
       //获取每一个区块的借款利率
       await borrowRatePerBlock(
           this.$store.state.wallet,
           eTokenAddress,
-      ).then(res =>{
-        result=res
-      }).catch(err=>{
+      ).then(res => {
+        result = res
+      }).catch(err => {
         this.getErrorInfo(err)
       })
       return result
     },
-    async searchLiquidity(){
-      let that=this
-      this.account=that.$store.state.wallet.address
-      this.liquidity.sumCollateral=new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor))
-      this.liquidity.sumBorrowPlusEffects=that.borrowUsdt.balance
+    async searchLiquidity() {
+      let that = this
+      this.account = that.$store.state.wallet.address
+      this.liquidity.sumCollateral = new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor))
+      this.liquidity.sumBorrowPlusEffects = that.borrowUsdt.balance
     },
     handleLiquid(index, row) {
       console.log(index, row);
     },
-    riskValue(h, { column }) {
+    riskValue(h, {column}) {
       return h(
-          'div',[
+          'div', [
             h('span', column.label),
-            h('el-tooltip',{
-              props:{
-                effect:'dark',
-                content:' 风险值超过100%将会被进行清算，请尽量控制风险值在85%以内 ',
-                placement:'top'
+            h('el-tooltip', {
+              props: {
+                effect: 'dark',
+                content: ' 风险值超过100%将会被进行清算，请尽量控制风险值在85%以内 ',
+                placement: 'top'
               },
-            },[
+            }, [
               h('i', {
-                class:'el-icon-question',
-                style:'margin-left:5px;'
+                class: 'el-icon-question',
+                style: 'margin-left:5px;'
               })
             ])
           ]
       );
     },
-    borrowCount(h, { column }) {
+    borrowCount(h, {column}) {
       return h(
-          'div',[
+          'div', [
             h('span', column.label),
-            h('el-tooltip',{
-              props:{
-                effect:'dark',
-                content:'借款代币数量',
-                placement:'top'
+            h('el-tooltip', {
+              props: {
+                effect: 'dark',
+                content: '借款代币数量',
+                placement: 'top'
               },
-            },[
+            }, [
               h('i', {
-                class:'el-icon-question',
-                style:'margin-left:5px;'
+                class: 'el-icon-question',
+                style: 'margin-left:5px;'
               })
             ])
           ]
