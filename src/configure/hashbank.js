@@ -26,6 +26,7 @@ export const address = {
         "UsdtJumpRateModel":"0x00182c24a9D279B0E6f5c2815956E5f4816371BF",
     },
     "bhp2":{
+        "url":"https://bscscan.com/address/",
         // bsc test mhxw deploy
         "Comptroller": '0x9e8830275a1A5d12e346a9d22A62be9a3f9CaEDA',
         "Unitroller": '0x66BdA36bDe4BD43b4f13e6Cc9d2730636a1dAE3d',
@@ -37,6 +38,7 @@ export const address = {
         "eFIL": '0xd82956a16443788e86231b1eC9C7191fd2185347'
     },
     "bhp":{
+        "url":"https://testnet.bscscan.com/address/",
         // bsc wepiggy
         "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
