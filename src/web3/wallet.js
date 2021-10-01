@@ -57,7 +57,7 @@ export async function connectWallet(that) {
         });
         provider.on("networkChanged", async (networkId) => {
             console.log("网络改变："+networkId)
-            if (!(parseInt(networkId) === 3476||parseInt(networkId) === 6779||parseInt(networkId) === 97||parseInt(networkId) === 56)) {
+            if (!(parseInt(networkId) === 3476||parseInt(networkId) === 6779||parseInt(networkId) === 97||parseInt(networkId) === 56||parseInt(networkId) === 128||parseInt(networkId) === 1||parseInt(networkId) === 2)) {
                 await disconnectWallet(web3, data => {})
             }
             // 更新地址

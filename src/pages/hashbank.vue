@@ -11,17 +11,33 @@
                   <span>市场概况</span>
                 </div>
                 <el-col :span="24" style="margin-bottom: 20px;">
-                  <el-descriptions title="其他" direction="vertical" :column="5" border size="medium" >
-                    <el-descriptions-item label="每年的区块数">{{ panel.blocksPerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="基准区块利率">{{ panel.baseRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点">{{ panel.kink }}</el-descriptions-item>
-                    <el-descriptions-item label="区块斜率">{{ panel.multiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点后区块斜率">{{ panel.jumpMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="Unitroller清算系数">{{ panel.closeFactorMantissa }} %</el-descriptions-item>
-                    <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                  <el-descriptions title="USDT" direction="vertical" :column="6" border size="medium" style="margin-bottom: 15px;">
+                    <el-descriptions-item label="每年的区块数">{{ panel.usdtBlocksPerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="基准区块利率">{{ panel.usdtBaseRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点">{{ panel.usdtKink }} %</el-descriptions-item>
+                    <el-descriptions-item label="区块斜率">{{ panel.usdtMultiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点后区块斜率">{{ panel.usdtJumpMultiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="USDT储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
+                    <el-descriptions-item label="R0">{{ panel.r0Usdt}} %</el-descriptions-item>
+                    <el-descriptions-item label="R1">{{ panel.r1Usdt }} %</el-descriptions-item>
+                    <el-descriptions-item label="R2">{{ panel.r2Usdt }} %</el-descriptions-item>
                     <el-descriptions-item label="eUSDT合约最新触发高度">{{ panel.accrualUsdtBlockNumber}}</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                    <el-descriptions-item label="Unitroller清算系数">{{ panel.closeFactorMantissa }} %</el-descriptions-item>
+                  </el-descriptions>
+                  <el-descriptions title="FIL" direction="vertical" :column="6" border size="medium" >
+                    <el-descriptions-item label="每年的区块数">{{ panel.filBlocksPerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="基准区块利率">{{ panel.filBaseRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点">{{ panel.filKink }} %</el-descriptions-item>
+                    <el-descriptions-item label="区块斜率">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点后区块斜率">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="FIL储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
+                    <el-descriptions-item label="R0">{{ panel.r0Fil}} %</el-descriptions-item>
+                    <el-descriptions-item label="R1">{{ panel.r1Fil }} %</el-descriptions-item>
+                    <el-descriptions-item label="R2">{{ panel.r2Fil }} %</el-descriptions-item>
                     <el-descriptions-item label="eFIL合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.totalBorrowsInfo }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="eFIL合约最新触发的借款总额">{{ panel.filTotalReservesInfo }} USDT</el-descriptions-item>
                   </el-descriptions>
                 </el-col>
                 <el-col :span="12">
@@ -32,7 +48,6 @@
                     <el-descriptions-item label="USDT储备金"> {{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
                     <el-descriptions-item label="USDT利用率"> {{ panel.usdtUtilizationRate }} %</el-descriptions-item>
                     <el-descriptions-item label="USDT每个区块借款利率">{{ panel.borrowUsdtRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="USDT储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
                     <el-descriptions-item label="USDT每个区块存款利率">{{ panel.supplyUsdtRatePerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="USDT借款年APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
                     <el-descriptions-item label="USDT存款年APY">{{ panel.supplyUsdtApy }} %</el-descriptions-item>
@@ -48,7 +63,6 @@
                     <el-descriptions-item label="FIL储备金(没有)"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
                     <el-descriptions-item label="FIL利用率(没有)"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
                     <el-descriptions-item label="FIL每个区块借款利率(没有,假值)">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="FIL储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
                     <el-descriptions-item label="FIL每个区块存款利率(没有)">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="FIL借款年APY(没有,假值)">{{ panel.borrowFilApy }} %</el-descriptions-item>
                     <el-descriptions-item label="FIL存款年APY(没有)">{{ panel.supplyFilApy }} %</el-descriptions-item>
@@ -465,42 +479,8 @@
           <el-tab-pane label="合约" name="fourth">
             <el-card class="box-card">
               <el-tabs v-model="contract.activeName" tab-position="left">
-                <el-tab-pane label="BHP测试网" name="first">
-                  <el-descriptions title="BHP测试网" :column="1" border>
-                    <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D
-                    </el-descriptions-item>
-                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
-                    <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
-                    <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb
-                    </el-descriptions-item>
-                    <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0
-                    </el-descriptions-item>
-                    <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C
-                    </el-descriptions-item>
-                  </el-descriptions>
-                </el-tab-pane>
-                <el-tab-pane label="BSC测试网" name="second">
-                  <el-descriptions title="BSC测试网" :column="1" border>
-                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4
-                    </el-descriptions-item>
-                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
-                    <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
-                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5
-                    </el-descriptions-item>
-                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28
-                    </el-descriptions-item>
-                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF
-                    </el-descriptions-item>
-                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0
-                    </el-descriptions-item>
-                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6
-                    </el-descriptions-item>
-                  </el-descriptions>
-                </el-tab-pane>
-                <el-tab-pane label="BSC测试网-MHXW" name="four">
-                  <el-descriptions title="BSC测试网-MHXW" :column="1" border>
+                <el-tab-pane label="当前运行版" name="four">
+                  <el-descriptions title="当前运行版" :column="1" border>
                     <el-descriptions-item label="eFIL">
                       <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.eFIL]" target="_blank">{{
                           addressInfo.bhp.eFIL
@@ -540,10 +520,49 @@
                         {{ addressInfo.bhp.UsdtJumpRateModel }}
                       </el-link>
                     </el-descriptions-item>
+                    <el-descriptions-item label="FilJumpRateModel">
+                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.FilJumpRateModel]" target="_blank">
+                        {{ addressInfo.bhp.FilJumpRateModel }}
+                      </el-link>
+                    </el-descriptions-item>
                     <el-descriptions-item label="FILPriceSource">
                       <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.FilChainlink]" target="_blank">
                         {{ addressInfo.bhp.FilChainlink }}
                       </el-link>
+                    </el-descriptions-item>
+                  </el-descriptions>
+                </el-tab-pane>
+                <el-tab-pane label="BHP测试网" name="first">
+                  <el-descriptions title="BHP测试网" :column="1" border>
+                    <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                    <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0
+                    </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C
+                    </el-descriptions-item>
+                  </el-descriptions>
+                </el-tab-pane>
+                <el-tab-pane label="BSC测试网" name="second">
+                  <el-descriptions title="BSC测试网" :column="1" border>
+                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0</el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                    <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28
+                    </el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF
+                    </el-descriptions-item>
+                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0
+                    </el-descriptions-item>
+                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6
                     </el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
@@ -628,7 +647,7 @@ export default {
       },
       dialogActiveName: 'first',
       contract: {
-        activeName: 'first',
+        activeName: 'four',
       },
       liquidity: {
         activeName: 'first',
@@ -654,11 +673,22 @@ export default {
         ],
       },
       panel: {
-        blocksPerYear:0,
-        jumpMultiplierPerBlock:0,
-        multiplierPerBlock:0,
-        baseRatePerBlock:0,
-        kink:0,
+        r0Usdt:0,
+        r1Usdt:0,
+        r2Usdt:0,
+        r0Fil:0,
+        r1Fil:0,
+        r2Fil:0,
+        usdtBlocksPerYear:0,
+        filBlocksPerYear:0,
+        usdtJumpMultiplierPerBlock:0,
+        filJumpMultiplierPerBlock:0,
+        usdtMultiplierPerBlock:0,
+        filMultiplierPerBlock:0,
+        usdtBaseRatePerBlock:0,
+        filBaseRatePerBlock:0,
+        usdtKink:0,
+        filKink:0,
         closeFactorMantissa:0,
         activeName: 'first',
         filUtilizationRate: 0,
@@ -737,17 +767,18 @@ export default {
       },
       addressInfo: {
         "bhp": {
-          "url": "https://bscscan.com/address/",
-          // bsc test mhxw deploy
-          "Comptroller": '0x9e8830275a1A5d12e346a9d22A62be9a3f9CaEDA',
-          "Unitroller": '0x66BdA36bDe4BD43b4f13e6Cc9d2730636a1dAE3d',
-          "UsdtJumpRateModel": '0xb67877E787c266CBB1e8D569Bf750642e687b00C',
-          "Oracle": '0xA074c7A4eac4BEd6588597C220D966739221d2F6',
-          "USDT": '0xDF23a7Da5995B2e501dCAb2a9A901C91799aaB7a',
-          "eUSDT": '0x7712920cC915eB9A8f1392791ED0598167a8AE6C',
-          "FIL": '0xf120638637B49b230E2c2D36e144362cfC060089',
-          "eFIL": '0xd82956a16443788e86231b1eC9C7191fd2185347',
-          "FilChainlink": "0x17308A18d4a50377A4E1C37baaD424360025C74D"
+          "url":"https://bscscan.com/address/",
+          // bsc pig
+          "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
+          "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
+          "UsdtJumpRateModel": '0xc1b02e52e9512519edf99671931772e452fb4399',
+          "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
+          "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
+          "USDT": '0x55d398326f99059fF775485246999027B3197955',
+          "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
+          "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
+          "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
+          "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
         },
       }
     };
@@ -1349,15 +1380,13 @@ export default {
       }
       this.getApy(constants.eUSDT)
       this.getApy(constants.eFIL)
-      this.getBSCApy()
+      //this.getBSCApy()
       this.viewPrice()
       this.checkMemberShipPage()
       this.closeFactorMantissaPage()
-      this.blocksPerYearPage()
-      this.baseRatePerBlockPage()
-      this.multiplierPerBlockPage()
-      this.jumpMultiplierPerBlockPage()
-      this.kinkPage()
+
+      this.getApr()
+
       this.getSupplyPage(constants.eUSDT)
       this.getBorrowPage(constants.eUSDT)
       this.getSupplyPage(constants.eFIL)
@@ -1540,7 +1569,7 @@ export default {
       //获取最后一次合约触发时的借款总额
       await borrowIndex(
           this.$store.state.wallet,
-          address.bhp.eUSDT,
+          eTokenAddress,
       ).then(res => {
         result = res
       }).catch(err => {
@@ -1562,7 +1591,6 @@ export default {
           eTokenAddress,
       ).then(res => {
         result = res
-        console.log(tokenName,res)
         //efilhom
 /*        if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1638,37 +1666,41 @@ export default {
       return result
     },
     async getBorrowRatePage(tokenName, cash, borrows, reserves) {
-      let contractAddress
+      let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        contractAddress = address.bhp.UsdtJumpRateModel
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
       }
-      contractAddress = address.bhp.UsdtJumpRateModel
       let result = 0
       //获取USDT资金池余额
       await getBorrowRate(
           this.$store.state.wallet,
-          contractAddress,
+          interestModelAddr,
           cash,
           borrows,
           reserves
       ).then(res => {
         result = res
       }).catch(err => {
+        console.log("error getBorrowRatePage")
         this.getErrorInfo(err)
       })
       return result
     },
     async getSupplyRatePage(tokenName, cash, borrows, reserves, reserveFactor) {
-      let contractAddress
+      let interestModelAddr
       if (tokenName === constants.eUSDT) {
-
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
       }
-      contractAddress = address.bhp.UsdtJumpRateModel
+
       let result = 0
       //获取USDT资金池余额
       await getSupplyRate(
           this.$store.state.wallet,
-          contractAddress,
+          interestModelAddr,
           cash,
           borrows,
           reserves,
@@ -1676,14 +1708,22 @@ export default {
       ).then(res => {
         result = res
       }).catch(err => {
+        console.log("error getSupplyRate")
         this.getErrorInfo(err)
       })
       return result
     },
-    async utilizationRatePage(cash, borrows, reserves) {
+    async utilizationRatePage(tokenName,cash, borrows, reserves) {
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
       let result = 0
       //获取USDT资金池余额
       await utilizationRate(
+          interestModelAddr,
           this.$store.state.wallet,
           cash,
           borrows,
@@ -1691,6 +1731,7 @@ export default {
       ).then(res => {
         result = res
       }).catch(err => {
+        console.log("error utilizationRatePage")
         this.getErrorInfo(err)
       })
       return result
@@ -1706,6 +1747,7 @@ export default {
       await viewPrice(
           this.$store.state.wallet,
           eTokenAddress,
+          address.bhp.Oracle
       ).then(res => {
         let balance = new Decimal(res)
         //efil
@@ -1752,6 +1794,7 @@ export default {
           enterMarkets(
               this.$store.state.wallet,
               assetArray,
+              address.bhp.Unitroller,
               data => {
                 this.$parent.url = bhp + data.message;
                 this.$parent.flag2 = true;
@@ -1771,6 +1814,7 @@ export default {
           exitMarket(
               this.$store.state.wallet,
               assetToken,
+              address.bhp.Unitroller,
               data => {
                 this.$parent.url = bhp + data.message;
                 this.$parent.flag2 = true;
@@ -1821,6 +1865,7 @@ export default {
       await checkMembership(
           this.$store.state.wallet,
           address.bhp.eFIL,
+          address.bhp.Unitroller
       ).then(res => {
         this.supplyFil.isEnterMarket = res
         isSuccess = res
@@ -1829,84 +1874,167 @@ export default {
       })
       return isSuccess
     },
-    async kinkPage() {
-      await kink(
-          this.$store.state.wallet,
-          address.bhp.Comptroller,
-      ).then(res => {
-        this.panel.kink = res
-      }).catch(err => {
-        this.getErrorInfo(err)
-      })
-    },
-    async blocksPerYearPage() {
-      await blocksPerYear(
-          this.$store.state.wallet,
-          address.bhp.Comptroller,
-      ).then(res => {
-        this.panel.blocksPerYear = res
-      }).catch(err => {
-        this.getErrorInfo(err)
-      })
-    },
     async closeFactorMantissaPage() {
+      let result
       await closeFactorMantissa(
           this.$store.state.wallet,
           address.bhp.Unitroller,
       ).then(res => {
+        result=res
         this.panel.closeFactorMantissa = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       }).catch(err => {
+        console.log("err closeFactorMantissaPage")
         this.getErrorInfo(err)
       })
+      return result
     },
-    async jumpMultiplierPerBlockPage() {
+
+    async kinkPage(tokenName) {
+      let result
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
+      await kink(
+          this.$store.state.wallet,
+          interestModelAddr,
+      ).then(res => {
+        result=res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+        }else if (tokenName === constants.eFIL){
+          this.panel.filKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+        }
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+      return result
+    },
+    async blocksPerYearPage(tokenName) {
+      let result
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
+      await blocksPerYear(
+          this.$store.state.wallet,
+          interestModelAddr,
+      ).then(res => {
+        result=res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtBlocksPerYear = res
+        }else if (tokenName === constants.eFIL){
+          this.panel.filBlocksPerYear = res
+        }
+      }).catch(err => {
+        console.log("err blocksPerYearPage")
+        this.getErrorInfo(err)
+      })
+      return result
+    },
+    async jumpMultiplierPerBlockPage(tokenName) {
+      let result
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
       await jumpMultiplierPerBlock(
           this.$store.state.wallet,
+          interestModelAddr
       ).then(res => {
-        this.panel.jumpMultiplierPerBlock = res
+        result=res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtJumpMultiplierPerBlock = res
+        }else if (tokenName === constants.eFIL){
+          this.panel.filJumpMultiplierPerBlock = res
+        }
       }).catch(err => {
         this.getErrorInfo(err)
       })
+      return result
     },
-    async multiplierPerBlockPage() {
+    async multiplierPerBlockPage(tokenName) {
+      let result
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
       await multiplierPerBlock(
           this.$store.state.wallet,
+          interestModelAddr
       ).then(res => {
-        this.panel.multiplierPerBlock = res
+        result=res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtMultiplierPerBlock = res
+        }else if (tokenName === constants.eFIL){
+          this.panel.filMultiplierPerBlock = res
+        }
       }).catch(err => {
         this.getErrorInfo(err)
       })
+      return result
     },
-    async baseRatePerBlockPage() {
+    async baseRatePerBlockPage(tokenName) {
+      let result
+      let interestModelAddr
+      if (tokenName === constants.eUSDT) {
+        interestModelAddr = address.bhp.UsdtJumpRateModel
+      }else if (tokenName === constants.eFIL){
+        interestModelAddr = address.bhp.FilJumpRateModel
+      }
       await baseRatePerBlock(
           this.$store.state.wallet,
+          interestModelAddr
       ).then(res => {
-        this.panel.baseRatePerBlock = res
+        result=res
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtBaseRatePerBlock = res
+        }else if (tokenName === constants.eFIL){
+          this.panel.filBaseRatePerBlock = res
+        }
       }).catch(err => {
         this.getErrorInfo(err)
       })
+      return result
+    },
+
+    randomString(e) {
+        e = e || 32;
+      let t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
+          a = t.length,
+          n = "";
+      for (let i = 0; i < e; i++) {
+        n += t.charAt(Math.floor(Math.random() * a));
+      }
+      return n
     },
     async accrueInterestPage(tokenName) {
       let currentBlockNumber = await this.getBlockNumberPage()
-      console.log("最新高度：", currentBlockNumber)
+      let rand=this.randomString(6)
       let accrualBlockNumber = await this.accrualBlockNumberPage(tokenName)
       let totalCash = await this.getCashPage(tokenName)
       let totalBorrows = await this.totalBorrowsPage(tokenName)
       let totalReserves = await this.totalReservesPage(tokenName)
       let borrowIndex = await this.borrowIndexPage(tokenName)
-      let utilizationRate
+      let utilizationRate= await this.utilizationRatePage(tokenName,totalCash, totalBorrows, totalReserves)
       if (tokenName === constants.eUSDT) {
-        utilizationRate = await this.utilizationRatePage(totalCash, totalBorrows, totalReserves)
         this.panel.usdtUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eFIL) {
-        utilizationRate = await this.utilizationRatePage(totalCash, totalBorrows, totalReserves)
         this.panel.filUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       }
       let borrowRate = await this.getBorrowRatePage(tokenName, totalCash, totalBorrows, totalReserves)
       if (tokenName === constants.eFIL) {
-        console.log("原来totalCash,totalBorrows,totalReserves", totalCash.toString(), totalBorrows.toString(), totalReserves.toString())
+        /*console.log("原来totalCash,totalBorrows,totalReserves", totalCash.toString(), totalBorrows.toString(), totalReserves.toString())
         console.log("borrowRate", borrowRate.toString())
-        console.log("utilizationRate", utilizationRate.toString())
+        console.log("utilizationRate", utilizationRate.toString())*/
       }
       let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
       this.borrowUsdt.borrowRate = borrowRate
@@ -1923,7 +2051,7 @@ export default {
       let totalReservesNew = new Decimal(new Decimal(reserveFactorMantissa).mul(interestAccumulated).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).add(new Decimal(totalReserves))
       // 累加借款指数=区块区间内的单位利息x借款指数/1Ether+借款指数
       let borrowIndexNew = new Decimal(simpleInterestFactor.mul(new Decimal(borrowIndex)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).add(new Decimal(borrowIndex))
-      console.log("totalBorrowsNew",totalBorrowsNew.toString(),totalReservesNew.toString(),borrowIndexNew.toString(),totalCash.toString())
+      //console.log("totalBorrowsNew",totalBorrowsNew.toString(),totalReservesNew.toString(),borrowIndexNew.toString(),totalCash.toString())
       return {borrowIndex, totalBorrowsNew, totalReservesNew, borrowIndexNew, totalCash}
     },
     async exchangeRatePage(tokenName) {
@@ -2051,8 +2179,8 @@ export default {
         return
       }
       console.log("getApy",tokenName,this.$store.state.wallet.networkId)
-      if (this.$store.state.wallet.networkId === 97||this.$store.state.wallet.networkId === 56) {
-        //bhp主网测试 每3s一个区块
+      if (this.$store.state.wallet.networkId === 97||this.$store.state.wallet.networkId === 56||this.$store.state.wallet.networkId === 128) {
+        //bsc主网测试 每3s一个区块
         let blocksPerDay = 28800
         //一年按照365天计算
         let daysPerYear = 365
@@ -2066,10 +2194,10 @@ export default {
         let list = await this.accrueInterestPage(tokenName)
 
         //合约最后一次触发
-        let supplyRatePerBlock=await this.supplyRatePerBlockPage(tokenName)
-        let borrowRatePerBlock=await this.borrowRatePerBlockPage(tokenName)
-        //let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN))
-        //let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN), reserveFactorMantissa)
+        //let supplyRatePerBlock=await this.supplyRatePerBlockPage(tokenName)
+        //let borrowRatePerBlock=await this.borrowRatePerBlockPage(tokenName)
+        let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN))
+        let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN), reserveFactorMantissa)
         let one = new Decimal(1)
         let hundred = new Decimal(100)
         let supply = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
@@ -2114,6 +2242,44 @@ export default {
           this.panel.supplyUsdtApy = supplyApy
           this.panel.borrowUsdtApy = borrowApy
         }else if (tokenName===constants.eFIL){
+          this.panel.borrowFilRatePerBlock=borrowRatePerBlock
+          this.panel.supplyFilRatePerBlock=supplyRatePerBlock
+          this.panel.supplyFilApy = supplyApy
+          this.panel.borrowFilApy = borrowApy
+        }
+      } else if (this.$store.state.wallet.networkId === 1||this.$store.state.wallet.networkId === 2) {
+        //eth主网测试 每13.15一个区块
+        let blocksPerDay = 6570
+        //一年按照365天计算
+        let daysPerYear = 365
+
+        //储备金率：抽取借款利息的百分比
+        //efilhom为0 方便扩展可取合约
+        //let reserveFactorMantissa=0
+        let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
+
+        //实时
+        let list = await this.accrueInterestPage(tokenName)
+
+        //合约最后一次触发
+        //let supplyRatePerBlock=await this.supplyRatePerBlockPage(tokenName)
+        //let borrowRatePerBlock=await this.borrowRatePerBlockPage(tokenName)
+        let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN))
+        let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN), reserveFactorMantissa)
+        let one = new Decimal(1)
+        let hundred = new Decimal(100)
+        let supply = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let borrow = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
+        let supplyApy = Decimal.pow(supply, daysPerYear).sub(one).mul(hundred)
+        let borrowApy = Decimal.pow(borrow, daysPerYear).sub(one).mul(hundred)
+        if (tokenName===constants.eUSDT){
+          this.panel.usdtReserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.borrowUsdtRatePerBlock=borrowRatePerBlock
+          this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
+          this.panel.supplyUsdtApy = supplyApy
+          this.panel.borrowUsdtApy = borrowApy
+        }else if (tokenName===constants.eFIL){
+          this.panel.filReserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
           this.panel.borrowFilRatePerBlock=borrowRatePerBlock
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
           this.panel.supplyFilApy = supplyApy
@@ -2266,6 +2432,31 @@ export default {
           ]
       );
     },
+    async getApr() {
+      let blocksPerYear = await this.blocksPerYearPage(constants.eUSDT)
+      let baseRatePerBlock = await this.baseRatePerBlockPage(constants.eUSDT)
+      let multiplierPerBlock =await this.multiplierPerBlockPage(constants.eUSDT)
+      let jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eUSDT)
+      let kink =await this.kinkPage(constants.eUSDT)
+      let r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      let r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      let r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.r0Usdt=r0
+      this.panel.r1Usdt=r1
+      this.panel.r2Usdt=r2
+
+      blocksPerYear =await this.blocksPerYearPage(constants.eFIL)
+      baseRatePerBlock =await this.baseRatePerBlockPage(constants.eFIL)
+      multiplierPerBlock =await this.multiplierPerBlockPage(constants.eFIL)
+      jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eFIL)
+      kink =await this.kinkPage(constants.eFIL)
+      r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.r0Fil=r0
+      this.panel.r1Fil=r1
+      this.panel.r2Fil=r2
+    }
   },
 };
 </script>

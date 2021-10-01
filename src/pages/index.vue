@@ -206,7 +206,8 @@ export default {
     changeUpdate() {
       if (this.$store.state.wallet.connected) {
         console.log('启动' + this.$store.state.wallet.networkId)
-        if (!(this.$store.state.wallet.networkId === 3476 || this.$store.state.wallet.networkId === 6779 || this.$store.state.wallet.networkId === 56 || this.$store.state.wallet.networkId === 97)) {
+        if (!(this.$store.state.wallet.networkId === 3476 || this.$store.state.wallet.networkId === 6779 || this.$store.state.wallet.networkId === 56 || this.$store.state.wallet.networkId === 97
+            ||this.$store.state.wallet.networkId === 128||this.$store.state.wallet.networkId === 1||this.$store.state.wallet.networkId === 2)) {
           this.$notify.error({
             title: '错误',
             message: '错误的网络：请使用BHP主网或测试网'
@@ -229,6 +230,12 @@ export default {
         return "BSC Testnet"
       }else if (networkId===56){
         return "BSC Mainnet"
+      }else if (networkId===128){
+        return "Heco Mainnet"
+      }else if (networkId===1){
+        return "ETH Mainnet"
+      }else if (networkId===2){
+        return "Repsten Testnet"
       }else if (networkId===-1){
         return "-1"
       }else{

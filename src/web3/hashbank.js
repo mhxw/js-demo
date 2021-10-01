@@ -133,10 +133,11 @@ export async function repayBorrowEstimateGas(contract,web3,userAddress,repayAmou
  * 查看某个用户地址是否开启对应cToken的抵押
  * @param wallet 用户地址
  * @param asset cToken合约
+ * @param comptrollerAddr 审计代理合约地址
  * @returns {Promise<*>}
  */
-export async function checkMembership(wallet,asset){
-    const contract = new wallet.web3.eth.Contract(abi.Comptroller, address.bhp.Comptroller)
+export async function checkMembership(wallet,asset,comptrollerAddr){
+    const contract = new wallet.web3.eth.Contract(abi.Comptroller, comptrollerAddr)
     return contract.methods.checkMembership(wallet.address,asset).call({from: wallet.address})
 }
 
@@ -144,12 +145,13 @@ export async function checkMembership(wallet,asset){
  * 开启cToken市场抵押
  * @param wallet 调用地址
  * @param assetArray 资产数组
+ * @param comptrollerAddr 代理合约地址
  * @param callback
  * @returns {Promise<unknown>}
  */
-export async function enterMarkets(wallet,assetArray,callback){
-    const contract = new wallet.web3.eth.Contract(abi.Comptroller, address.bhp.Comptroller)
-    await enterMarketsEstimateGas(contract,wallet.web3,wallet.address,assetArray,address.bhp.Comptroller)
+export async function enterMarkets(wallet,assetArray,comptrollerAddr,callback){
+    const contract = new wallet.web3.eth.Contract(abi.Comptroller, comptrollerAddr)
+    await enterMarketsEstimateGas(contract,wallet.web3,wallet.address,assetArray,comptrollerAddr)
     return Utils.callContract(contract.methods.enterMarkets(assetArray).send({from: wallet.address}), callback)
 }
 
@@ -166,12 +168,13 @@ export async function enterMarketsEstimateGas(contract,web3,userAddress,assetArr
  * 关闭抵押
  * @param wallet
  * @param asset
+ * @param comptrollerAddr 代理合约地址
  * @param callback
  * @returns {Promise<unknown>}
  */
-export async function exitMarket(wallet,asset,callback){
-    const contract = new wallet.web3.eth.Contract(abi.Comptroller, address.bhp.Comptroller)
-    await exitMarketsEstimateGas(contract,wallet.web3,wallet.address,asset,address.bhp.Comptroller)
+export async function exitMarket(wallet,asset,comptrollerAddr,callback){
+    const contract = new wallet.web3.eth.Contract(abi.Comptroller, comptrollerAddr)
+    await exitMarketsEstimateGas(contract,wallet.web3,wallet.address,asset,comptrollerAddr)
     return Utils.callContract(contract.methods.exitMarket(asset).send({from: wallet.address}), callback)
 }
 
@@ -188,10 +191,11 @@ export async function exitMarketsEstimateGas(contract,web3,userAddress,asset,com
  * 查看当前预言机中币价
  * @param wallet 调用地址
  * @param asset 资产合约地址
+ * @param oracleAddr 预言机合约地址
  * @returns {Promise<*>}
  */
-export async function viewPrice(wallet,asset){
-    const contract = new wallet.web3.eth.Contract(abi.Oracle, address.bhp.Oracle)
+export async function viewPrice(wallet,asset,oracleAddr){
+    const contract = new wallet.web3.eth.Contract(abi.Oracle, oracleAddr)
     return contract.methods.getUnderlyingPrice(asset).call({from: wallet.address})
 }
 
@@ -339,40 +343,71 @@ export async function borrowRatePerBlock (wallet,asset) {
 }
 
 /**
- * 获取最新的资金使用率
+ * 获取对应token的资金使用率
  * @param wallet
  * @param cash
  * @param borrows
  * @param reserves
+ * @param interestModelAddr
  * @returns {Promise<*>}
  */
-export async function utilizationRate (wallet,cash,borrows,reserves) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+export async function utilizationRate (interestModelAddr,wallet,cash,borrows,reserves) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.utilizationRate(cash,borrows,reserves).call({from: wallet.address})
 }
 
-export async function baseRatePerBlock (wallet) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+/**
+ * 获取基准区块利率
+ * @param wallet
+ * @param interestModelAddr
+ * @returns {Promise<*>}
+ */
+export async function baseRatePerBlock (wallet,interestModelAddr) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.baseRatePerBlock().call({from: wallet.address})
 }
 
-export async function multiplierPerBlock (wallet) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+/**
+ * 获取拐点前的区块斜率
+ * @param wallet
+ * @param interestModelAddr
+ * @returns {Promise<*>}
+ */
+export async function multiplierPerBlock (wallet,interestModelAddr) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.multiplierPerBlock().call({from: wallet.address})
 }
 
-export async function jumpMultiplierPerBlock (wallet) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+/**
+ * 查询拐点后的区块斜率
+ * @param wallet
+ * @param interestModelAddr
+ * @returns {Promise<*>}
+ */
+export async function jumpMultiplierPerBlock (wallet,interestModelAddr) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.jumpMultiplierPerBlock().call({from: wallet.address})
 }
 
-export async function kink (wallet) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+/**
+ * 查询对应利率模型的拐点
+ * @param wallet
+ * @param interestModelAddr
+ * @returns {Promise<*>}
+ */
+export async function kink (wallet,interestModelAddr) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.kink().call({from: wallet.address})
 }
 
-export async function blocksPerYear (wallet) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, address.bhp.UsdtJumpRateModel)
+/**
+ * 查询每年有多少个区块
+ * @param wallet
+ * @param interestModelAddr
+ * @returns {Promise<*>}
+ */
+export async function blocksPerYear (wallet,interestModelAddr) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.blocksPerYear().call({from: wallet.address})
 }
 
@@ -382,19 +417,30 @@ export async function exchangeRateStored (wallet,asset) {
 }
 
 /**
- * 获取借贷利率
+ * 查询每个区块的借贷利率
  * @param wallet
+ * @param interestModelAddr 利率模型合约地址
  * @param cash
  * @param borrows
  * @param reserves
  * @returns {Promise<*>}
  */
-export async function getBorrowRate (wallet,contractAddress,cash,borrows,reserves) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, contractAddress)
+export async function getBorrowRate (wallet,interestModelAddr,cash,borrows,reserves) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.getBorrowRate(cash,borrows,reserves).call({from: wallet.address})
 }
 
-export async function getSupplyRate (wallet,contractAddress,cash, borrows, reserves, reserveFactor) {
-    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, contractAddress)
+/**
+ * 查询每个区块的存款利率
+ * @param wallet
+ * @param interestModelAddr 利率模型合约
+ * @param cash
+ * @param borrows
+ * @param reserves
+ * @param reserveFactor 储备金系数
+ * @returns {Promise<*>}
+ */
+export async function getSupplyRate (wallet,interestModelAddr,cash, borrows, reserves, reserveFactor) {
+    const contract = new wallet.web3.eth.Contract(abi.JumpRateModel, interestModelAddr)
     return contract.methods.getSupplyRate(cash,borrows,reserves,reserveFactor).call({from: wallet.address})
 }

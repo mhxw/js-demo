@@ -25,40 +25,90 @@ export const address = {
         "Oracle": "0x394078A417D16a0a0A611B38fc80084b8562cB28",
         "UsdtJumpRateModel":"0x00182c24a9D279B0E6f5c2815956E5f4816371BF",
     },
-    "bhp2":{
-        "url":"https://bscscan.com/address/",
+    "bhp3":{
         // bsc test mhxw deploy
-        "Comptroller": '0x9e8830275a1A5d12e346a9d22A62be9a3f9CaEDA',
-        "Unitroller": '0x66BdA36bDe4BD43b4f13e6Cc9d2730636a1dAE3d',
-        "UsdtJumpRateModel": '0xb67877E787c266CBB1e8D569Bf750642e687b00C',
-        "Oracle": '0xA074c7A4eac4BEd6588597C220D966739221d2F6',
-        "USDT": '0xDF23a7Da5995B2e501dCAb2a9A901C91799aaB7a',
-        "eUSDT": '0x7712920cC915eB9A8f1392791ED0598167a8AE6C',
-        "FIL": '0xf120638637B49b230E2c2D36e144362cfC060089',
-        "eFIL": '0xd82956a16443788e86231b1eC9C7191fd2185347'
-    },
-    "bhp":{
         "url":"https://testnet.bscscan.com/address/",
-        // bsc wepiggy
+        "Comptroller": '0x263BcC4AeC350985176E6d9DC0737Ad9DB1fFD9E',
+        "Unitroller": '0xd23eB91801FEabC15ECADb7679cBFAa5bC204Aa9',
+        "Oracle": '0xdcFc0137c4661dCc81a282A1373e90e08E1b09C8',
+        "USDT": '0x0eAeBb6BB5d9B401C4ad0c2cc3F74179408832F4',
+        "eUSDT": '0xbfAe1E775a4c5EB9a9fd861AC504af058b20a013',
+        "FIL": '0x0C1e9A87129EA0e29412bE74bC3745bdDb651073',
+        "eFIL": '0x7cA45E7328B9F61a98cA996B32E8DC4201184003',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "UsdtJumpRateModel": '0x1e9fF074BBAA178Bb812fd4138ADcF16e0D4622B',
+        "FilJumpRateModel": '0x3210286320f08Aa1AB8BccF637ab80c7140e17a1',
+    },
+    "ht-filda":{
+        // heco miannet filda
+        "url":"https://hecoinfo.com/address/",
+        "Comptroller": '0xb74633f2022452f377403b638167b0a135db096d',
+        "Unitroller": '0xb74633f2022452f377403b638167b0a135db096d',
+        "Oracle": '0x0DDD1956278d80165051805f3B688EF3C4C288A3',
+        "USDT": '0xa71edc38d189767582c38a3145b5873052c3e47a',
+        "eUSDT": '0xAab0C9561D5703e84867670Ac78f6b5b4b40A7c1',
+        "FIL": '0xae3a768f9ab104c69a7cd6041fe16ffa235d1810',
+        "eFIL": '0x043aFB65e93500CE5BCbf5Bbb41FC1fDcE2B7518',
+        "UsdtJumpRateModel": '0xc43940f47f04b3935d7c1d51c90199924acbc944',
+        "FilJumpRateModel": '0x8222b744d89cb1568b5e3b5978ce9c1c01e2a467',
+        "FilChainlink":'0x4d8869eCF1F8C78C0bd2439c4BcAE50AC8420bC4',
+    },
+    "ht-pig":{
+        // heco miannet pig
+        "url":"https://hecoinfo.com/address/",
+        "Comptroller": '0x3401d01e31bb6defcfc7410c312c0181e19b9dd5',
+        "Unitroller": '0x3401d01e31bb6defcfc7410c312c0181e19b9dd5',
+        "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
+        "USDT": '0xa71edc38d189767582c38a3145b5873052c3e47a',
+        "eUSDT": '0x12D803497D1e58dD4D4A4F455D754f1d0F937C8b',
+        "FIL": '0xae3a768f9ab104c69a7cd6041fe16ffa235d1810',
+        "eFIL": '0x0C8c1ab017c3C0c8A48dD9F1DB2F59022D190f0b',
+        "UsdtJumpRateModel": '0xd1121ade04ee215524aefbf7f8d45029214d668d',
+        "FilJumpRateModel": '0x8e1e582879cb8bac6283368e8ede458b63f499a5',
+        "FilChainlink":'0x4d8869eCF1F8C78C0bd2439c4BcAE50AC8420bC4',
+    },
+    "bsc-pig":{
+        // bsc miannet pig
+        "url":"https://bscscan.com/address/",
         "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
-        "UsdtJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
+        "UsdtJumpRateModel": '0xc1b02e52e9512519edf99671931772e452fb4399',
         "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
         "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
         "USDT": '0x55d398326f99059fF775485246999027B3197955',
         "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
         "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
-        "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32'
+        "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
+        "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "bsctest": {
+    "bhp": {
+        //eth mainnet compound
+        //https://compound.finance/markets
+        "url":"https://etherscan.io/address/",
+        "eFIL": "0xface851a4921ce59e912d19329929ce6da6eb0c7",
+        "eUSDT": "0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9",
+        "FIL": "0x514910771af9ca656af840dff83e8264ecf986ca",
+        "USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "Comptroller": "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b",
+        "Unitroller": '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b',
+        "Oracle": "0x6d2299c48a8dd07a872fdd0f8233924872ad1071",
+        "UsdtJumpRateModel":"0xfb564da37b41b2f6b6edcc3e56fbf523bd9f2012",
+        "FilJumpRateModel":"0xd956188795ca6f4a74092ddca33e0ea4ca3a1395",
+        "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
+    },
+    "bhp5": {
         //bhp 测试网
+        "url":"https://bscscan.com/address/",
         "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
         "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
         "USDT": "0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162",
         "Comptroller": "0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb",
+        "Unitroller": '0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb',
         "Oracle": "0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0",
         "UsdtJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
+        "FilJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
+        "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     }
 }
 
