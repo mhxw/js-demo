@@ -18,6 +18,9 @@
                     <el-descriptions-item label="区块斜率">{{ panel.usdtMultiplierPerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="拐点后区块斜率">{{ panel.usdtJumpMultiplierPerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="USDT储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
+                    <el-descriptions-item label="基准年利率">{{ panel.usdtBaseRatePerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.usdtMultiplierPerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点后年斜率">{{ panel.usdtJumpMultiplierPerYear}}</el-descriptions-item>
                     <el-descriptions-item label="R0">{{ panel.r0Usdt}} %</el-descriptions-item>
                     <el-descriptions-item label="R1">{{ panel.r1Usdt }} %</el-descriptions-item>
                     <el-descriptions-item label="R2">{{ panel.r2Usdt }} %</el-descriptions-item>
@@ -33,6 +36,9 @@
                     <el-descriptions-item label="区块斜率">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="拐点后区块斜率">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="FIL储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
+                    <el-descriptions-item label="基准年利率">{{ panel.filBaseRatePerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.filMultiplierPerYear }}</el-descriptions-item>
+                    <el-descriptions-item label="拐点后年斜率">{{ panel.filJumpMultiplierPerYear}}</el-descriptions-item>
                     <el-descriptions-item label="R0">{{ panel.r0Fil}} %</el-descriptions-item>
                     <el-descriptions-item label="R1">{{ panel.r1Fil }} %</el-descriptions-item>
                     <el-descriptions-item label="R2">{{ panel.r2Fil }} %</el-descriptions-item>
@@ -62,9 +68,9 @@
                     <el-descriptions-item label="FIL借款总数量(没有)"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
                     <el-descriptions-item label="FIL储备金(没有)"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
                     <el-descriptions-item label="FIL利用率(没有)"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
-                    <el-descriptions-item label="FIL每个区块借款利率(没有,假值)">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="FIL每个区块借款利率(没有)">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="FIL每个区块存款利率(没有)">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="FIL借款年APY(没有,假值)">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="FIL借款年APY(没有)">{{ panel.borrowFilApy }} %</el-descriptions-item>
                     <el-descriptions-item label="FIL存款年APY(没有)">{{ panel.supplyFilApy }} %</el-descriptions-item>
                     <el-descriptions-item label="FIL兑换率(保持恒定)"> 1 FIL ={{ panel.filExchangeRate }} eFIL</el-descriptions-item>
                     <el-descriptions-item label="FIL最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
@@ -673,6 +679,12 @@ export default {
         ],
       },
       panel: {
+        usdtBaseRatePerYear:0,
+        usdtMultiplierPerYear:0,
+        usdtJumpMultiplierPerYear:0,
+        filBaseRatePerYear:0,
+        filMultiplierPerYear:0,
+        filJumpMultiplierPerYear:0,
         r0Usdt:0,
         r1Usdt:0,
         r2Usdt:0,
@@ -993,6 +1005,7 @@ export default {
         this.getSuccessInfo(this.$parent.url)
 
       }).catch(err => {
+        console.log("err mint")
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
@@ -1515,13 +1528,23 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        // pig
-        if (tokenName === constants.eUSDT) {
-          this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+          //bhp comp
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          }
+        }else{
+          // pig
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          }
         }
       }).catch(err => {
+        console.log("err totalReserve")
         this.getErrorInfo(err)
       })
       return result
@@ -1547,11 +1570,20 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        // pig
-        if (tokenName === constants.eUSDT) {
-          this.panel.usdtTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+          //bhp comp
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+          }
+        }else{
+          // pig
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          }
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1597,11 +1629,20 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        //pig
-        if (tokenName === constants.eUSDT) {
-          this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+          //bhp comp
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          }
+        }else{
+          //pig
+          if (tokenName === constants.eUSDT) {
+            this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
+          }
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1758,13 +1799,25 @@ export default {
           result = balance.dividedBy(Decimal.pow(10, decimals.FIL))
           this.panel.filPrice = balance.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(4)
         }*/
-        //pig
-        if (tokenName === constants.eUSDT) {
-          result = balance.div(Decimal.pow(10, 18))
-          this.panel.usdtPrice = balance.div(Decimal.pow(10, 18)).toFixed(4)
-        } else if (tokenName === constants.eFIL) {
-          result = balance.div(Decimal.pow(10, 18))
-          this.panel.filPrice = balance.div(Decimal.pow(10, 18)).toFixed(4)
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+          //bhp comp
+          //pig
+          if (tokenName === constants.eUSDT) {
+            result = balance.div(Decimal.pow(10, 30))
+            this.panel.usdtPrice = balance.div(Decimal.pow(10, 30)).toFixed(4,Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            result = balance.div(Decimal.pow(10, 18))
+            this.panel.filPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
+          }
+        }else{
+          //pig
+          if (tokenName === constants.eUSDT) {
+            result = balance.div(Decimal.pow(10, 18))
+            this.panel.usdtPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            result = balance.div(Decimal.pow(10, 18))
+            this.panel.filPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
+          }
         }
       }).catch(err => {
         console.log("error viewPrice")
@@ -2039,7 +2092,7 @@ export default {
       let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
       this.borrowUsdt.borrowRate = borrowRate
       // 当前区块和 accrualBlockNumberPrior 之间的区块数
-      let blockDelta = new Decimal(currentBlockNumber).sub(new Decimal(accrualBlockNumber))
+      let blockDelta = new Decimal(currentBlockNumber).sub(new Decimal(accrualBlockNumber)).add(new Decimal(1))
       // 区块区间内的单位利息=借贷利率*区块数
       let simpleInterestFactor = new Decimal(borrowRate).mul(new Decimal(blockDelta))
       // 总借款在该区块区间内产生的总利息=区块区间内的单位利息*总借款/1Ether(最后取整数值)
@@ -2071,22 +2124,35 @@ export default {
       // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
       const cTokenDecimals = 8;
       let mantissa
-      if (tokenName === constants.eUSDT) {
-        //pig 为18
-        mantissa=28
-        //comp 30
-        //mantissa = 18 + decimals.USDT - cTokenDecimals
-        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-        this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
-      } else if (tokenName === constants.eFIL) {
-        mantissa = 18 + decimals.FIL - cTokenDecimals
-        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-        this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+
+      if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        //bhp comp
+        if (tokenName === constants.eUSDT) {
+          //comp 30
+          //18+18-8=28 efil 6
+          mantissa = 30 + decimals.USDT - cTokenDecimals
+          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, decimals.USDT))).toFixed(18, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          //18+18-8=28 efil 18
+          mantissa = 18 + decimals.FIL - cTokenDecimals
+          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, decimals.FIL))).toFixed(18, Decimal.ROUND_DOWN)
+        }
+      }else{
+        if (tokenName === constants.eUSDT) {
+          //pig 为18
+          mantissa=28
+          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          //28
+          mantissa = 18 + decimals.FIL - cTokenDecimals
+          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+        }
       }
-      if (tokenName === constants.eFIL) {
-        console.log("新的 totalCash totalBorrowsNew totalReservesNew", list.totalCash.toString(), list.totalBorrowsNew.toString(), list.totalReservesNew.toString())
-        console.log("exchangeRate cashPlusBorrowsMinusReserves", exchangeRate.toString(), cashPlusBorrowsMinusReserves.toString())
-      }
+
       return exchangeRate
     },
     async getSupplyPage(tokenName) {
@@ -2178,7 +2244,6 @@ export default {
       if (!this.verifyConnect()) {
         return
       }
-      console.log("getApy",tokenName,this.$store.state.wallet.networkId)
       if (this.$store.state.wallet.networkId === 97||this.$store.state.wallet.networkId === 56||this.$store.state.wallet.networkId === 128) {
         //bsc主网测试 每3s一个区块
         let blocksPerDay = 28800
@@ -2441,6 +2506,9 @@ export default {
       let r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       let r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       let r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.usdtBaseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.usdtMultiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.usdtJumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       this.panel.r0Usdt=r0
       this.panel.r1Usdt=r1
       this.panel.r2Usdt=r2
@@ -2453,6 +2521,9 @@ export default {
       r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.filBaseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.filMultiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.filJumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       this.panel.r0Fil=r0
       this.panel.r1Fil=r1
       this.panel.r2Fil=r2

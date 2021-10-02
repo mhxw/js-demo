@@ -14,30 +14,48 @@ export const constants = {
 }
 
 export const address = {
-    //bsc-t
-    "bhp1": {
-        //bsc 测试网 在线版
+    "bsc-t": {
+        //bsc test online
+        "role":"mhxw",
+        "url":"https://testnet.bscscan.com/address/",
         "eFIL": "0xF673099cae8EC04FF524d38924cb3BB5040503a0",
         "eUSDT": "0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
         "USDT": "0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169",
         "Comptroller": "0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5",
+        "Unitroller": '0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5',
         "Oracle": "0x394078A417D16a0a0A611B38fc80084b8562cB28",
         "UsdtJumpRateModel":"0x00182c24a9D279B0E6f5c2815956E5f4816371BF",
+        "FilJumpRateModel": '0x00182c24a9D279B0E6f5c2815956E5f4816371BF',
     },
-    "bhp3":{
-        // bsc test mhxw deploy
-        "url":"https://testnet.bscscan.com/address/",
-        "Comptroller": '0x263BcC4AeC350985176E6d9DC0737Ad9DB1fFD9E',
-        "Unitroller": '0xd23eB91801FEabC15ECADb7679cBFAa5bC204Aa9',
-        "Oracle": '0xdcFc0137c4661dCc81a282A1373e90e08E1b09C8',
-        "USDT": '0x0eAeBb6BB5d9B401C4ad0c2cc3F74179408832F4',
-        "eUSDT": '0xbfAe1E775a4c5EB9a9fd861AC504af058b20a013',
-        "FIL": '0x0C1e9A87129EA0e29412bE74bC3745bdDb651073',
-        "eFIL": '0x7cA45E7328B9F61a98cA996B32E8DC4201184003',
+    "lendhub":{
+        // heco mainnet lendhub
+        "url":"https://hecoinfo.com/address/",
+        "Comptroller": '0xd60831fb239d17acd328cc040e10069cbbdb076b',
+        "Unitroller": '0x6537d6307ca40231939985bcf7d83096dd1b4c09',
+        "Oracle": '0x2c2ec252940290d65b919a31f0df00c2262f2053',
+        "USDT": '0xa71edc38d189767582c38a3145b5873052c3e47a',
+        "eUSDT": '0xc502f3f6f1b71cb7d856e70b574d27d942c2993c',
+        "FIL": '0xae3a768f9ab104c69a7cd6041fe16ffa235d1810',
+        "eFIL": '0x276a4829d41bfc3885edb60c7b008188f096b082',
         "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
-        "UsdtJumpRateModel": '0x1e9fF074BBAA178Bb812fd4138ADcF16e0D4622B',
-        "FilJumpRateModel": '0x3210286320f08Aa1AB8BccF637ab80c7140e17a1',
+        "UsdtJumpRateModel": '0x5f03935b92ebcfac47a06159bca594c387b92ca0',
+        "FilJumpRateModel": '0xa408380fe27ac16b43e92003986e70d8c9bc244a',
+    },
+    "bhp":{
+        // bsc test mhxw deploy
+        "role":"mhxw",
+        "url":"https://testnet.bscscan.com/address/",
+        "Comptroller": '0xf8Acf1ff202F499801819523Da150068DC47B9AD',
+        "Unitroller": '0xA5ef53C7745C409284F4be5e0618B4FD973C5794',
+        "Oracle": '0x735733F7E3538eD9d36747c381c7e58F5edb2fd4',
+        "USDT": '0xc0329004c9b9C6BB61bEf4Ed294A72e62dF0776a',
+        "eUSDT": '0x1e69a53D6A47Bc172Cb843503C634C05c9E4D2B1',
+        "FIL": '0xDF101b4Cad101331b269743CF4bda2d917DBc7de',
+        "eFIL": '0xE857554404f781626353C017C674660cc91c9B26',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "UsdtJumpRateModel": '0x5F0E0B11326ddDdD837C0aa801Ef203CFB691874',
+        "FilJumpRateModel": '0x6D0a909cC6Efcb7d5d86ABfdF88eE38B6cb664fA',
     },
     "ht-filda":{
         // heco miannet filda
@@ -81,7 +99,8 @@ export const address = {
         "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "bhp": {
+    "eth-comp": {
+        "role":"eth-comp",
         //eth mainnet compound
         //https://compound.finance/markets
         "url":"https://etherscan.io/address/",
@@ -96,7 +115,7 @@ export const address = {
         "FilJumpRateModel":"0xd956188795ca6f4a74092ddca33e0ea4ca3a1395",
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "bhp5": {
+    "bhp-test": {
         //bhp 测试网
         "url":"https://bscscan.com/address/",
         "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
