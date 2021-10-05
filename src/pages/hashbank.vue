@@ -375,7 +375,7 @@
                     </div>
                     <el-descriptions :column="4" border style="margin-top: 20px;">
                       <el-descriptions-item label="清算地址" label-class-name="my-label">
-                        {{ account }}
+                        本地址
                       </el-descriptions-item>
                       <el-descriptions-item label="FIL价格">$ {{ panel.filPrice }}</el-descriptions-item>
                       <el-descriptions-item label="USDT价格">$ {{ panel.usdtPrice }}</el-descriptions-item>
@@ -509,6 +509,11 @@
                       <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.USDT]" target="_blank">{{
                           addressInfo.bhp.USDT
                         }}
+                      </el-link>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="Unitroller">
+                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.Unitroller]" target="_blank">
+                        {{ addressInfo.bhp.Comptroller }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="Comptroller">
@@ -1461,11 +1466,22 @@ export default {
       ).then(res => {
         result = res
         let amount = new Decimal(res)
-        if (tokenName === constants.eUSDT) {
-          this.panel.eusdtBalance = amount.dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.efilBalance = amount.dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+          //bhp comp
+          if (tokenName === constants.eUSDT) {
+            this.panel.eusdtBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.efilBalance = amount.div(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
+          }
+        }else{
+          // pig
+          if (tokenName === constants.eUSDT) {
+            this.panel.eusdtBalance = amount.dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
+          } else if (tokenName === constants.eFIL) {
+            this.panel.efilBalance = amount.dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
+          }
         }
+
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -2117,6 +2133,11 @@ export default {
       let totalSupply = await this.totalSupplyPage(tokenName)
       if (new Decimal(totalSupply).cmp(new Decimal(0)) === 0) {
         exchangeRate = await this.exchangeRateStoredPage(tokenName)
+        if (tokenName === constants.eUSDT) {
+          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+6-8))).toFixed(18, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+18-8))).toFixed(18, Decimal.ROUND_DOWN)
+        }
         return exchangeRate
       }
 
@@ -2132,12 +2153,12 @@ export default {
           //18+18-8=28 efil 6
           mantissa = 30 + decimals.USDT - cTokenDecimals
           exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, decimals.USDT))).toFixed(18, Decimal.ROUND_DOWN)
+          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+6-8))).toFixed(18, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
           //18+18-8=28 efil 18
           mantissa = 18 + decimals.FIL - cTokenDecimals
           exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, decimals.FIL))).toFixed(18, Decimal.ROUND_DOWN)
+          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+18-8))).toFixed(18, Decimal.ROUND_DOWN)
         }
       }else{
         if (tokenName === constants.eUSDT) {
