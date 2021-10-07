@@ -46,21 +46,21 @@ export async function connectWallet(that) {
         provider.on("accountsChanged", async (accounts) => {
             console.log("地址改变："+accounts)
             if (!accounts[0]) {
-                await disconnectWallet(web3, data => {
-                })
+                await disconnectWallet(web3, data => {})
                 return
             }
             // 更新地址
             that.updateAddress(accounts[0]);
             // 更新数据
-            //that.changeUpdate();
+            that.changeUpdate();
         });
         provider.on("networkChanged", async (networkId) => {
             console.log("网络改变："+networkId)
             if (!(parseInt(networkId) === 3476||parseInt(networkId) === 6779||parseInt(networkId) === 97||parseInt(networkId) === 56||parseInt(networkId) === 128||parseInt(networkId) === 1||parseInt(networkId) === 2)) {
                 await disconnectWallet(web3, data => {})
+                return
             }
-            // 更新地址
+            // 更新网络ID
             that.updateNetworkId(parseInt(networkId,10));
             // 更新数据
             that.changeUpdate();

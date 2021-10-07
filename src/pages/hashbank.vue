@@ -83,10 +83,10 @@
             <!--   2.存取 -->
             <el-col :span="24">
               <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
-                <el-descriptions-item label="用户钱包FIL余额">{{ panel.filBalance }} FIL</el-descriptions-item>
-                <el-descriptions-item label="用户钱包USDT余额">{{ panel.usdtBalance }} USDT</el-descriptions-item>
-                <el-descriptions-item label="用户eFIL余额">{{ panel.efilBalance }} eFIL</el-descriptions-item>
-                <el-descriptions-item label="用户eUSDT余额">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
+                <el-descriptions-item label="钱包USDT数量">{{ panel.usdtBalance }} USDT</el-descriptions-item>
+                <el-descriptions-item label="凭证eUSDT数量">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
+                <el-descriptions-item label="钱包FIL数量">{{ panel.filBalance }} FIL</el-descriptions-item>
+                <el-descriptions-item label="凭证eFIL数量">{{ panel.efilBalance }} eFIL</el-descriptions-item>
                 <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ supplyFil.balance }}+ ${{ supplyUsdt.balance}}</el-descriptions-item>
                 <el-descriptions-item label="用户借款总额(USDT)"> $ {{ borrowUsdt.balance }}</el-descriptions-item>
               </el-descriptions>
@@ -99,10 +99,8 @@
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">USDT</el-descriptions-item>
                   <el-descriptions-item label="存款数量">{{ supplyUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="钱包USDT数量"> {{ panel.usdtBalance }} USDT</el-descriptions-item>
+                  <el-descriptions-item label="存款APY"> {{ panel.supplyUsdtApy }} %</el-descriptions-item>
                   <el-descriptions-item label="存款金额">$ {{ supplyUsdt.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="钱包eUSDT数量"> {{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
-                  <el-descriptions-item label="存款APY"> {{ panel.supplyFilApy }} %</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`USDT`)" type="success">存取</el-button>
                   </el-descriptions-item>
@@ -111,9 +109,6 @@
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">FIL</el-descriptions-item>
                   <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="钱包FIL数量"> {{ panel.filBalance }} FIL</el-descriptions-item>
-                  <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }}</el-descriptions-item>
-                  <el-descriptions-item label="钱包eFIL数量"> {{ panel.efilBalance }} eFiL</el-descriptions-item>
                   <el-descriptions-item label="抵押开关">
                     <el-switch
                         v-model="supplyFil.isEnterMarket"
@@ -121,6 +116,7 @@
                     >
                     </el-switch>
                   </el-descriptions-item>
+                  <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`FIL`)" type="success">存取</el-button>
                     <el-button size="small" v-show="!supplyFil.isEnterMarket" @click="switchMarketStatus()"
@@ -142,7 +138,7 @@
                 <el-descriptions size="medium" :column="2" border>
                   <el-descriptions-item label="资产">USDT</el-descriptions-item>
                   <el-descriptions-item label="借款数量">{{ borrowUsdt.count }} USDT</el-descriptions-item>
-                  <el-descriptions-item label="借款APY">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="借款APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ borrowUsdt.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
@@ -373,23 +369,34 @@
                     <div slot="header" class="clearfix">
                       <span>我的账户</span>
                     </div>
-                    <el-descriptions :column="4" border style="margin-top: 20px;">
-                      <el-descriptions-item label="清算地址" label-class-name="my-label">
-                        本地址
-                      </el-descriptions-item>
-                      <el-descriptions-item label="FIL价格">$ {{ panel.filPrice }}</el-descriptions-item>
-                      <el-descriptions-item label="USDT价格">$ {{ panel.usdtPrice }}</el-descriptions-item>
-                      <el-descriptions-item label="FIL抵押率">{{ panel.filCollateralFactor }}</el-descriptions-item>
-                      <el-descriptions-item label="抵押品最新存款总额(FIL)">$ {{ supplyFil.balance }}</el-descriptions-item>
-                      <el-descriptions-item label="A=抵押品最新存款总额x抵押率(FIL)">$ {{
+                    <el-descriptions title="借款限额" :column="6" direction="vertical" border style="margin-top: 20px;">
+                      <el-descriptions-item label="币种" label-class-name="my-label"> FIL</el-descriptions-item>
+                      <el-descriptions-item label="数量">  {{ supplyFil.count }}</el-descriptions-item>
+                      <el-descriptions-item label="币价">$ {{ panel.filPrice }}</el-descriptions-item>
+                      <el-descriptions-item label="抵押率">{{ panel.filCollateralFactor }}</el-descriptions-item>
+                      <el-descriptions-item label="抵押品价值(FIL抵押品+存款利息)">$ {{ supplyFil.balance }}</el-descriptions-item>
+                      <el-descriptions-item label="A(借款限额)=抵押品价值x抵押率(FIL)">$ {{
                           liquidity.sumCollateral
                         }}
                       </el-descriptions-item>
-                      <el-descriptions-item label="B=最新借款总额+利息(USDT)">$ {{
+                    </el-descriptions>
+
+                    <el-descriptions title="债务" :column="6" direction="vertical" border style="margin-top: 20px;">
+                      <el-descriptions-item label="币种" label-class-name="my-label"> USDT </el-descriptions-item>
+                      <el-descriptions-item label="数量"> {{ borrowUsdt.count }}</el-descriptions-item>
+                      <el-descriptions-item label="币价">$ {{ panel.usdtPrice }}</el-descriptions-item>
+                      <el-descriptions-item label="B(当前借款总额)=最新借款总额+利息(USDT)">$ {{
                           liquidity.sumBorrowPlusEffects
                         }}
                       </el-descriptions-item>
                       <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算</el-descriptions-item>
+                    </el-descriptions>
+
+                    <el-descriptions title="清算" :column="6" direction="vertical" border style="margin-top: 20px;">
+                      <el-descriptions-item label="清算系数" label-class-name="my-label"> 50% </el-descriptions-item>
+                      <el-descriptions-item label="清算奖励"> 8% </el-descriptions-item>
+                      <el-descriptions-item label="偿还usdt数量" label-class-name="my-label"> 0 </el-descriptions-item>
+                      <el-descriptions-item label="得到的fil数量"> 0 </el-descriptions-item>
                     </el-descriptions>
                   </el-card>
                 </el-tab-pane>
@@ -546,16 +553,13 @@
                 <el-tab-pane label="BHP测试网" name="first">
                   <el-descriptions title="BHP测试网" :column="1" border>
                     <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D
-                    </el-descriptions-item>
+                    <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D</el-descriptions-item>
                     <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
                     <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
-                    <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb
-                    </el-descriptions-item>
-                    <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0
-                    </el-descriptions-item>
-                    <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C
-                    </el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb</el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0</el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C</el-descriptions-item>
+                    <el-descriptions-item label="FilJumpRateModel">0x79A0d60FfE46519a63123A005055ed59a55c1C7c</el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC测试网" name="second">
@@ -565,16 +569,11 @@
                     </el-descriptions-item>
                     <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
                     <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
-                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5
-                    </el-descriptions-item>
-                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28
-                    </el-descriptions-item>
-                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF
-                    </el-descriptions-item>
-                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0
-                    </el-descriptions-item>
-                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6
-                    </el-descriptions-item>
+                    <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5</el-descriptions-item>
+                    <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28</el-descriptions-item>
+                    <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF</el-descriptions-item>
+                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
+                    <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6</el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC主网" name="third">
@@ -2304,8 +2303,8 @@ export default {
           this.panel.borrowFilApy = borrowApy
         }
       } else if (this.$store.state.wallet.networkId === 3476) {
-        //假定bhp主网 每块13.15s
-        let blocksPerDay = 6570
+        //bhp主网和测试网为 每块15s
+        let blocksPerDay = 5760
         //一年按照365天计算
         let daysPerYear = 365
 
@@ -2334,7 +2333,7 @@ export default {
           this.panel.borrowFilApy = borrowApy
         }
       } else if (this.$store.state.wallet.networkId === 1||this.$store.state.wallet.networkId === 2) {
-        //eth主网测试 每13.15一个区块
+        //eth主网 每13.15一个区块
         let blocksPerDay = 6570
         //一年按照365天计算
         let daysPerYear = 365
@@ -2374,6 +2373,7 @@ export default {
       }
     },
     async getBSCApy() {
+      //测试
       if (!this.verifyConnect()) {
         return
       }

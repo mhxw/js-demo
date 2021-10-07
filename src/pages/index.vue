@@ -28,7 +28,7 @@
       </el-result>
     </el-dialog>
     <el-row>
-        <el-col :span="12" style="margin:3em auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-col :span="12" style="margin:1.5em auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div style="text-align:center;margin: 0 auto;">
             <el-button type="success" round @click="centerDialogVisible = true" >{{ addressMsg }}</el-button>
             <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BHPTest`)" >添加并切换到 BHP Testnet</el-button>

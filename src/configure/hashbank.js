@@ -42,7 +42,7 @@ export const address = {
         "UsdtJumpRateModel": '0x5f03935b92ebcfac47a06159bca594c387b92ca0',
         "FilJumpRateModel": '0xa408380fe27ac16b43e92003986e70d8c9bc244a',
     },
-    "bhp":{
+    "mhxw":{
         // bsc test mhxw deploy
         "role":"mhxw",
         "url":"https://testnet.bscscan.com/address/",
@@ -115,18 +115,18 @@ export const address = {
         "FilJumpRateModel":"0xd956188795ca6f4a74092ddca33e0ea4ca3a1395",
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "bhp-test": {
+    "bhp": {
         //bhp 测试网
-        "url":"https://bscscan.com/address/",
+        "url":"https://pegasus.bhpnet.io/address/",
         "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
         "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
         "USDT": "0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162",
-        "Comptroller": "0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb",
+        "Comptroller": "0x5002D33b7f04e2809b84C74f6C0f7bDf2085Ca21",
         "Unitroller": '0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb',
         "Oracle": "0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0",
         "UsdtJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
-        "FilJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
+        "FilJumpRateModel":"0x79A0d60FfE46519a63123A005055ed59a55c1C7c",
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     }
 }
