@@ -493,59 +493,59 @@
             <el-card class="box-card">
               <el-tabs v-model="contract.activeName" tab-position="left">
                 <el-tab-pane label="当前运行版" name="four">
-                  <el-descriptions title="当前运行版" :column="1" border>
+                  <el-descriptions :title="this.addressInfo.current.name" :column="1" border>
                     <el-descriptions-item label="eFIL">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.eFIL]" target="_blank">{{
-                          addressInfo.bhp.eFIL
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.eFIL]" target="_blank">{{
+                          this.addressInfo.current.eFIL
                         }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="eUSDT">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.eUSDT]" target="_blank">{{
-                          addressInfo.bhp.eUSDT
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.eUSDT]" target="_blank">{{
+                          this.addressInfo.current.eUSDT
                         }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="FIL">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.FIL]" target="_blank">{{
-                          addressInfo.bhp.FIL
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FIL]" target="_blank">{{
+                          this.addressInfo.current.FIL
                         }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="USDT">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.USDT]" target="_blank">{{
-                          addressInfo.bhp.USDT
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.USDT]" target="_blank">{{
+                          this.addressInfo.current.USDT
                         }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="Unitroller">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.Unitroller]" target="_blank">
-                        {{ addressInfo.bhp.Comptroller }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.Unitroller]" target="_blank">
+                        {{ this.addressInfo.current.Unitroller }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="Comptroller">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.Comptroller]" target="_blank">
-                        {{ addressInfo.bhp.Comptroller }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.Comptroller]" target="_blank">
+                        {{ this.addressInfo.current.Comptroller }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="Oracle">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.Oracle]" target="_blank">
-                        {{ addressInfo.bhp.Oracle }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.Oracle]" target="_blank">
+                        {{ this.addressInfo.current.Oracle }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="UsdtJumpRateModel">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.UsdtJumpRateModel]" target="_blank">
-                        {{ addressInfo.bhp.UsdtJumpRateModel }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.UsdtJumpRateModel]" target="_blank">
+                        {{ this.addressInfo.current.UsdtJumpRateModel }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="FilJumpRateModel">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.FilJumpRateModel]" target="_blank">
-                        {{ addressInfo.bhp.FilJumpRateModel }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FilJumpRateModel]" target="_blank">
+                        {{ this.addressInfo.current.FilJumpRateModel }}
                       </el-link>
                     </el-descriptions-item>
                     <el-descriptions-item label="FILPriceSource">
-                      <el-link :href="[addressInfo.bhp.url+addressInfo.bhp.FilChainlink]" target="_blank">
-                        {{ addressInfo.bhp.FilChainlink }}
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FilChainlink]" target="_blank">
+                        {{ this.addressInfo.current.FilChainlink }}
                       </el-link>
                     </el-descriptions-item>
                   </el-descriptions>
@@ -636,7 +636,7 @@ import {
 } from "../web3/hashbank";
 import Decimal from 'decimal.js';
 import {address, constants, decimals} from "../configure/hashbank";
-import {erc20Approval, erc20BalanceOf} from "../web3";
+import {disconnectWallet, erc20Approval, erc20BalanceOf} from "../web3";
 import {bhp, exp} from "../configure/conf";
 
 export default {
@@ -706,7 +706,6 @@ export default {
         usdtKink:0,
         filKink:0,
         closeFactorMantissa:0,
-        activeName: 'first',
         filUtilizationRate: 0,
         usdtUtilizationRate: 0,
         supplyFilApy: 0,
@@ -741,6 +740,7 @@ export default {
         filTotalBorrowsInfo: 0,
         usdtExchangeRate: 0,
         filExchangeRate: 0,
+        activeName: 'first',
       },
       supplyFil: {
         userCanRedeemCount: 0,
@@ -782,19 +782,20 @@ export default {
         redeemAmount: 0,
       },
       addressInfo: {
-        "bhp": {
-          "url":"https://bscscan.com/address/",
-          // bsc pig
-          "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
-          "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
-          "UsdtJumpRateModel": '0xc1b02e52e9512519edf99671931772e452fb4399',
-          "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
-          "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
-          "USDT": '0x55d398326f99059fF775485246999027B3197955',
-          "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
-          "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
-          "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
-          "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
+        "current": {
+          "type":"",
+          "name":"无标题",
+          "url":"",
+          "Comptroller": '',
+          "Unitroller": '',
+          "UsdtJumpRateModel": '',
+          "FilJumpRateModel": '',
+          "Oracle": '',
+          "USDT": '',
+          "eUSDT": '',
+          "FIL": '',
+          "eFIL": '',
+          "FilChainlink":''
         },
       }
     };
@@ -803,7 +804,7 @@ export default {
     clearInterval(this.timer);
   },
   filters: {
-    toBHP: (amount) => {
+    toEther: (amount) => {
       let balance = new Decimal(amount)
       return balance.div(exp).toPrecision(18)
     },
@@ -811,13 +812,32 @@ export default {
       return new Date(parseInt(time) * 1000).toLocaleString();
     }
   },
-  created() {
-    if (this.$store.state.wallet.connected) {
-
-    }
-    this.addressInfo.bhp=address.bhp
-  },
   methods: {
+    switchNetwork(){
+      // 判断网络id
+      if (this.$store.state.wallet.networkId === 3476){
+        // bhp测试网
+        this.addressInfo.current = address.bhp_t
+      }else if (this.$store.state.wallet.networkId === 97){
+        //bsc测试网
+        this.addressInfo.current = address.mhxw
+      }else if (this.$store.state.wallet.networkId === 56){
+        //bsc主网
+        this.addressInfo.current = address.bsc_pig
+      }else if (this.$store.state.wallet.networkId === 128){
+        //heco主网
+        this.addressInfo.current = address.ht_pig
+      }else if (this.$store.state.wallet.networkId === 128){
+        //eth主网
+        this.addressInfo.current = address.eth_comp
+      }else{
+        console.log("没有存在的信息")
+        this.$notify.error({
+          title: '错误',
+          message: '没有符合匹配的合约信息'
+        });
+      }
+    },
     openSupply(tokenName) {
       if (!this.verifyConnect()) {
         return
@@ -825,11 +845,11 @@ export default {
       let assetAddress
       let assetToken
       if (tokenName === constants.FIL) {
-        assetAddress = address.bhp.FIL
-        assetToken = address.bhp.eFIL
+        assetAddress = this.addressInfo.current.FIL
+        assetToken = this.addressInfo.current.eFIL
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
-        assetToken = address.bhp.eUSDT
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
       }
       erc20BalanceOf(
           this.$store.state.wallet,
@@ -883,7 +903,7 @@ export default {
       }
       erc20BalanceOf(
           this.$store.state.wallet,
-          address.bhp.FIL,
+          this.addressInfo.current.FIL,
           data => {
             this.$parent.url = bhp + data.message;
             this.$parent.flag2 = true;
@@ -899,7 +919,7 @@ export default {
       })
       erc20BalanceOf(
           this.$store.state.wallet,
-          address.bhp.eFIL,
+          this.addressInfo.current.eFIL,
       ).then(res => {
         this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(18)
       }).catch(err => {
@@ -958,7 +978,7 @@ export default {
       if (!wallet.connected) {
         this.$notify.error({
           title: '错误',
-          message: '错误的网络：请使用BHP主网或测试网'
+          message: '错误的网络：请使用正确网络'
         });
         return false
       }
@@ -975,12 +995,12 @@ export default {
       //获取到存款数量之后转换为小单位wei
       let mintAmount
       if (tokenName === constants.FIL) {
-        assetAddress = address.bhp.FIL
-        assetToken = address.bhp.eFIL
+        assetAddress = this.addressInfo.current.FIL
+        assetToken = this.addressInfo.current.eFIL
         mintAmount = new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
-        assetToken = address.bhp.eUSDT
-        assetAddress = address.bhp.USDT
+        assetToken = this.addressInfo.current.eUSDT
+        assetAddress = this.addressInfo.current.USDT
         mintAmount = new Decimal(this.supplyUsdt.mintAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("mintAmount", mintAmount)
@@ -1026,12 +1046,12 @@ export default {
       //获取到存款数量之后转换为小单位wei
       let redeemAmount
       if (tokenName === constants.FIL) {
-        assetAddress = address.bhp.FIL
-        assetToken = address.bhp.eFIL
+        assetAddress = this.addressInfo.current.FIL
+        assetToken = this.addressInfo.current.eFIL
         redeemAmount = new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
-        assetToken = address.bhp.eUSDT
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
         redeemAmount = new Decimal(this.supplyUsdt.redeemAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("redeemAmount", redeemAmount)
@@ -1073,12 +1093,12 @@ export default {
       //获取到存款数量之后转换为小单位wei
       let redeemToken
       if (tokenName === constants.FIL) {
-        assetAddress = address.bhp.FIL
-        assetToken = address.bhp.eFIL
+        assetAddress = this.addressInfo.current.FIL
+        assetToken = this.addressInfo.current.eFIL
         redeemToken = new Decimal(this.panel.efilBalance).mul(Decimal.pow(10, decimals.eFIL)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
-        assetToken = address.bhp.eUSDT
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
         redeemToken = new Decimal(this.panel.eusdtBalance).mul(Decimal.pow(10, decimals.eUSDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("redeemToken", redeemToken)
@@ -1168,10 +1188,10 @@ export default {
       //获取到存款数量之后转换为小单位wei
       let borrowAmount
       if (tokenName === constants.FIL) {
-        assetToken = address.bhp.eFIL
+        assetToken = this.addressInfo.current.eFIL
         borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.FIL)).toNumber().toString()
       } else if (tokenName === constants.USDT) {
-        assetToken = address.bhp.eUSDT
+        assetToken = this.addressInfo.current.eUSDT
         borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toNumber().toString()
       }
       console.log("borrowAmount", borrowAmount)
@@ -1215,8 +1235,8 @@ export default {
       if (tokenName === constants.FIL) {
 
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
-        assetToken = address.bhp.eUSDT
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
         repayAmount = new Decimal(this.borrowUsdt.repayAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("repayAmount", repayAmount.toString())
@@ -1262,8 +1282,8 @@ export default {
       if (tokenName === constants.FIL) {
 
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
-        assetToken = address.bhp.eUSDT
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
       }
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
@@ -1296,9 +1316,9 @@ export default {
       }
       let assetAddress
       if (tokenName === constants.FIL) {
-        assetAddress = address.bhp.FIL
+        assetAddress = this.addressInfo.current.FIL
       } else if (tokenName === constants.USDT) {
-        assetAddress = address.bhp.USDT
+        assetAddress = this.addressInfo.current.USDT
       }
       balanceOf(
           this.$store.state.wallet,
@@ -1359,11 +1379,11 @@ export default {
       let assetAddress
       let assetToken
       if (tokenName === constants.FIL) {
-        assetToken = address.bhp.eFIL
-        assetAddress = address.bhp.FIL
+        assetToken = this.addressInfo.current.eFIL
+        assetAddress = this.addressInfo.current.FIL
       } else if (tokenName === constants.USDT) {
-        assetToken = address.bhp.eUSDT
-        assetAddress = address.bhp.USDT
+        assetToken = this.addressInfo.current.eUSDT
+        assetAddress = this.addressInfo.current.USDT
       }
       console.log("tokenName", tokenName, assetAddress)
       // 查看是否授权
@@ -1412,7 +1432,7 @@ export default {
       //获取用户USDT余额
       balanceOf(
           this.$store.state.wallet,
-          address.bhp.USDT,
+          this.addressInfo.current.USDT,
       ).then(res => {
         let amount = new Decimal(res)
         this.panel.usdtBalance = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1422,7 +1442,7 @@ export default {
       //获取用户FIL余额
       balanceOf(
           this.$store.state.wallet,
-          address.bhp.FIL,
+          this.addressInfo.current.FIL,
       ).then(res => {
         let amount = new Decimal(res)
         this.panel.filBalance = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1433,9 +1453,9 @@ export default {
     async getUserBorrowTokenPage(account, tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取用户USDT借贷金额
@@ -1453,9 +1473,9 @@ export default {
     async getUserSupplyTokenPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取用户eUSDT余额
@@ -1465,8 +1485,9 @@ export default {
       ).then(res => {
         result = res
         let amount = new Decimal(res)
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bhp"||this.addressInfo.current.type==="bsc"){
           //bhp comp
+          console.log("获取usdt价格")
           if (tokenName === constants.eUSDT) {
             this.panel.eusdtBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
           } else if (tokenName === constants.eFIL) {
@@ -1489,9 +1510,9 @@ export default {
     async accrualBlockNumberPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取USDT池子最新计算高度
@@ -1526,9 +1547,9 @@ export default {
     async totalReservesPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取最后一次合约触发时的总储备金
@@ -1543,7 +1564,7 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
           //bhp comp
           if (tokenName === constants.eUSDT) {
             this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1567,9 +1588,9 @@ export default {
     async totalBorrowsPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1585,7 +1606,7 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
           //bhp comp
           if (tokenName === constants.eUSDT) {
             this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1608,9 +1629,9 @@ export default {
     async borrowIndexPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1627,9 +1648,9 @@ export default {
     async getCashPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取USDT资金池余额
@@ -1644,7 +1665,7 @@ export default {
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
         }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
           //bhp comp
           if (tokenName === constants.eUSDT) {
             this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1667,9 +1688,9 @@ export default {
     async exchangeRateStoredPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取USDT资金池余额
@@ -1686,9 +1707,9 @@ export default {
     async getReserveFactorMantissaPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取USDT资金池余额
@@ -1705,9 +1726,9 @@ export default {
     async totalSupplyPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取eUSDT供应量
@@ -1724,9 +1745,9 @@ export default {
     async getBorrowRatePage(tokenName, cash, borrows, reserves) {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1747,9 +1768,9 @@ export default {
     async getSupplyRatePage(tokenName, cash, borrows, reserves, reserveFactor) {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
 
       let result = 0
@@ -1772,9 +1793,9 @@ export default {
     async utilizationRatePage(tokenName,cash, borrows, reserves) {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1796,14 +1817,14 @@ export default {
       let result
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       await viewPrice(
           this.$store.state.wallet,
           eTokenAddress,
-          address.bhp.Oracle
+          this.addressInfo.current.Oracle
       ).then(res => {
         let balance = new Decimal(res)
         //efil
@@ -1814,7 +1835,7 @@ export default {
           result = balance.dividedBy(Decimal.pow(10, decimals.FIL))
           this.panel.filPrice = balance.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(4)
         }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
           //bhp comp
           //pig
           if (tokenName === constants.eUSDT) {
@@ -1850,7 +1871,7 @@ export default {
       this.$parent.flag3 = false;
       this.filSupplyDialogVisible = false;
       this.usdtSupplyDialogVisible = false;
-      let assetToken = address.bhp.eFIL
+      let assetToken = this.addressInfo.current.eFIL
       let assetArray = new Array(assetToken)
       //先判断当前是开启抵押还是关闭抵押
       //如果开启，查看用户是否抵押
@@ -1862,7 +1883,7 @@ export default {
           enterMarkets(
               this.$store.state.wallet,
               assetArray,
-              address.bhp.Unitroller,
+              this.addressInfo.current.Unitroller,
               data => {
                 this.$parent.url = bhp + data.message;
                 this.$parent.flag2 = true;
@@ -1882,7 +1903,7 @@ export default {
           exitMarket(
               this.$store.state.wallet,
               assetToken,
-              address.bhp.Unitroller,
+              this.addressInfo.current.Unitroller,
               data => {
                 this.$parent.url = bhp + data.message;
                 this.$parent.flag2 = true;
@@ -1904,15 +1925,15 @@ export default {
       let result
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       //获取抵押因子 用于计算抵押存款
       await markets(
           this.$store.state.wallet,
           eTokenAddress,
-          address.bhp.Unitroller
+          this.addressInfo.current.Unitroller
       ).then(res => {
         let collateralFactorMantissa = res.collateralFactorMantissa
 
@@ -1932,8 +1953,8 @@ export default {
       let isSuccess = false;
       await checkMembership(
           this.$store.state.wallet,
-          address.bhp.eFIL,
-          address.bhp.Unitroller
+          this.addressInfo.current.eFIL,
+          this.addressInfo.current.Unitroller
       ).then(res => {
         this.supplyFil.isEnterMarket = res
         isSuccess = res
@@ -1946,7 +1967,7 @@ export default {
       let result
       await closeFactorMantissa(
           this.$store.state.wallet,
-          address.bhp.Unitroller,
+          this.addressInfo.current.Unitroller,
       ).then(res => {
         result=res
         this.panel.closeFactorMantissa = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
@@ -1956,14 +1977,13 @@ export default {
       })
       return result
     },
-
     async kinkPage(tokenName) {
       let result
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       await kink(
           this.$store.state.wallet,
@@ -1984,9 +2004,9 @@ export default {
       let result
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       await blocksPerYear(
           this.$store.state.wallet,
@@ -2008,9 +2028,9 @@ export default {
       let result
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       await jumpMultiplierPerBlock(
           this.$store.state.wallet,
@@ -2031,9 +2051,9 @@ export default {
       let result
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       await multiplierPerBlock(
           this.$store.state.wallet,
@@ -2054,9 +2074,9 @@ export default {
       let result
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
-        interestModelAddr = address.bhp.UsdtJumpRateModel
+        interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eFIL){
-        interestModelAddr = address.bhp.FilJumpRateModel
+        interestModelAddr = this.addressInfo.current.FilJumpRateModel
       }
       await baseRatePerBlock(
           this.$store.state.wallet,
@@ -2073,7 +2093,6 @@ export default {
       })
       return result
     },
-
     randomString(e) {
         e = e || 32;
       let t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
@@ -2145,7 +2164,7 @@ export default {
       const cTokenDecimals = 8;
       let mantissa
 
-      if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||address.bhp.role==="mhxw"){
+      if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
         //bhp comp
         if (tokenName === constants.eUSDT) {
           //comp 30
@@ -2436,9 +2455,9 @@ export default {
     async supplyRatePerBlockPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取每一个区块的存款利率
@@ -2455,9 +2474,9 @@ export default {
     async borrowRatePerBlockPage(tokenName) {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
-        eTokenAddress = address.bhp.eUSDT
+        eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eFIL) {
-        eTokenAddress = address.bhp.eFIL
+        eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
       //获取每一个区块的借款利率

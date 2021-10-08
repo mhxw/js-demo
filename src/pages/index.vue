@@ -74,6 +74,7 @@
 import {mapMutations} from "vuex";
 import {connectWallet, disconnectWallet} from "@/web3/index";
 import {connectNetwork} from "../web3/wallet";
+import {address} from "../configure/hashbank";
 export default {
   data() {
     return {
@@ -141,6 +142,8 @@ export default {
         this.clearWallet();
         this.show1 = false;
         this.hide1 = true;
+        this.$refs.son.addressInfo.current= {};
+        return
       });
     },
     closeMengceng() {
@@ -210,15 +213,18 @@ export default {
             ||this.$store.state.wallet.networkId === 128||this.$store.state.wallet.networkId === 1||this.$store.state.wallet.networkId === 2)) {
           this.$notify.error({
             title: '错误',
-            message: '错误的网络：请使用BHP主网或测试网'
+            message: '错误的网络请使用正确网络'
           });
+          this.openAndClose()
           return
         }
-
+        this.$refs.son.switchNetwork();
         this.OperationAddress = this.$store.state.wallet.address
         this.networkId = this.$store.state.wallet.networkId
         this.addressMsg = this.$store.state.wallet.address.substr(0, 5)+"***"+this.$store.state.wallet.address.substr(39, 3)
         this.options = this.$store.state.wallet.addressList
+      }else{
+        console.log("未连接")
       }
     }
   },

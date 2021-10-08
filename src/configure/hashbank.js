@@ -14,9 +14,41 @@ export const constants = {
 }
 
 export const address = {
-    "bsc-t": {
+    "mhxw":{
+        // bsc test mhxw deploy
+        "type":"bsc",
+        "name":"bsc test mhxw deploy",
+        "url":"https://testnet.bscscan.com/address/",
+        "eFIL": '0xAbb3ABd2a971E84b9d74173977322215dFe850aF',
+        "eUSDT": '0x6ffF58f868F79460003aECE1d6732C268eD48287',
+        "Comptroller": '0xE79956BFBAf3C12c749229c1aE153d3512584A99',
+        "Unitroller": '0x32A784323B63519bfc0BaD142DC33810fD42ec58',
+        "Oracle": '0x93CbCD514B3B95046D6D063795cb2D9B055F0699',
+        "USDT": '0xDab3b85fB139F7A557FA8Dd98795B1d70529556b',
+        "FIL": '0x35DBa98D424704657B40FAF7a93dEBe663f38716',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "UsdtJumpRateModel": '0x10674b4aa6eD0775B2A9E8f213eF75770152402B',
+        "FilJumpRateModel": '0xB28629DFCB762E008607c8E75eDE77886b724028',
+    },
+    "bhp_t": {
+        //bhp 测试网
+        "type":"bhp",
+        "name":"bhp-testnet",
+        "url":"https://pegasus.bhpnet.io/address/",
+        "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
+        "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
+        "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
+        "USDT": "0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162",
+        "Comptroller": "0x5002D33b7f04e2809b84C74f6C0f7bDf2085Ca21",
+        "Unitroller": '0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb',
+        "Oracle": "0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0",
+        "UsdtJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
+        "FilJumpRateModel":"0x79A0d60FfE46519a63123A005055ed59a55c1C7c",
+        "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
+    },
+    "bsc_t": {
         //bsc test online
-        "role":"mhxw",
+        "name":"bsc test online",
         "url":"https://testnet.bscscan.com/address/",
         "eFIL": "0xF673099cae8EC04FF524d38924cb3BB5040503a0",
         "eUSDT": "0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4",
@@ -42,25 +74,10 @@ export const address = {
         "UsdtJumpRateModel": '0x5f03935b92ebcfac47a06159bca594c387b92ca0',
         "FilJumpRateModel": '0xa408380fe27ac16b43e92003986e70d8c9bc244a',
     },
-    "mhxw":{
-        // bsc test mhxw deploy
-        "role":"mhxw",
-        "url":"https://testnet.bscscan.com/address/",
-        "Comptroller": '0xE79956BFBAf3C12c749229c1aE153d3512584A99',
-        "Unitroller": '0x32A784323B63519bfc0BaD142DC33810fD42ec58',
-        "Oracle": '0x93CbCD514B3B95046D6D063795cb2D9B055F0699',
-        "USDT": '0xDab3b85fB139F7A557FA8Dd98795B1d70529556b',
-        "eUSDT": '0x6ffF58f868F79460003aECE1d6732C268eD48287',
-        "FIL": '0x35DBa98D424704657B40FAF7a93dEBe663f38716',
-        "eFIL": '0xAbb3ABd2a971E84b9d74173977322215dFe850aF',
-        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
-        "UsdtJumpRateModel": '0x10674b4aa6eD0775B2A9E8f213eF75770152402B',
-        "FilJumpRateModel": '0xB28629DFCB762E008607c8E75eDE77886b724028',
-    },
-    "ht-filda":{
+    "ht_filda":{
         // heco miannet filda
         "url":"https://hecoinfo.com/address/",
-        "Comptroller": '0xb74633f2022452f377403b638167b0a135db096d',
+        "Comptroller": '0xF9B7e5f27e95715Be757a82116DE54036A75c507',
         "Unitroller": '0xb74633f2022452f377403b638167b0a135db096d',
         "Oracle": '0x0DDD1956278d80165051805f3B688EF3C4C288A3',
         "USDT": '0xa71edc38d189767582c38a3145b5873052c3e47a',
@@ -71,38 +88,40 @@ export const address = {
         "FilJumpRateModel": '0x8222b744d89cb1568b5e3b5978ce9c1c01e2a467',
         "FilChainlink":'0x4d8869eCF1F8C78C0bd2439c4BcAE50AC8420bC4',
     },
-    "ht-pig":{
+    "ht_pig":{
         // heco miannet pig
+        "name":"heco miannet pig",
         "url":"https://hecoinfo.com/address/",
+        "eFIL": '0x0C8c1ab017c3C0c8A48dD9F1DB2F59022D190f0b',
+        "eUSDT": '0x12D803497D1e58dD4D4A4F455D754f1d0F937C8b',
         "Comptroller": '0x3401d01e31bb6defcfc7410c312c0181e19b9dd5',
         "Unitroller": '0x3401d01e31bb6defcfc7410c312c0181e19b9dd5',
         "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
         "USDT": '0xa71edc38d189767582c38a3145b5873052c3e47a',
-        "eUSDT": '0x12D803497D1e58dD4D4A4F455D754f1d0F937C8b',
         "FIL": '0xae3a768f9ab104c69a7cd6041fe16ffa235d1810',
-        "eFIL": '0x0C8c1ab017c3C0c8A48dD9F1DB2F59022D190f0b',
         "UsdtJumpRateModel": '0xd1121ade04ee215524aefbf7f8d45029214d668d',
         "FilJumpRateModel": '0x8e1e582879cb8bac6283368e8ede458b63f499a5',
         "FilChainlink":'0x4d8869eCF1F8C78C0bd2439c4BcAE50AC8420bC4',
     },
-    "bsc-pig":{
+    "bsc_pig":{
         // bsc miannet pig
+        name:"bsc miannet pig",
         "url":"https://bscscan.com/address/",
+        "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
+        "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
         "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "UsdtJumpRateModel": '0xc1b02e52e9512519edf99671931772e452fb4399',
         "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
         "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
         "USDT": '0x55d398326f99059fF775485246999027B3197955',
-        "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
         "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
-        "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "eth-comp": {
-        "role":"eth-comp",
+    "eth_comp": {
         //eth mainnet compound
         //https://compound.finance/markets
+        "name":"eth-comp",
         "url":"https://etherscan.io/address/",
         "eFIL": "0xface851a4921ce59e912d19329929ce6da6eb0c7",
         "eUSDT": "0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9",
@@ -115,20 +134,6 @@ export const address = {
         "FilJumpRateModel":"0xd956188795ca6f4a74092ddca33e0ea4ca3a1395",
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
-    "bhp": {
-        //bhp 测试网
-        "url":"https://pegasus.bhpnet.io/address/",
-        "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
-        "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
-        "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
-        "USDT": "0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162",
-        "Comptroller": "0x5002D33b7f04e2809b84C74f6C0f7bDf2085Ca21",
-        "Unitroller": '0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb',
-        "Oracle": "0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0",
-        "UsdtJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
-        "FilJumpRateModel":"0x79A0d60FfE46519a63123A005055ed59a55c1C7c",
-        "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
-    }
 }
 
 export const abi = {
