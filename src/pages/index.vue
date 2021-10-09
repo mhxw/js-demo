@@ -139,7 +139,7 @@ export default {
         this.OperationAddress = '';
         this.networkId = -1;
         this.options = []
-        this.clearWallet();
+        await this.clearWallet();
         this.show1 = false;
         this.hide1 = true;
         this.$refs.son.addressInfo.current= {};
@@ -192,7 +192,7 @@ export default {
       if (this.$store.state.wallet.connected) {
         disconnectWallet(this.$store.state.wallet.web3,(data => {})).then(async () => {
           this.show1 = false;
-          this.clearWallet();
+          await this.clearWallet();
           await connectWallet(this);
         });
       } else {
@@ -206,7 +206,7 @@ export default {
       connectNetwork(networkName)
     },
     // 改变更新数据
-    changeUpdate() {
+    async changeUpdate() {
       if (this.$store.state.wallet.connected) {
         console.log('启动' + this.$store.state.wallet.networkId)
         if (!(this.$store.state.wallet.networkId === 3476 || this.$store.state.wallet.networkId === 6779 || this.$store.state.wallet.networkId === 56 || this.$store.state.wallet.networkId === 97

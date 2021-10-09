@@ -34,7 +34,7 @@ export async function connectWallet(that) {
         provider.on("connect", async (chainId) => {
             const web3 = new Web3(provider)
             let account = await web3.eth.getAccounts()
-            that.updateWallet({
+            await that.updateWallet({
                 address: account[0],
                 web3: web3,
                 connected: true,
@@ -50,9 +50,9 @@ export async function connectWallet(that) {
                 return
             }
             // 更新地址
-            that.updateAddress(accounts[0]);
+            await that.updateAddress(accounts[0]);
             // 更新数据
-            that.changeUpdate();
+            await that.changeUpdate();
         });
         provider.on("networkChanged", async (networkId) => {
             if (!(parseInt(networkId) === 3476||parseInt(networkId) === 6779||parseInt(networkId) === 97||parseInt(networkId) === 56||parseInt(networkId) === 128||parseInt(networkId) === 1||parseInt(networkId) === 2)) {
@@ -60,9 +60,9 @@ export async function connectWallet(that) {
                 return
             }
             // 更新网络ID
-            that.updateNetworkId(parseInt(networkId,10));
+            await that.updateNetworkId(parseInt(networkId,10));
             // 更新数据
-            that.changeUpdate();
+            await that.changeUpdate();
         });
     }
     await subscribeProvider(provider);

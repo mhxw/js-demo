@@ -19,6 +19,7 @@ export const address = {
         "type":"bsc",
         "name":"bsc test mhxw deploy",
         "url":"https://testnet.bscscan.com/address/",
+        "tx_url":"https://testnet.bscscan.com/tx/",
         "eFIL": '0xAbb3ABd2a971E84b9d74173977322215dFe850aF',
         "eUSDT": '0x6ffF58f868F79460003aECE1d6732C268eD48287',
         "Comptroller": '0xE79956BFBAf3C12c749229c1aE153d3512584A99',
@@ -35,6 +36,7 @@ export const address = {
         "type":"bhp",
         "name":"bhp-testnet",
         "url":"https://pegasus.bhpnet.io/address/",
+        "tx_url":"https://pegasus.bhpnet.io/tx/",
         "eFIL": "0x5eb657300870019F4B3786E0Eb16DA0141e478fA",
         "eUSDT": "0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
@@ -50,6 +52,7 @@ export const address = {
         //bsc test online
         "name":"bsc test online",
         "url":"https://testnet.bscscan.com/address/",
+        "tx_url":"https://testnet.bscscan.com/tx/",
         "eFIL": "0xF673099cae8EC04FF524d38924cb3BB5040503a0",
         "eUSDT": "0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4",
         "FIL": "0x8F66E03daC3316dFe38d50C66980702E7b4dFA38",
@@ -63,6 +66,7 @@ export const address = {
     "lendhub":{
         // heco mainnet lendhub
         "url":"https://hecoinfo.com/address/",
+        "tx_url":"https://hecoinfo.com/tx/",
         "Comptroller": '0xd60831fb239d17acd328cc040e10069cbbdb076b',
         "Unitroller": '0x6537d6307ca40231939985bcf7d83096dd1b4c09',
         "Oracle": '0x2c2ec252940290d65b919a31f0df00c2262f2053',
@@ -77,6 +81,7 @@ export const address = {
     "ht_filda":{
         // heco miannet filda
         "url":"https://hecoinfo.com/address/",
+        "tx_url":"https://hecoinfo.com/tx/",
         "Comptroller": '0xF9B7e5f27e95715Be757a82116DE54036A75c507',
         "Unitroller": '0xb74633f2022452f377403b638167b0a135db096d',
         "Oracle": '0x0DDD1956278d80165051805f3B688EF3C4C288A3',
@@ -92,6 +97,7 @@ export const address = {
         // heco miannet pig
         "name":"heco miannet pig",
         "url":"https://hecoinfo.com/address/",
+        "tx_url":"https://hecoinfo.com/tx/",
         "eFIL": '0x0C8c1ab017c3C0c8A48dD9F1DB2F59022D190f0b',
         "eUSDT": '0x12D803497D1e58dD4D4A4F455D754f1d0F937C8b',
         "Comptroller": '0x3401d01e31bb6defcfc7410c312c0181e19b9dd5',
@@ -107,6 +113,7 @@ export const address = {
         // bsc miannet pig
         name:"bsc miannet pig",
         "url":"https://bscscan.com/address/",
+        "tx_url":"https://bscscan.com/tx/",
         "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
         "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
         "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
@@ -123,6 +130,7 @@ export const address = {
         //https://compound.finance/markets
         "name":"eth-comp",
         "url":"https://etherscan.io/address/",
+        "tx_url":"https://etherscan.io/tx/",
         "eFIL": "0xface851a4921ce59e912d19329929ce6da6eb0c7",
         "eUSDT": "0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9",
         "FIL": "0x514910771af9ca656af840dff83e8264ecf986ca",

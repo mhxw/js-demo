@@ -14,16 +14,16 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        updateWallet(state, wallet) {
+        async updateWallet(state, wallet) {
             state.wallet = wallet
         },
-        updateAddress(state, address) {
+        async updateAddress(state, address) {
             state.wallet.address = address
         },
-        updateNetworkId(state, networkId) {
+        async updateNetworkId(state, networkId) {
             state.wallet.networkId = networkId
         },
-        clearWallet(state) {
+        async clearWallet(state) {
             state.wallet = {
                 address: "",
                 web3: null,

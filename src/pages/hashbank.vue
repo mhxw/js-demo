@@ -637,7 +637,7 @@ import {
 import Decimal from 'decimal.js';
 import {address, constants, decimals} from "../configure/hashbank";
 import {disconnectWallet, erc20Approval, erc20BalanceOf} from "../web3";
-import {bhp, exp} from "../configure/conf";
+import {exp} from "../configure/conf";
 
 export default {
   data() {
@@ -855,7 +855,7 @@ export default {
           this.$store.state.wallet,
           assetAddress,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -875,7 +875,7 @@ export default {
           this.$store.state.wallet,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -905,7 +905,7 @@ export default {
           this.$store.state.wallet,
           this.addressInfo.current.FIL,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1019,7 +1019,7 @@ export default {
           mintAmount,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1068,7 +1068,7 @@ export default {
           redeemAmount,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1115,7 +1115,7 @@ export default {
           redeemToken,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1206,7 +1206,7 @@ export default {
           borrowAmount,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1251,7 +1251,7 @@ export default {
           repayAmount,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1296,7 +1296,7 @@ export default {
           repayAmount,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1324,7 +1324,7 @@ export default {
           this.$store.state.wallet,
           assetAddress,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1398,7 +1398,7 @@ export default {
           assetAddress,
           assetToken,
           data => {
-            this.$parent.url = bhp + data.message;
+            this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
             this.$parent.flag1 = false;
             this.$parent.flag3 = false;
@@ -1885,7 +1885,7 @@ export default {
               assetArray,
               this.addressInfo.current.Unitroller,
               data => {
-                this.$parent.url = bhp + data.message;
+                this.$parent.url = this.addressInfo.current.tx_url + data.message;
                 this.$parent.flag2 = true;
                 this.$parent.flag1 = false;
                 this.$parent.flag3 = false;
@@ -1905,7 +1905,7 @@ export default {
               assetToken,
               this.addressInfo.current.Unitroller,
               data => {
-                this.$parent.url = bhp + data.message;
+                this.$parent.url = this.addressInfo.current.tx_url + data.message;
                 this.$parent.flag2 = true;
                 this.$parent.flag1 = false;
                 this.$parent.flag3 = false;
