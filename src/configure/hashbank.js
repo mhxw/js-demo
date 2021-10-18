@@ -20,13 +20,32 @@ export const address = {
         "name":"bsc test mhxw deploy",
         "url":"https://testnet.bscscan.com/address/",
         "tx_url":"https://testnet.bscscan.com/tx/",
-        "eFIL": '0xAbb3ABd2a971E84b9d74173977322215dFe850aF',
+        "eFIL": "0xb0e4857E0c8753849a0E527D2Da5e6A304699730",
+        "eUSDT": "0x301F357106131252e7FEB0EbC3C9fcd32eC575b8",
+        "FIL": '0xbff22bb7f275715703e29ff60cd035203a79e61d',
+        "USDT": '0x922F531c9BDfbe3CE176FCBa91ACCdFE0D33b89e',
+        "Unitroller": '0xF2fA277094fD84172738B16Dc470d620C4080c49',
+        "Oracle": '0x079eFCa354FBA618b34dD237A6500eb34c90d863',
+        "FilJumpRateModel": '0xB28629DFCB762E008607c8E75eDE77886b724028',
+        "UsdtJumpRateModel": '0x10674b4aa6eD0775B2A9E8f213eF75770152402B',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "Comptroller": '0xb766CAb25fa4937A9a5F6554c9Ccc86Bf4af9021',
+        "Oracle_link":"0xB5935145a91EA5330E03CE0F7B7c1Df4fb54715F",
+        "Oracle_simple":"0x079eFCa354FBA618b34dD237A6500eb34c90d863",
+    },
+    "bscm-mhxw":{
+        // bsc test mhxw deploy
+        "type":"bsc",
+        "name":"bsc mainnet mhxw deploy",
+        "url":"https://bscscan.com/address/",
+        "tx_url":"https://bscscan.com/tx/",
+        "eFIL": '0x31a3C189eCE169bc92Ed7725CDdca76Ff2d04C25',
         "eUSDT": '0x6ffF58f868F79460003aECE1d6732C268eD48287',
         "Comptroller": '0xE79956BFBAf3C12c749229c1aE153d3512584A99',
         "Unitroller": '0x32A784323B63519bfc0BaD142DC33810fD42ec58',
-        "Oracle": '0x93CbCD514B3B95046D6D063795cb2D9B055F0699',
-        "USDT": '0xDab3b85fB139F7A557FA8Dd98795B1d70529556b',
-        "FIL": '0x35DBa98D424704657B40FAF7a93dEBe663f38716',
+        "Oracle": '0x079eFCa354FBA618b34dD237A6500eb34c90d863',
+        "USDT": '0x55d398326f99059ff775485246999027b3197955',
+        "FIL": '0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153',
         "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
         "UsdtJumpRateModel": '0x10674b4aa6eD0775B2A9E8f213eF75770152402B',
         "FilJumpRateModel": '0xB28629DFCB762E008607c8E75eDE77886b724028',
@@ -47,6 +66,23 @@ export const address = {
         "UsdtJumpRateModel":"0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C",
         "FilJumpRateModel":"0x79A0d60FfE46519a63123A005055ed59a55c1C7c",
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
+    },
+    "cream":{
+        // bsc test mhxw deploy
+        "type":"bsc",
+        "name":"cream.finance",
+        "url":"https://bscscan.com/address/",
+        "tx_url":"https://bscscan.com/tx/",
+        "eFIL": '0x1af8c1c3ad36a041cb6678fed86b1e095004fd16',
+        "eUSDT": '0xEF6d459FE81C3Ed53d292c936b2df5a8084975De',
+        "FIL": '0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153',
+        "USDT": '0x55d398326f99059ff775485246999027b3197955',
+        "Comptroller": '0x8075f0a6490ce1bd065eac9032d14dd2468ba6b9',
+        "Unitroller": '0x589de0f0ccf905477646599bb3e5c622c84cc0ba',
+        "Oracle": '0xa82958C9f2Ff63f6D2DC7d8Ee22AE69fD0819477',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "UsdtJumpRateModel": '0xeb689084bd7990604eef53376d269f87cb12ca63',
+        "FilJumpRateModel": '0x8122e8585724bfd0a5964847fae47c949b90b899',
     },
     "bsc_t": {
         //bsc test online
@@ -143,6 +179,23 @@ export const address = {
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
 }
+
+export const cTokens = [
+    'eFIL',
+    'eUSDT',
+];
+
+export const underlyings = [
+    'FIL',
+    'USDT',
+];
+
+export const decimals = {
+    'eFIL': 8,
+    'eUSDT': 8,
+    'USDT': 18,
+    'FIL': 18,
+};
 
 export const abi = {
     Erc20: [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}],
@@ -1898,20 +1951,3 @@ export const abi = {
         }
     ]
 }
-
-export const cTokens = [
-    'eFIL',
-    'eUSDT',
-];
-
-export const underlyings = [
-    'FIL',
-    'USDT',
-];
-
-export const decimals = {
-    'eFIL': 8,
-    'eUSDT': 8,
-    'USDT': 6,
-    'FIL': 18,
-};

@@ -48,7 +48,7 @@
                 </el-col>
                 <el-col :span="12">
                   <el-descriptions title="USDT" direction="horizontal" :column="1" border size="medium" >
-                    <el-descriptions-item label="USDT价格"> ${{ panel.usdtPrice }}</el-descriptions-item>
+                    <el-descriptions-item label="USDT价格"> $ {{ panel.usdtPrice }}</el-descriptions-item>
                     <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
                     <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
                     <el-descriptions-item label="USDT储备金"> {{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
@@ -63,7 +63,7 @@
                 </el-col>
                 <el-col :span="12">
                   <el-descriptions title="FIL" direction="horizontal" :column="1" border size="medium">
-                    <el-descriptions-item label="FIL价格"> ${{ panel.filPrice }} </el-descriptions-item>
+                    <el-descriptions-item label="FIL价格"> $ {{ panel.filPrice }} </el-descriptions-item>
                     <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
                     <el-descriptions-item label="FIL借款总数量(没有)"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
                     <el-descriptions-item label="FIL储备金(没有)"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
@@ -146,220 +146,6 @@
                 </el-descriptions>
               </el-card>
             </el-col>
-            <!--   FIL存取 -->
-            <el-dialog
-                title="FIL"
-                :visible.sync="filSupplyDialogVisible"
-                width="460px"
-                center>
-              <el-tabs v-model="dialogActiveName">
-                <el-tab-pane label="存款" name="first">
-                  <el-form label-position="top" label-width="80px" :model="supplyFil">
-                    <el-form-item label="存款数量">
-                      <el-input v-model="supplyFil.mintAmount" placeholder="请输入存款数量" clearable>
-                        <el-button slot="prepend" @click="getSupplyBalance(`FIL`)">最大值</el-button>
-                        <el-button slot="append">FIL</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
-                        FIL
-                      </el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eFIL
-                        ={{ panel.filExchangeRate }} eFIL
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.filBalance }} FIL
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.efilBalance }} eFIL
-                      </el-descriptions-item>
-                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.filTotalCash }} FIL
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="erc20Approve(`FIL`)">{{ supplyButton }}</el-button>
-                      <el-button type="success" @click="supplyToken(`FIL`)">存款</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="取款" name="second">
-                  <el-form label-position="top" label-width="80px" :model="supplyFil">
-                    <el-form-item label="取款数量">
-                      <el-input v-model="supplyFil.redeemAmount" clearable>
-                        <el-button slot="prepend" @click="getRedeemBalance(`FIL`)">安全最大值（80%）</el-button>
-                        <el-button slot="append">FIL</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
-                        FIL
-                      </el-descriptions-item>
-                      <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}">$ {{
-                          borrowUsdt.balance
-                        }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
-                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
-                      <el-button type="success" @click="redeemAllToken(`FIL`)">取款全部</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-              </el-tabs>
-            </el-dialog>
-            <!--   USDT存取 -->
-            <el-dialog
-                title="USDT"
-                :visible.sync="usdtSupplyDialogVisible"
-                width="460px"
-                center>
-              <el-tabs v-model="dialogActiveName" @tab-click="handleClick">
-                <el-tab-pane label="存款" name="first">
-                  <el-form label-position="top" label-width="80px" :model="supplyUsdt">
-                    <el-form-item label="存款数量">
-                      <el-input v-model="supplyUsdt.mintAmount" placeholder="请输入存款数量" clearable>
-                        <el-button slot="prepend" @click="getSupplyBalance(`USDT`)">最大值</el-button>
-                        <el-button slot="append">USDT</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
-                        USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 USDT
-                        ={{ panel.usdtExchangeRate }} eUSDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.usdtBalance }} USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.eusdtBalance }} eUSDT
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
-                      <el-button type="success" @click="supplyToken(`USDT`)">存款</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="取款" name="second">
-                  <el-form label-position="top" label-width="80px" :model="supply">
-                    <el-form-item label="取款数量">
-                      <el-input v-model="supplyUsdt.redeemAmount" clearable>
-                        <el-button slot="prepend" @click="getRedeemBalance(`USDT`)">最大值</el-button>
-                        <el-button slot="append">USDT</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
-                        USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 USDT
-                        ={{ panel.usdtExchangeRate }} eUSDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.usdtBalance }} USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.eusdtBalance }} eUSDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.usdtTotalCash }} USDT
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="redeemUnderlying(`USDT`)">取款</el-button>
-                      <el-button type="success" @click="redeemAllToken(`USDT`)">取款全部</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-              </el-tabs>
-            </el-dialog>
-            <!--   USDT借还 -->
-            <el-dialog
-                title="USDT"
-                :visible.sync="usdtBorrowDialogVisible"
-                width="460px"
-                center>
-              <el-tabs v-model="dialogActiveName">
-                <el-tab-pane label="借款" name="first">
-                  <el-form label-position="top" label-width="80px" :model="supplyUsdt">
-                    <el-form-item label="借款数量">
-                      <el-input v-model="borrowUsdt.borrowAmount" placeholder="请输入借款数量" clearable>
-                        <el-button slot="prepend" @click="getBorrowBalance(`USDT`)">（80%限制）</el-button>
-                        <el-button slot="append">USDT</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border>
-                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
-                        {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </el-descriptions-item>
-                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
-                          borrowUsdt.count
-                        }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
-                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
-                        USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.usdtTotalCash }} USDT
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="borrowToken(`USDT`)">借款</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-                <el-tab-pane label="还款" name="second">
-                  <el-form label-position="top" label-width="80px" :model="borrowUsdt">
-                    <el-form-item label="还款数量">
-                      <el-input v-model="borrowUsdt.repayAmount" placeholder="请输入还款数量" clearable>
-                        <el-button slot="prepend" @click="getRepayMaxBalance(`USDT`)">最大值</el-button>
-                        <el-button slot="append">USDT</el-button>
-                      </el-input>
-                    </el-form-item>
-                    <el-descriptions :column="1" size="medium" border>
-                      <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
-                        {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
-                      </el-descriptions-item>
-                      <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
-                          borrowUsdt.count
-                        }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
-                        {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
-                      <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
-                        USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
-                        {{ panel.usdtTotalCash }} USDT
-                      </el-descriptions-item>
-                      <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}">{{ panel.usdtBalance }}
-                        USDT
-                      </el-descriptions-item>
-                    </el-descriptions>
-                    <el-form-item label="" style="margin-top: 20px;">
-                      <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
-                      <el-button type="success" @click="repayToken(`USDT`)">还款</el-button>
-                      <el-button type="success" @click="repayAllToken(`USDT`)">还款全部</el-button>
-                    </el-form-item>
-                  </el-form>
-                </el-tab-pane>
-              </el-tabs>
-            </el-dialog>
           </el-tab-pane>
           <el-tab-pane label="清算" name="second">
             <el-col :span="12" style="margin:10px auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -392,12 +178,24 @@
                       <el-descriptions-item label="差值 A-B">如果A`<`B,差值为负数执行清算</el-descriptions-item>
                     </el-descriptions>
 
-                    <el-descriptions title="清算" :column="6" direction="vertical" border style="margin-top: 20px;">
+                    <el-descriptions title="清算" :column="6" direction="vertical" border style="margin-top: 20px;margin-bottom: 20px;">
                       <el-descriptions-item label="清算系数" label-class-name="my-label"> 50% </el-descriptions-item>
                       <el-descriptions-item label="清算奖励"> 8% </el-descriptions-item>
                       <el-descriptions-item label="偿还usdt数量" label-class-name="my-label"> 0 </el-descriptions-item>
                       <el-descriptions-item label="得到的fil数量"> 0 </el-descriptions-item>
                     </el-descriptions>
+
+                    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                      <el-form-item label="借款人">
+                        <el-input v-model="formInline.user" placeholder="借款人"></el-input>
+                      </el-form-item>
+                      <el-form-item label="还款金额">
+                        <el-input v-model="formInline.region" placeholder="还款金额"></el-input>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-button type="success" @click="onSubmit">清算</el-button>
+                      </el-form-item>
+                    </el-form>
                   </el-card>
                 </el-tab-pane>
                 <el-tab-pane label="清算列表" name="second">
@@ -572,7 +370,7 @@
                     <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5</el-descriptions-item>
                     <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28</el-descriptions-item>
                     <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF</el-descriptions-item>
-                    <el-descriptions-item label="FIL chianlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
+                    <el-descriptions-item label="FIL chainlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
                     <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6</el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
@@ -587,6 +385,221 @@
         </el-tabs>
       </el-row>
     </el-tabs>
+    <!--   FIL存取 -->
+    <el-dialog
+        title="FIL"
+        :visible.sync="filSupplyDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName">
+        <el-tab-pane label="存款" name="first">
+          <el-form label-position="top" label-width="80px" :model="supplyFil">
+            <el-form-item label="存款数量">
+              <el-input v-model="supplyFil.mintAmount" placeholder="请输入存款数量" clearable>
+                <el-button slot="prepend" @click="getSupplyBalance(`FIL`)">最大值</el-button>
+                <el-button slot="append">FIL</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
+                FIL
+              </el-descriptions-item>
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eFIL
+                ={{ panel.filExchangeRate }} eFIL
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.filBalance }} FIL
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.efilBalance }} eFIL
+              </el-descriptions-item>
+              <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
+                {{ panel.filTotalCash }} FIL
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="erc20Approve(`FIL`)">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="supplyToken(`FIL`)">存款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="取款" name="second">
+          <el-form label-position="top" label-width="80px" :model="supplyFil">
+            <el-form-item label="取款数量">
+              <el-input v-model="supplyFil.redeemAmount" clearable>
+                <el-button slot="prepend" @click="getRedeemBalance(`FIL`)">安全最大值（80%）</el-button>
+                <el-button slot="append">FIL</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
+                FIL
+              </el-descriptions-item>
+              <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}">$ {{
+                  borrowUsdt.balance
+                }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
+              <el-button type="success" @click="redeemAllToken(`FIL`)">取款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+    <!--   USDT存取 -->
+    <el-dialog
+        title="USDT"
+        :visible.sync="usdtSupplyDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName" @tab-click="handleClick">
+        <el-tab-pane label="存款" name="first">
+          <el-form label-position="top" label-width="80px" :model="supplyUsdt">
+            <el-form-item label="存款数量">
+              <el-input v-model="supplyUsdt.mintAmount" placeholder="请输入存款数量" clearable>
+                <el-button slot="prepend" @click="getSupplyBalance(`USDT`)">最大值</el-button>
+                <el-button slot="append">USDT</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
+                USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 USDT
+                ={{ panel.usdtExchangeRate }} eUSDT
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.usdtBalance }} USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.eusdtBalance }} eUSDT
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="supplyToken(`USDT`)">存款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="取款" name="second">
+          <el-form label-position="top" label-width="80px" :model="supply">
+            <el-form-item label="取款数量">
+              <el-input v-model="supplyUsdt.redeemAmount" clearable>
+                <el-button slot="prepend" @click="getRedeemBalance(`USDT`)">最大值</el-button>
+                <el-button slot="append">USDT</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyUsdt.count }}
+                USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 USDT
+                ={{ panel.usdtExchangeRate }} eUSDT
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包USDT数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.usdtBalance }} USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包eUSDT数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.eusdtBalance }} eUSDT
+              </el-descriptions-item>
+              <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
+                {{ panel.usdtTotalCash }} USDT
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="redeemUnderlying(`USDT`)">取款</el-button>
+              <el-button type="success" @click="redeemAllToken(`USDT`)">取款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+    <!--   USDT借还 -->
+    <el-dialog
+        title="USDT"
+        :visible.sync="usdtBorrowDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName">
+        <el-tab-pane label="借款" name="first">
+          <el-form label-position="top" label-width="80px" :model="supplyUsdt">
+            <el-form-item label="借款数量">
+              <el-input v-model="borrowUsdt.borrowAmount" placeholder="请输入借款数量" clearable>
+                <el-button slot="prepend" @click="getBorrowBalance(`USDT`)">（80%限制）</el-button>
+                <el-button slot="append">USDT</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  borrowUsdt.count
+                }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
+                USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.usdtTotalCash }} USDT
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="borrowToken(`USDT`)">借款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="还款" name="second">
+          <el-form label-position="top" label-width="80px" :model="borrowUsdt">
+            <el-form-item label="还款数量">
+              <el-input v-model="borrowUsdt.repayAmount" placeholder="请输入还款数量" clearable>
+                <el-button slot="prepend" @click="getRepayMaxBalance(`USDT`)">最大值</el-button>
+                <el-button slot="append">USDT</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="medium" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ borrowUsdt.balance }} -> $ {{ borrowUsdt.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  borrowUsdt.count
+                }} USDT -> {{ borrowUsdt.borrowCountLimit }} USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ borrowUsdt.alreadyCashPercent + ' %' }} -> {{ borrowUsdt.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ borrowUsdt.count }}
+                USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.usdtTotalCash }} USDT
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}">{{ panel.usdtBalance }}
+                USDT
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="erc20Approve(`USDT`)">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="repayToken(`USDT`)">还款</el-button>
+              <el-button type="success" @click="repayAllToken(`USDT`)">还款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+    <!--   返回结果 -->
     <el-dialog
         :visible.sync="dialogResultVisible"
         width="35em"
@@ -642,6 +655,10 @@ import {exp} from "../configure/conf";
 export default {
   data() {
     return {
+      formInline: {
+        user: '',
+        region: ''
+      },
       account: "",
       filSupplyDialogVisible: false,
       usdtSupplyDialogVisible: false,
@@ -767,9 +784,9 @@ export default {
         borrowAmountLimit: 0,
         borrowCountLimit: 0,
         borrowlimitPercent: 0,
-        //剩余可借额度
         //还款额度
         repayAmount: 0,
+        //剩余可借额度
         canBorrowCountLimit: 0,
         alreadyCashPercent: 0,
         borrowRate: '',
@@ -813,6 +830,9 @@ export default {
     }
   },
   methods: {
+    onSubmit() {
+      console.log('submit!');
+    },
     switchNetwork(){
       // 判断网络id
       if (this.$store.state.wallet.networkId === 3476){
@@ -823,7 +843,7 @@ export default {
         this.addressInfo.current = address.mhxw
       }else if (this.$store.state.wallet.networkId === 56){
         //bsc主网
-        this.addressInfo.current = address.bsc_pig
+        this.addressInfo.current = address.cream
       }else if (this.$store.state.wallet.networkId === 128){
         //heco主网
         this.addressInfo.current = address.ht_pig
@@ -949,11 +969,13 @@ export default {
           ) {
             this.info.result = "状态错误，请到首页刷新重试";
           } else if (
-              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds balance") !== -1
+              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds balance") !== -1||
+              result.message.toString().indexOf("execution reverted: BEP20: transfer amount exceeds balance") !== -1
           ) {
             this.info.result = "余额不足";
           } else if (
-              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1
+              result.message.toString().indexOf("execution reverted: ERC20: transfer amount exceeds allowance") !== -1||
+              result.message.toString().indexOf("execution reverted: BEP20: transfer amount exceeds allowance") !== -1
           ) {
             this.info.result = "授权额度不足或未授权";
           } else if (
@@ -1077,6 +1099,7 @@ export default {
         this.$parent.loading = false;
         this.verifyContractResult(res, this.$parent.url)
       }).catch(err => {
+        console.log("redeemUnderlying error")
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
@@ -1122,16 +1145,16 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
-
+        this.verifyContractResult(res, this.$parent.url)
       }).catch(err => {
+        console.log("redeem error")
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
     },
-    getResultInfo(result, info) {
+    getResultInfo(result, info,detail) {
       this.info.title = "错误提示"
-      this.info.result = info
+      this.info.result = result+"，"+info+"，"+detail
       this.dialogResultVisible = true
       //this.updatePanel()
     },
@@ -1163,6 +1186,9 @@ export default {
           case "15":
             info = "转账转出失败"
             break;
+          case "40":
+            info = "赎回被审计合约拒绝"
+            break;
           case "47":
             info = "取款金额错误，超出实际金额"
             break;
@@ -1171,9 +1197,12 @@ export default {
           case "4":
             detail = "差额不足"
             break;
+          case "13":
+            detail = "查询价格合约为0"
+            break;
         }
         console.log("result,info,detail", result, info, detail)
-        this.getResultInfo(result, info)
+        this.getResultInfo(result, info,detail)
       } else {
         this.getSuccessInfo(url)
       }
@@ -1189,10 +1218,10 @@ export default {
       let borrowAmount
       if (tokenName === constants.FIL) {
         assetToken = this.addressInfo.current.eFIL
-        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.FIL)).toNumber().toString()
+        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
-        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toNumber().toString()
+        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("borrowAmount", borrowAmount)
       this.verifyConnect()
@@ -1362,7 +1391,9 @@ export default {
         return
       }
       let that = this
-      this.borrowUsdt.borrowAmount = new Decimal(that.borrowUsdt.canBorrowCountLimit).toFixed(6, Decimal.ROUND_DOWN)
+      if (tokenName===constants.USDT){
+        this.borrowUsdt.borrowAmount = new Decimal(that.borrowUsdt.canBorrowCountLimit).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+      }
     },
     getRepayMaxBalance(tokenName) {
       if (!this.verifyConnect()) {
@@ -1419,7 +1450,9 @@ export default {
       this.getApy(constants.eFIL)
       //this.getBSCApy()
       this.viewPrice()
+      //检查本地址的fil抵押状态
       this.checkMemberShipPage()
+      //清算系数
       this.closeFactorMantissaPage()
 
       this.getApr()
@@ -1478,30 +1511,19 @@ export default {
         eTokenAddress = this.addressInfo.current.eFIL
       }
       let result = 0
-      //获取用户eUSDT余额
+      //获取用户eUSDT数量
       await balanceOf(
           this.$store.state.wallet,
           eTokenAddress,
       ).then(res => {
         result = res
         let amount = new Decimal(res)
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bhp"||this.addressInfo.current.type==="bsc"){
-          //bhp comp
-          console.log("获取usdt价格")
-          if (tokenName === constants.eUSDT) {
-            this.panel.eusdtBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.efilBalance = amount.div(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
-          }
-        }else{
-          // pig
-          if (tokenName === constants.eUSDT) {
-            this.panel.eusdtBalance = amount.dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.efilBalance = amount.dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
-          }
+        console.log("获取eToken数量",res)
+        if (tokenName === constants.eUSDT) {
+          this.panel.eusdtBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eFIL) {
+          this.panel.efilBalance = amount.div(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
         }
-
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1558,27 +1580,13 @@ export default {
           eTokenAddress,
       ).then(res => {
         result = res
-        // efil
-/*        if (tokenName === constants.eUSDT) {
+
+        if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
-          //bhp comp
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          }
-        }else{
-          // pig
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          }
         }
+
       }).catch(err => {
         console.log("err totalReserve")
         this.getErrorInfo(err)
@@ -1599,28 +1607,14 @@ export default {
           eTokenAddress,
       ).then(res => {
         result = res
+
         let amount = new Decimal(res)
-        // e
-/*        if (tokenName === constants.eUSDT) {
+        if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
-          //bhp comp
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-          }
-        }else{
-          // pig
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalBorrowsInfo = amount.div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          }
         }
+
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1659,27 +1653,13 @@ export default {
           eTokenAddress,
       ).then(res => {
         result = res
-        //efilhom
-/*        if (tokenName === constants.eUSDT) {
+
+        if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
           this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
-          //bhp comp
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          }
-        }else{
-          //pig
-          if (tokenName === constants.eUSDT) {
-            this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, 18)).toFixed(18, Decimal.ROUND_DOWN)
-          }
         }
+
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1826,35 +1806,20 @@ export default {
           eTokenAddress,
           this.addressInfo.current.Oracle
       ).then(res => {
+        console.log("price",res)
+
         let balance = new Decimal(res)
-        //efil
-/*        if (tokenName === constants.eUSDT) {
-          result = balance.dividedBy(Decimal.pow(10, 30))
-          this.panel.usdtPrice = balance.dividedBy(Decimal.pow(10, 30)).toFixed(4)
+        let mantissa
+        if (tokenName === constants.eUSDT) {
+          mantissa = 36 - decimals.USDT
+          result = balance.div(Decimal.pow(10, mantissa))
+          this.panel.usdtPrice = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
-          result = balance.dividedBy(Decimal.pow(10, decimals.FIL))
-          this.panel.filPrice = balance.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(4)
-        }*/
-        if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
-          //bhp comp
-          //pig
-          if (tokenName === constants.eUSDT) {
-            result = balance.div(Decimal.pow(10, 30))
-            this.panel.usdtPrice = balance.div(Decimal.pow(10, 30)).toFixed(4,Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            result = balance.div(Decimal.pow(10, 18))
-            this.panel.filPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
-          }
-        }else{
-          //pig
-          if (tokenName === constants.eUSDT) {
-            result = balance.div(Decimal.pow(10, 18))
-            this.panel.usdtPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
-          } else if (tokenName === constants.eFIL) {
-            result = balance.div(Decimal.pow(10, 18))
-            this.panel.filPrice = balance.div(Decimal.pow(10, 18)).toFixed(4,Decimal.ROUND_DOWN)
-          }
+          mantissa = 36 - decimals.FIL
+          result = balance.div(Decimal.pow(10, mantissa))
+          this.panel.filPrice = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
         }
+
       }).catch(err => {
         console.log("error viewPrice")
         this.getErrorInfo(err)
@@ -1939,10 +1904,10 @@ export default {
 
         if (tokenName === constants.eUSDT) {
           result = collateralFactorMantissa
-          this.panel.usdtCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 18))
+          this.panel.usdtCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         } else if (tokenName === constants.eFIL) {
           result = collateralFactorMantissa
-          this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 18))
+          this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2093,19 +2058,8 @@ export default {
       })
       return result
     },
-    randomString(e) {
-        e = e || 32;
-      let t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678",
-          a = t.length,
-          n = "";
-      for (let i = 0; i < e; i++) {
-        n += t.charAt(Math.floor(Math.random() * a));
-      }
-      return n
-    },
     async accrueInterestPage(tokenName) {
       let currentBlockNumber = await this.getBlockNumberPage()
-      let rand=this.randomString(6)
       let accrualBlockNumber = await this.accrualBlockNumberPage(tokenName)
       let totalCash = await this.getCashPage(tokenName)
       let totalBorrows = await this.totalBorrowsPage(tokenName)
@@ -2118,11 +2072,6 @@ export default {
         this.panel.filUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       }
       let borrowRate = await this.getBorrowRatePage(tokenName, totalCash, totalBorrows, totalReserves)
-      if (tokenName === constants.eFIL) {
-        /*console.log("原来totalCash,totalBorrows,totalReserves", totalCash.toString(), totalBorrows.toString(), totalReserves.toString())
-        console.log("borrowRate", borrowRate.toString())
-        console.log("utilizationRate", utilizationRate.toString())*/
-      }
       let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
       this.borrowUsdt.borrowRate = borrowRate
       // 当前区块和 accrualBlockNumberPrior 之间的区块数
@@ -2147,49 +2096,35 @@ export default {
       let cashPlusBorrowsMinusReserves = new Decimal(list.totalCash).add(new Decimal(list.totalBorrowsNew)).sub(new Decimal(list.totalReservesNew))
       // 兑换率=(资金池余额+借贷总额-总储备金)*1Ether/总供应量
       let exchangeRate
+      let cTokenDecimals = 8;
+      let mantissa
       // 总供应量
       let totalSupply = await this.totalSupplyPage(tokenName)
       if (new Decimal(totalSupply).cmp(new Decimal(0)) === 0) {
         exchangeRate = await this.exchangeRateStoredPage(tokenName)
         if (tokenName === constants.eUSDT) {
-          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+6-8))).toFixed(18, Decimal.ROUND_DOWN)
+          mantissa = 18 + decimals.USDT - cTokenDecimals
+          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eFIL) {
-          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+18-8))).toFixed(18, Decimal.ROUND_DOWN)
+          mantissa = 18 + decimals.FIL - cTokenDecimals
+          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         }
         return exchangeRate
       }
 
-      // cToken和标的资产的小数点换算 18+标的资产小数位-cToken资产小数位
+      // cToken和标的资产的初始兑换率小数点换算=18+标的资产小数位-cToken资产小数位
       // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
-      const cTokenDecimals = 8;
-      let mantissa
 
-      if (this.$store.state.wallet.networkId === 3476||this.$store.state.wallet.networkId === 1||this.addressInfo.current.type==="bsc"){
-        //bhp comp
-        if (tokenName === constants.eUSDT) {
-          //comp 30
-          //18+18-8=28 efil 6
-          mantissa = 30 + decimals.USDT - cTokenDecimals
-          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+6-8))).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          //18+18-8=28 efil 18
-          mantissa = 18 + decimals.FIL - cTokenDecimals
-          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, 18+18-8))).toFixed(18, Decimal.ROUND_DOWN)
-        }
-      }else{
-        if (tokenName === constants.eUSDT) {
-          //pig 为18
-          mantissa=28
-          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          //28
-          mantissa = 18 + decimals.FIL - cTokenDecimals
-          exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-          this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
-        }
+      if (tokenName === constants.eUSDT) {
+        //18+18-8=28 efil 6
+        mantissa = 18 + decimals.USDT - cTokenDecimals
+        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+        this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.eFIL) {
+        //18+18-8=28 efil 18
+        mantissa = 18 + decimals.FIL - cTokenDecimals
+        exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
+        this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
       }
 
       return exchangeRate
@@ -2217,20 +2152,19 @@ export default {
         this.supplyUsdt.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
 
       } else if (tokenName === constants.eFIL) {
-        //存款金额=兑换率*存款数量/1Ether （取整数值）
-        //console.log("redeemTokensIn",redeemTokensIn)
-        /*       let ex=new Decimal(1500).div(new Decimal(redeemTokensIn)).mul(Decimal.pow(10,36)).toFixed(0,Decimal.ROUND_DOWN)
-                console.log("真实：ex",ex.toString())
-                console.log("计算：exchangeRateMantissa",exchangeRateMantissa)
-                exchangeRateMantissa=ex*/
+        //fil存款数量
         redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        //console.log("redeemAmount",redeemAmount)
+        console.log("redeemAmount",redeemAmount)
         this.supplyFil.count = redeemAmount.toString()
+        //fil存款金额
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         this.supplyFil.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
-        // 计算FIL可抵押多少FIL=FIL余额*FIL抵押因子/1Ether
-        // 存款数量xfil价格x0.6
+        // 可抵押价值=存款数量xfil价格x抵押率
+        console.log("redeemBalance",redeemBalance.toNumber().toString())
+        console.log("collateralFactor",collateralFactor.toString())
+        // 借款限额（数量）
         let enterCash = redeemBalance.mul(new Decimal(collateralFactor).div(Decimal.pow(10, 18)))
+        console.log("enterCash",enterCash.toNumber().toString())
         // 用户最少存多少FIL的数量=当前借贷总额/（FIL抵押因子/1Ether）/fil价格
         let limitPercent = new Decimal(0.8)
         // 借款USDT最大额度金额(80%限额)
@@ -2244,21 +2178,36 @@ export default {
         this.borrowUsdt.borrowCountLimit = borrowCountLimit.toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         // usdt剩余可借额度(判断是否大于0，不是设置为0)
         let canBorrowCountLimit = borrowAmountLimit.sub(this.borrowUsdt.count)
+        console.log("borrowUsdt.count",this.borrowUsdt.count)
+        console.log("borrowAmountLimit",borrowAmountLimit.toNumber().toString())
         if (canBorrowCountLimit.lt(new Decimal(0)) === true) {
           canBorrowCountLimit = 0
         }
         this.borrowUsdt.canBorrowCountLimit = canBorrowCountLimit
         // 借款限制百分比
         this.borrowUsdt.borrowlimitPercent = limitPercent.mul(new Decimal(100)).toString()
-        // 目前借款
-        let alreadyCashPercent = new Decimal(this.borrowUsdt.balance).div(enterCash)
+        // 限额已使用百分比
+        let alreadyCashPercent
+        console.log("enterCash",enterCash.toNumber().toString())
+        if (enterCash.cmp(new Decimal(0))===0){
+          alreadyCashPercent = new Decimal(0)
+        }else{
+          alreadyCashPercent = new Decimal(this.borrowUsdt.balance).div(enterCash)
+        }
         this.borrowUsdt.alreadyCashPercent = alreadyCashPercent.mul(new Decimal(100)).toFixed(4)
-        //剩余FIL可取80%-已使用的百分比
-        // 最多可贷-已经贷的=可取的
-        let userCanRedeem = enterCash.sub(new Decimal(this.borrowUsdt.balance))
-        //用户可取的金额/fil价格=可取的fil数量
-        let userCanRedeemCount = userCanRedeem.div(new Decimal(price))
-        this.supplyFil.userCanRedeemCount = userCanRedeemCount
+
+        if (alreadyCashPercent.cmp(new Decimal(80))> -1){
+          // 如果限额已使用百分比大于等于80%，可取数量设为0
+          this.supplyFil.userCanRedeemCount = 0
+        }else{
+          //剩余FIL可取80%-已使用的百分比
+          // 最多可贷-已经贷的=可取的
+          let userCanRedeem = enterCash.sub(new Decimal(this.borrowUsdt.balance))
+          //用户可取的金额/fil价格=可取的fil数量
+          let userCanRedeemCount = userCanRedeem.div(new Decimal(price))
+          this.supplyFil.userCanRedeemCount = userCanRedeemCount
+        }
+
       }
       await this.searchLiquidity()
       return {redeemAmount, redeemBalance}
@@ -2493,7 +2442,7 @@ export default {
     async searchLiquidity() {
       let that = this
       this.account = that.$store.state.wallet.address
-      this.liquidity.sumCollateral = new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor))
+      this.liquidity.sumCollateral = new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor).div(new Decimal(100)))
       this.liquidity.sumBorrowPlusEffects = that.borrowUsdt.balance
     },
     handleLiquid(index, row) {
