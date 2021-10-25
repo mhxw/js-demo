@@ -649,7 +649,7 @@ import {
 } from "../web3/hashbank";
 import Decimal from 'decimal.js';
 import {address, constants, decimals} from "../configure/hashbank";
-import {disconnectWallet, erc20Approval, erc20BalanceOf} from "../web3";
+import {erc20Approval, erc20BalanceOf} from "../web3";
 import {exp} from "../configure/conf";
 
 export default {
@@ -1051,7 +1051,7 @@ export default {
         this.getSuccessInfo(this.$parent.url)
 
       }).catch(err => {
-        console.log("err mint")
+        console.log("mint error")
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
@@ -1076,7 +1076,6 @@ export default {
         assetToken = this.addressInfo.current.eUSDT
         redeemAmount = new Decimal(this.supplyUsdt.redeemAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("redeemAmount", redeemAmount)
 
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
@@ -1290,6 +1289,7 @@ export default {
         this.verifyContractResult(res, this.$parent.url)
 
       }).catch(err => {
+        console.log("repayToken error")
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
@@ -2149,22 +2149,21 @@ export default {
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         //金额保留8位
 
-        this.supplyUsdt.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
+        this.supplyUsdt.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
 
       } else if (tokenName === constants.eFIL) {
         //fil存款数量
+        console.log("fil exchangeRateMantissa",exchangeRateMantissa)
+        console.log("fil redeemTokensIn",redeemTokensIn)
         redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        console.log("redeemAmount",redeemAmount)
+        console.log("fil redeemAmount",redeemAmount)
         this.supplyFil.count = redeemAmount.toString()
         //fil存款金额
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
-        this.supplyFil.balance = redeemBalance.toDecimalPlaces(8, Decimal.ROUND_DOWN)
+        this.supplyFil.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
         // 可抵押价值=存款数量xfil价格x抵押率
-        console.log("redeemBalance",redeemBalance.toNumber().toString())
-        console.log("collateralFactor",collateralFactor.toString())
         // 借款限额（数量）
         let enterCash = redeemBalance.mul(new Decimal(collateralFactor).div(Decimal.pow(10, 18)))
-        console.log("enterCash",enterCash.toNumber().toString())
         // 用户最少存多少FIL的数量=当前借贷总额/（FIL抵押因子/1Ether）/fil价格
         let limitPercent = new Decimal(0.8)
         // 借款USDT最大额度金额(80%限额)
@@ -2178,8 +2177,6 @@ export default {
         this.borrowUsdt.borrowCountLimit = borrowCountLimit.toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         // usdt剩余可借额度(判断是否大于0，不是设置为0)
         let canBorrowCountLimit = borrowAmountLimit.sub(this.borrowUsdt.count)
-        console.log("borrowUsdt.count",this.borrowUsdt.count)
-        console.log("borrowAmountLimit",borrowAmountLimit.toNumber().toString())
         if (canBorrowCountLimit.lt(new Decimal(0)) === true) {
           canBorrowCountLimit = 0
         }
@@ -2188,7 +2185,6 @@ export default {
         this.borrowUsdt.borrowlimitPercent = limitPercent.mul(new Decimal(100)).toString()
         // 限额已使用百分比
         let alreadyCashPercent
-        console.log("enterCash",enterCash.toNumber().toString())
         if (enterCash.cmp(new Decimal(0))===0){
           alreadyCashPercent = new Decimal(0)
         }else{
@@ -2196,8 +2192,11 @@ export default {
         }
         this.borrowUsdt.alreadyCashPercent = alreadyCashPercent.mul(new Decimal(100)).toFixed(4)
 
-        if (alreadyCashPercent.cmp(new Decimal(80))> -1){
-          // 如果限额已使用百分比大于等于80%，可取数量设为0
+        console.log("alreadyCashPercent",alreadyCashPercent.toNumber().toString())
+        console.log("alreadyCashPercent",alreadyCashPercent.cmp(new Decimal(0.8)))
+        //借款限额大于等于80%时候，可取数量设为0
+        // Decimal cmp=0 2个数相等 cmp=1 前面大于后面 cmp=-1 后面大于前面
+        if (alreadyCashPercent.cmp(new Decimal(0.8))> -1){
           this.supplyFil.userCanRedeemCount = 0
         }else{
           //剩余FIL可取80%-已使用的百分比
@@ -2233,7 +2232,7 @@ export default {
         return
       }
       if (this.$store.state.wallet.networkId === 97||this.$store.state.wallet.networkId === 56||this.$store.state.wallet.networkId === 128) {
-        //bsc主网测试 每3s一个区块
+        //bsc heco 主网测试 每3s一个区块
         let blocksPerDay = 28800
         //一年按照365天计算
         let daysPerYear = 365
