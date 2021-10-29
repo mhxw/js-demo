@@ -152,13 +152,13 @@ export const address = {
         "tx_url":"https://bscscan.com/tx/",
         "eFIL": '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
         "eUSDT": '0x2a8Cd78bFb91ACF53f589961D213d87c956e0d7f',
-        "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "Unitroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "UsdtJumpRateModel": '0xc1b02e52e9512519edf99671931772e452fb4399',
         "FilJumpRateModel": '0x621ce6596e0b9ccf635316bfe7fdbc80c3029bec',
         "Oracle": '0x4c78015679fabe22f6e02ce8102afbf7d93794ea',
         "USDT": '0x55d398326f99059fF775485246999027B3197955',
         "FIL": '0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153',
+        "Comptroller": '0x8c925623708a94c7de98a8e83e8200259ff716e0',
         "FilChainlink":'0xE5dbFD9003bFf9dF5feB2f4F445Ca00fb121fb83'
     },
     "eth_comp": {
