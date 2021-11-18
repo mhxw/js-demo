@@ -19,12 +19,13 @@ let reserveFactor = new Decimal(0)
 let one = new Decimal(1)
 let hundred = new Decimal(100)
 
-for(let i = 0; i <= 100; i++) {
+for(let i = 0; i <= 10000; i++) {
 
   let borrowApy;
   let supplyApy;
-  let u = new Decimal(i/100);
-  if (i <= 80) {
+  let u = new Decimal(i/10000);
+  let percent=u.mul(hundred).toNumber()
+  if (i <= 8000) {
     let borrowRatePerBlock = u.mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0, Decimal.ROUND_DOWN)
     let supplyRatePerBlock = new Decimal(borrowRatePerBlock).mul(u).mul(one.sub(reserveFactor))
     let borrowInfo = new Decimal(borrowRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
@@ -33,7 +34,7 @@ for(let i = 0; i <= 100; i++) {
     supplyApy = Decimal.pow(supplyInfo, daysPerYear).sub(one).mul(hundred)
   }else{
     let normalRate = new Decimal(0.8).mul(multiplierPerBlock).add(baseRatePerBlock).toFixed(0, Decimal.ROUND_DOWN)
-    let borrowRatePerBlock100 = new Decimal(0.2).mul(jumpMultiplierPerBlock).add(new Decimal(normalRate))
+    let borrowRatePerBlock100 = (u.sub(new Decimal(0.8))).mul(jumpMultiplierPerBlock).add(new Decimal(normalRate))
     let supplyRatePerBlock100 = new Decimal(borrowRatePerBlock100).mul(u).mul(one.sub(reserveFactor))
     let borrowInfo = new Decimal(borrowRatePerBlock100).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
     let supplyInfo = new Decimal(supplyRatePerBlock100).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
@@ -42,9 +43,9 @@ for(let i = 0; i <= 100; i++) {
   }
 
   arrList.push(
-      { country: '存款APY', percentage: u.toNumber(), value: supplyApy.toDecimalPlaces(2,Decimal.ROUND_DOWN).toNumber() },
-      { country: '借款APY', percentage: u.toNumber(), value: borrowApy.toDecimalPlaces(2,Decimal.ROUND_DOWN).toNumber() },
-      { country: '资金利用率', percentage: u.toNumber(), value: u.toNumber() }
+      { country: '存款APY', percentage: percent, value: supplyApy.toDecimalPlaces(2,Decimal.ROUND_DOWN).toNumber() },
+      { country: '借款APY', percentage: percent, value: borrowApy.toDecimalPlaces(2,Decimal.ROUND_DOWN).toNumber() },
+      { country: '资金利用率', percentage: percent, value: percent }
   )
 }
 

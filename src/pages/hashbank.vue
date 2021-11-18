@@ -843,7 +843,7 @@ export default {
         this.addressInfo.current = address.mhxw
       }else if (this.$store.state.wallet.networkId === 56){
         //bsc主网
-        this.addressInfo.current = address.cream
+        this.addressInfo.current = address.bsc_pig
       }else if (this.$store.state.wallet.networkId === 128){
         //heco主网
         this.addressInfo.current = address.ht_pig
@@ -982,7 +982,11 @@ export default {
               result.message.toString().indexOf("execution reverted: REPAY_BORROW_NEW_ACCOUNT_BORROW_BALANCE_CALCULATION_FAILED") !== -1
           ) {
             this.info.result = "还款余额计算错误，超出实际还款值";
-          } else {
+          } else if (
+              result.message.toString().indexOf("execution reverted: TransparentUpgradeableProxy: admin cannot fallback to proxy target") !== -1
+          ) {
+            this.info.result = "管理员无法调用代理合约";
+          }else {
             this.info.result = result;
           }
         } else {
@@ -2248,8 +2252,11 @@ export default {
         //合约最后一次触发
         //let supplyRatePerBlock=await this.supplyRatePerBlockPage(tokenName)
         //let borrowRatePerBlock=await this.borrowRatePerBlockPage(tokenName)
+        //实时
         let borrowRatePerBlock = await this.getBorrowRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN))
         let supplyRatePerBlock = await this.getSupplyRatePage(tokenName, list.totalCash, list.totalBorrowsNew.toFixed(0, Decimal.ROUND_DOWN), list.totalReservesNew.toFixed(0, Decimal.ROUND_DOWN), reserveFactorMantissa)
+        console.log("borrowRatePerBlock",borrowRatePerBlock)
+        console.log("supplyRatePerBlock",supplyRatePerBlock)
         let one = new Decimal(1)
         let hundred = new Decimal(100)
         let supply = new Decimal(supplyRatePerBlock).div(Decimal.pow(10, 18)).mul(blocksPerDay).add(one)
@@ -2441,7 +2448,7 @@ export default {
     async searchLiquidity() {
       let that = this
       this.account = that.$store.state.wallet.address
-      this.liquidity.sumCollateral = new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor).div(new Decimal(100)))
+      this.liquidity.sumCollateral = new Decimal(that.supplyFil.balance).mul(new Decimal(that.panel.filCollateralFactor).div(new Decimal(100))).toFixed(18,Decimal.ROUND_DOWN)
       this.liquidity.sumBorrowPlusEffects = that.borrowUsdt.balance
     },
     handleLiquid(index, row) {
