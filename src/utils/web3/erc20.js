@@ -1,4 +1,4 @@
-import {erc20} from "@/configure/abi";
+import {erc20} from "@/utils/configure/abi";
 import BigNumber from "bignumber.js";
 
 export async function erc20Approval(wallet,tokenAddress,contractAddress, callback) {

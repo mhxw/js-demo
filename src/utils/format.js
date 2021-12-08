@@ -10,12 +10,12 @@ export function toUSDT(amount) {
     return balance.times("1000000").toNumber()
 }
 
-export function formBHP(amount) {
+export function formETH(amount) {
     let balance = new BigNumber(amount)
     return balance.div("1000000000000000000").toNumber()
 }
 
-export function toBHP(amount) {
+export function toETH(amount) {
     let balance = new BigNumber(amount)
     return balance.times("1000000000000000000").toNumber()
 }

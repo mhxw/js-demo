@@ -9,7 +9,7 @@
           <el-image :src="require('../assets/img/loading.gif')" style="width: 4.5rem;height: 4.5rem;"></el-image>
         </template>
         <template slot="extra">
-          <el-link type="success" :href="url"  v-text="$t('message.text3')" target="_blank" >查看交易</el-link>
+          <el-link type="success" :href="url"  target="_blank" >查看交易</el-link>
         </template>
       </el-result>
       <el-result title="交易详情" v-show="flag1">
@@ -17,13 +17,13 @@
           <el-image :src="require('../assets/img/loading.gif')" style="width: 4.5rem;height: 4.5rem;"></el-image>
         </template>
         <template slot="extra">
-          <span v-text="$t('message.text04')">交易确认中...</span>
+          <span >交易确认中...</span>
         </template>
       </el-result>
       <el-result icon="error" title="交易详情" v-show="flag3">
         <template slot="extra">
-          <span v-text="$t('message.text1')">交易被拒绝</span>
-          <button class="buttonLoading" @click="againTry()" v-text="$t('message.text2')">再试一次</button>
+          <span >交易被拒绝</span>
+          <button class="buttonLoading" @click="againTry()">再试一次</button>
         </template>
       </el-result>
     </el-dialog>
@@ -72,9 +72,9 @@
 
 <script>
 import {mapMutations} from "vuex";
-import {connectWallet, disconnectWallet} from "@/web3/index";
-import {connectNetwork} from "../web3/wallet";
-import {address} from "../configure/hashbank";
+import {connectWallet, disconnectWallet} from "@/utils/web3/index";
+import {connectNetwork} from "../utils/web3/wallet";
+import {address} from "../utils/configure/hashbank";
 export default {
   data() {
     return {

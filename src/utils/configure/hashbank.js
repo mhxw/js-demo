@@ -1,3 +1,4 @@
+export const exp=1000000000000000000
 
 export const network = {
     'BHPTest': 'BHPTest',

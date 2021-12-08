@@ -646,11 +646,10 @@ import {
   totalSupply,
   utilizationRate,
   viewPrice,
-} from "../web3/hashbank";
+} from "../utils/web3/hashbank";
 import Decimal from 'decimal.js';
-import {address, constants, decimals} from "../configure/hashbank";
-import {erc20Approval, erc20BalanceOf} from "../web3";
-import {exp} from "../configure/conf";
+import {exp,address, constants, decimals} from "../utils/configure/hashbank";
+import {erc20Approval, erc20BalanceOf} from "../utils/web3/index";
 
 export default {
   data() {

@@ -1,7 +1,7 @@
 import {
     constants, address, abi, decimals, underlyings
-} from "@/configure/hashbank";
-import {Utils} from "../utils/utils";
+} from "@/utils/configure/hashbank";
+import {Utils} from "../utils";
 
 /**
  * 存款
