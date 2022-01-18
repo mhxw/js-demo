@@ -10,12 +10,39 @@ export const constants = {
     'Comptroller': 'Comptroller',
     'eUSDT': 'eUSDT',
     'eFIL': 'eFIL',
+    'eETH': 'eETH',
+    'eBNB': 'eBNB',
     'FIL': 'FIL',
     'USDT': 'USDT',
+    'BNB':'BNB',
+    'ETH':'ETH'
 }
 
 export const address = {
     "mhxw":{
+        // bsc test mhxw deploy
+        "type":"bsc",
+        "name":"bsc test mhxw deploy",
+        "url":"https://testnet.bscscan.com/address/",
+        "tx_url":"https://testnet.bscscan.com/tx/",
+        "eFIL": "0xb0e4857E0c8753849a0E527D2Da5e6A304699730",
+        "FIL": '0xbff22bb7f275715703e29ff60cd035203a79e61d',
+        "eBNB": "0x5912Ef97f82D9791609798434d23686B3dde8F0d",
+        "eETH": "0xd15e2dc8e1399f5ECAF922A1067F6B234D783848",
+        "ETH": '0xc9F64a699eA6EF2a271C039bDb55B76eB67038F4',
+        "eUSDT": "0xcdD53d8B285FFb6149796189cE02556aEfD43fF0",
+        "USDT": '0x3d3ec5ecfe16CB53A9c29DD70759E4d772cF18c4',
+        "Unitroller": '0x90AFBec4BaC04739D1b8d8e1803bb1AF8786d470',
+        "Oracle": '0x08b4aa511581aa6f2c442cc29359cf171ff29f50',
+        "UsdtJumpRateModel": '0x664271A858933775B9ea23133A0eaDD8acb6EF45',
+        "ETHJumpRateModel": '0xFEd4251de3004980EeA110D32D67aF8D3F930290',
+        "BaseJumpRateModel": '0x47dec5E427fe41B13adcbbEB822Baef7C510be0c',
+        "FilChainlink":'0x17308A18d4a50377A4E1C37baaD424360025C74D',
+        "Comptroller": '0xEdcAe38f5Ca88b0F83E04BE180bb395DE137DE21',
+        "Oracle_link":"0xB5935145a91EA5330E03CE0F7B7c1Df4fb54715F",
+        "Oracle_simple":"0x079eFCa354FBA618b34dD237A6500eb34c90d863",
+    },
+    "mhxw-old":{
         // bsc test mhxw deploy
         "type":"bsc",
         "name":"bsc test mhxw deploy",
@@ -184,18 +211,19 @@ export const address = {
 export const cTokens = [
     'eFIL',
     'eUSDT',
-];
-
-export const underlyings = [
-    'FIL',
-    'USDT',
+    'eETH',
+    'eBNB'
 ];
 
 export const decimals = {
     'eFIL': 8,
     'eUSDT': 8,
+    'eETH':8,
+    'eBNB':8,
     'USDT': 18,
     'FIL': 18,
+    'BNB':18,
+    'ETH':18
 };
 
 export const abi = {

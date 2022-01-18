@@ -111,13 +111,6 @@ export default {
     this.selectValue = "cn";
     this.activeIndex = location.pathname; //下标刷新不变,history模式下
     switch (localStorage.getItem("lang")) {
-      case "cn":
-        this.msg = "推荐使用Google Chrome浏览器";
-        this.msg1 = "请先连接钱包";
-        this.msg2 = "请输入金额";
-        this.msg3 = "余额不足";
-        this.addressMsg = "连接钱包";
-        break;
       default:
         this.msg = "推荐使用Google Chrome浏览器";
         this.msg1 = "请先连接钱包";

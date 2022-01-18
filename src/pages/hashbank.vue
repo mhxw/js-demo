@@ -29,21 +29,21 @@
                     <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
                     <el-descriptions-item label="Unitroller清算系数">{{ panel.closeFactorMantissa }} %</el-descriptions-item>
                   </el-descriptions>
-                  <el-descriptions title="FIL" direction="vertical" :column="6" border size="medium" >
+                  <el-descriptions title="WETH" direction="vertical" :column="6" border size="medium" >
                     <el-descriptions-item label="每年的区块数">{{ panel.filBlocksPerYear }}</el-descriptions-item>
                     <el-descriptions-item label="基准区块利率">{{ panel.filBaseRatePerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="拐点">{{ panel.filKink }} %</el-descriptions-item>
                     <el-descriptions-item label="区块斜率">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
                     <el-descriptions-item label="拐点后区块斜率">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="FIL储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
+                    <el-descriptions-item label="WETH储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
                     <el-descriptions-item label="基准年利率">{{ panel.filBaseRatePerYear }}</el-descriptions-item>
                     <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.filMultiplierPerYear }}</el-descriptions-item>
                     <el-descriptions-item label="拐点后年斜率">{{ panel.filJumpMultiplierPerYear}}</el-descriptions-item>
-                    <el-descriptions-item label="R0">{{ panel.r0Fil}} %</el-descriptions-item>
-                    <el-descriptions-item label="R1">{{ panel.r1Fil }} %</el-descriptions-item>
-                    <el-descriptions-item label="R2">{{ panel.r2Fil }} %</el-descriptions-item>
-                    <el-descriptions-item label="eFIL合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="eFIL合约最新触发的借款总额">{{ panel.filTotalReservesInfo }} USDT</el-descriptions-item>
+                    <el-descriptions-item label="R0">{{ panel.r0WETH}} %</el-descriptions-item>
+                    <el-descriptions-item label="R1">{{ panel.r1WETH}} %</el-descriptions-item>
+                    <el-descriptions-item label="R2">{{ panel.r2WETH}} %</el-descriptions-item>
+                    <el-descriptions-item label="eETH合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                    <el-descriptions-item label="eETH合约最新触发的借款总额">{{ panel.filTotalReservesInfo }} USDT</el-descriptions-item>
                   </el-descriptions>
                 </el-col>
                 <el-col :span="12">
@@ -58,22 +58,22 @@
                     <el-descriptions-item label="USDT借款年APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
                     <el-descriptions-item label="USDT存款年APY">{{ panel.supplyUsdtApy }} %</el-descriptions-item>
                     <el-descriptions-item label="USDT兑换率"> 1 USDT ={{ panel.usdtExchangeRate }} eUSDT</el-descriptions-item>
-                    <el-descriptions-item label="USDT最大抵押系数(没有)"> {{ panel.usdtCollateralFactor }} %</el-descriptions-item>
+                    <el-descriptions-item label="USDT最大抵押系数"> {{ panel.usdtCollateralFactor }} %</el-descriptions-item>
                   </el-descriptions>
                 </el-col>
                 <el-col :span="12">
-                  <el-descriptions title="FIL" direction="horizontal" :column="1" border size="medium">
-                    <el-descriptions-item label="FIL价格"> $ {{ panel.filPrice }} </el-descriptions-item>
-                    <el-descriptions-item label="FIL资金池余额"> {{ panel.filTotalCash }} FIL</el-descriptions-item>
-                    <el-descriptions-item label="FIL借款总数量(没有)"> {{ panel.filTotalBorrowsInfo }} FIL</el-descriptions-item>
-                    <el-descriptions-item label="FIL储备金(没有)"> {{ panel.filTotalReservesInfo }} FIL</el-descriptions-item>
-                    <el-descriptions-item label="FIL利用率(没有)"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
-                    <el-descriptions-item label="FIL每个区块借款利率(没有)">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="FIL每个区块存款利率(没有)">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="FIL借款年APY(没有)">{{ panel.borrowFilApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="FIL存款年APY(没有)">{{ panel.supplyFilApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="FIL兑换率(保持恒定)"> 1 FIL ={{ panel.filExchangeRate }} eFIL</el-descriptions-item>
-                    <el-descriptions-item label="FIL最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
+                  <el-descriptions title="WETH" direction="horizontal" :column="1" border size="medium">
+                    <el-descriptions-item label="WETH价格"> $ {{ panel.filPrice }} </el-descriptions-item>
+                    <el-descriptions-item label="WETH资金池余额"> {{ panel.filTotalCash }} WETH</el-descriptions-item>
+                    <el-descriptions-item label="WETH借款总数量"> {{ panel.filTotalBorrowsInfo }} WETH</el-descriptions-item>
+                    <el-descriptions-item label="WETH储备金"> {{ panel.filTotalReservesInfo }} WETH</el-descriptions-item>
+                    <el-descriptions-item label="WETH利用率"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
+                    <el-descriptions-item label="WETH每个区块借款利率">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="WETH每个区块存款利率">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
+                    <el-descriptions-item label="WETH借款年APY">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="WETH存款年APY">{{ panel.supplyFilApy }} %</el-descriptions-item>
+                    <el-descriptions-item label="WETH兑换率"> 1 WETH={{ panel.filExchangeRate }} eETH</el-descriptions-item>
+                    <el-descriptions-item label="WETH最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
                   </el-descriptions>
                 </el-col>
               </el-card>
@@ -85,8 +85,8 @@
               <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="medium" style="margin-top: 10px;">
                 <el-descriptions-item label="钱包USDT数量">{{ panel.usdtBalance }} USDT</el-descriptions-item>
                 <el-descriptions-item label="凭证eUSDT数量">{{ panel.eusdtBalance }} eUSDT</el-descriptions-item>
-                <el-descriptions-item label="钱包FIL数量">{{ panel.filBalance }} FIL</el-descriptions-item>
-                <el-descriptions-item label="凭证eFIL数量">{{ panel.efilBalance }} eFIL</el-descriptions-item>
+                <el-descriptions-item label="钱包FIL数量">{{ panel.filBalance }} WETH</el-descriptions-item>
+                <el-descriptions-item label="凭证eETH数量">{{ panel.eETHBalance }} eETH</el-descriptions-item>
                 <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ supplyFil.balance }}+ ${{ supplyUsdt.balance}}</el-descriptions-item>
                 <el-descriptions-item label="用户借款总额(USDT)"> $ {{ borrowUsdt.balance }}</el-descriptions-item>
               </el-descriptions>
@@ -107,8 +107,8 @@
                 </el-descriptions>
                 <el-divider></el-divider>
                 <el-descriptions size="medium" :column="2" border>
-                  <el-descriptions-item label="资产">FIL</el-descriptions-item>
-                  <el-descriptions-item label="存款数量">{{ supplyFil.count }} FIL</el-descriptions-item>
+                  <el-descriptions-item label="资产">WETH</el-descriptions-item>
+                  <el-descriptions-item label="存款数量">{{ supplyFil.count }} WETH</el-descriptions-item>
                   <el-descriptions-item label="抵押开关">
                     <el-switch
                         v-model="supplyFil.isEnterMarket"
@@ -118,7 +118,7 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="存款金额">$ {{ supplyFil.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
-                    <el-button size="small" @click="openSupply(`FIL`)" type="success">存取</el-button>
+                    <el-button size="small" @click="openSupply('ETH')" type="success">存取</el-button>
                     <el-button size="small" v-show="!supplyFil.isEnterMarket" @click="switchMarketStatus()"
                                type="success">开启抵押
                     </el-button>
@@ -156,7 +156,7 @@
                       <span>我的账户</span>
                     </div>
                     <el-descriptions title="借款限额" :column="6" direction="vertical" border style="margin-top: 20px;">
-                      <el-descriptions-item label="币种" label-class-name="my-label"> FIL</el-descriptions-item>
+                      <el-descriptions-item label="币种" label-class-name="my-label"> WETH</el-descriptions-item>
                       <el-descriptions-item label="数量">  {{ supplyFil.count }}</el-descriptions-item>
                       <el-descriptions-item label="币价">$ {{ panel.filPrice }}</el-descriptions-item>
                       <el-descriptions-item label="抵押率">{{ panel.filCollateralFactor }}</el-descriptions-item>
@@ -292,9 +292,9 @@
               <el-tabs v-model="contract.activeName" tab-position="left">
                 <el-tab-pane label="当前运行版" name="four">
                   <el-descriptions :title="this.addressInfo.current.name" :column="1" border>
-                    <el-descriptions-item label="eFIL">
-                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.eFIL]" target="_blank">{{
-                          this.addressInfo.current.eFIL
+                    <el-descriptions-item label="eETH">
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.eETH]" target="_blank">{{
+                          this.addressInfo.current.eETH
                         }}
                       </el-link>
                     </el-descriptions-item>
@@ -304,9 +304,9 @@
                         }}
                       </el-link>
                     </el-descriptions-item>
-                    <el-descriptions-item label="FIL">
-                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FIL]" target="_blank">{{
-                          this.addressInfo.current.FIL
+                    <el-descriptions-item label="WETH">
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.ETH]" target="_blank">{{
+                          this.addressInfo.current.ETH
                         }}
                       </el-link>
                     </el-descriptions-item>
@@ -336,41 +336,36 @@
                         {{ this.addressInfo.current.UsdtJumpRateModel }}
                       </el-link>
                     </el-descriptions-item>
-                    <el-descriptions-item label="FilJumpRateModel">
-                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FilJumpRateModel]" target="_blank">
-                        {{ this.addressInfo.current.FilJumpRateModel }}
-                      </el-link>
-                    </el-descriptions-item>
-                    <el-descriptions-item label="FILPriceSource">
-                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.FilChainlink]" target="_blank">
-                        {{ this.addressInfo.current.FilChainlink }}
+                    <el-descriptions-item label="ETHJumpRateModel">
+                      <el-link :href="[this.addressInfo.current.url+this.addressInfo.current.ETHJumpRateModel]" target="_blank">
+                        {{ this.addressInfo.current.ETHJumpRateModel }}
                       </el-link>
                     </el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BHP测试网" name="first">
                   <el-descriptions title="BHP测试网" :column="1" border>
-                    <el-descriptions-item label="eFIL">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
+                    <el-descriptions-item label="eETH">0x5eb657300870019F4B3786E0Eb16DA0141e478fA</el-descriptions-item>
                     <el-descriptions-item label="eUSDT">0xb2c1aEF1a8C982A100199d9710AB8f1543bde44D</el-descriptions-item>
-                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                    <el-descriptions-item label="WETH">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
                     <el-descriptions-item label="USDT">0x0cb4DcbB6271E694FA44A6A09d3b768E42A6a162</el-descriptions-item>
                     <el-descriptions-item label="Comptroller">0x7B4e6f7CBA9E441eC87742afFC2bfbfe8F1771eb</el-descriptions-item>
                     <el-descriptions-item label="Oracle">0x4c784E745CA045AfcCFd40053376fb2ad4A7Dec0</el-descriptions-item>
                     <el-descriptions-item label="UsdtJumpRateModel">0xC66CC25B43580e0f4B589ed4b0F331B8BB56235C</el-descriptions-item>
-                    <el-descriptions-item label="FilJumpRateModel">0x79A0d60FfE46519a63123A005055ed59a55c1C7c</el-descriptions-item>
+                    <el-descriptions-item label="WETHJumpRateModel">0x79A0d60FfE46519a63123A005055ed59a55c1C7c</el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
                 <el-tab-pane label="BSC测试网" name="second">
                   <el-descriptions title="BSC测试网" :column="1" border>
-                    <el-descriptions-item label="eFIL">0xF673099cae8EC04FF524d38924cb3BB5040503a0</el-descriptions-item>
+                    <el-descriptions-item label="eETH">0xF673099cae8EC04FF524d38924cb3BB5040503a0</el-descriptions-item>
                     <el-descriptions-item label="eUSDT">0xA3f1eC9d338b304a4c6ea1e0218364b35B83a1d4
                     </el-descriptions-item>
-                    <el-descriptions-item label="FIL">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
+                    <el-descriptions-item label="WETH">0x8F66E03daC3316dFe38d50C66980702E7b4dFA38</el-descriptions-item>
                     <el-descriptions-item label="USDT">0xFaAA3D83d778836A2ECe0fEB597eA74e2Bcbb169</el-descriptions-item>
                     <el-descriptions-item label="Comptroller">0x25b297Dfb5c91A76181027c0eFbA86B7aaCB40f5</el-descriptions-item>
                     <el-descriptions-item label="Oracle">0x394078A417D16a0a0A611B38fc80084b8562cB28</el-descriptions-item>
                     <el-descriptions-item label="UsdtJumpRateModel">0x00182c24a9D279B0E6f5c2815956E5f4816371BF</el-descriptions-item>
-                    <el-descriptions-item label="FIL chainlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
+                    <el-descriptions-item label="WETH chainlink">0x6307f94f2c998cba6c0d47a1f74e3a8ec8babcc0</el-descriptions-item>
                     <el-descriptions-item label="USDT chainlink">0xe8af72ef575800101f8e46cf8f399260544e0fc6</el-descriptions-item>
                   </el-descriptions>
                 </el-tab-pane>
@@ -385,10 +380,10 @@
         </el-tabs>
       </el-row>
     </el-tabs>
-    <!--   FIL存取 -->
+    <!--   WETH存取 -->
     <el-dialog
-        title="FIL"
-        :visible.sync="filSupplyDialogVisible"
+        title="WETH"
+        :visible.sync="WETHSupplyDialogVisible"
         width="36em"
         center>
       <el-tabs v-model="dialogActiveName">
@@ -396,30 +391,30 @@
           <el-form label-position="top" label-width="80px" :model="supplyFil">
             <el-form-item label="存款数量">
               <el-input v-model="supplyFil.mintAmount" placeholder="请输入存款数量" clearable>
-                <el-button slot="prepend" @click="getSupplyBalance(`FIL`)">最大值</el-button>
+                <el-button slot="prepend" @click="getSupplyBalance('ETH')">最大值</el-button>
                 <el-button slot="append">FIL</el-button>
               </el-input>
             </el-form-item>
             <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
               <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
-                FIL
+                WETH
               </el-descriptions-item>
-              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eFIL
-                ={{ panel.filExchangeRate }} eFIL
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eETH
+                ={{ panel.filExchangeRate }} eETH
               </el-descriptions-item>
               <el-descriptions-item label="钱包FIL数量" :contentStyle="{'text-align': 'right'}">
-                {{ panel.filBalance }} FIL
+                {{ panel.filBalance }} WETH
               </el-descriptions-item>
-              <el-descriptions-item label="钱包eFIL数量" :contentStyle="{'text-align': 'right'}">
-                {{ panel.efilBalance }} eFIL
+              <el-descriptions-item label="钱包eETH数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.eETHBalance }} eETH
               </el-descriptions-item>
               <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
-                {{ panel.filTotalCash }} FIL
+                {{ panel.filTotalCash }} WETH
               </el-descriptions-item>
             </el-descriptions>
             <el-form-item label="" style="margin-top: 20px;">
-              <el-button type="success" @click="erc20Approve(`FIL`)">{{ supplyButton }}</el-button>
-              <el-button type="success" @click="supplyToken(`FIL`)">存款</el-button>
+              <el-button type="success" @click="erc20Approve('ETH')">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="supplyToken('ETH')">存款</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -427,13 +422,13 @@
           <el-form label-position="top" label-width="80px" :model="supplyFil">
             <el-form-item label="取款数量">
               <el-input v-model="supplyFil.redeemAmount" clearable>
-                <el-button slot="prepend" @click="getRedeemBalance(`FIL`)">安全最大值（80%）</el-button>
+                <el-button slot="prepend" @click="getRedeemBalance('ETH')">安全最大值（80%）</el-button>
                 <el-button slot="append">FIL</el-button>
               </el-input>
             </el-form-item>
             <el-descriptions :column="1" size="medium" border style="margin-top: 1em;">
               <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ supplyFil.count }}
-                FIL
+                WETH
               </el-descriptions-item>
               <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}">$ {{
                   borrowUsdt.balance
@@ -444,8 +439,8 @@
               </el-descriptions-item>
             </el-descriptions>
             <el-form-item label="" style="margin-top: 20px;">
-              <el-button type="success" @click="redeemUnderlying(`FIL`)">取款</el-button>
-              <el-button type="success" @click="redeemAllToken(`FIL`)">取款全部</el-button>
+              <el-button type="success" @click="redeemUnderlying('ETH')">取款</el-button>
+              <el-button type="success" @click="redeemAllToken('ETH')">取款全部</el-button>
             </el-form-item>
           </el-form>
         </el-tab-pane>
@@ -646,9 +641,9 @@ import {
   totalSupply,
   utilizationRate,
   viewPrice,
-} from "../utils/web3/hashbank";
+} from "@/utils/web3/hashbank";
 import Decimal from 'decimal.js';
-import {exp,address, constants, decimals} from "../utils/configure/hashbank";
+import {exp,address, constants, decimals} from "@/utils/configure/hashbank";
 import {erc20Approval, erc20BalanceOf} from "../utils/web3/index";
 
 export default {
@@ -659,7 +654,7 @@ export default {
         region: ''
       },
       account: "",
-      filSupplyDialogVisible: false,
+      WETHSupplyDialogVisible: false,
       usdtSupplyDialogVisible: false,
       dialogResultVisible: false,
       usdtBorrowDialogVisible: false,
@@ -702,27 +697,27 @@ export default {
         usdtBaseRatePerYear:0,
         usdtMultiplierPerYear:0,
         usdtJumpMultiplierPerYear:0,
-        filBaseRatePerYear:0,
-        filMultiplierPerYear:0,
-        filJumpMultiplierPerYear:0,
+        WETHBaseRatePerYear:0,
+        WETHMultiplierPerYear:0,
+        WETHJumpMultiplierPerYear:0,
         r0Usdt:0,
         r1Usdt:0,
         r2Usdt:0,
-        r0Fil:0,
-        r1Fil:0,
-        r2Fil:0,
+        r0WETH:0,
+        r1WETH:0,
+        r2WETH:0,
         usdtBlocksPerYear:0,
-        filBlocksPerYear:0,
+        WETHBlocksPerYear:0,
         usdtJumpMultiplierPerBlock:0,
-        filJumpMultiplierPerBlock:0,
+        WETHJumpMultiplierPerBlock:0,
         usdtMultiplierPerBlock:0,
-        filMultiplierPerBlock:0,
+        WETHMultiplierPerBlock:0,
         usdtBaseRatePerBlock:0,
-        filBaseRatePerBlock:0,
+        WETHBaseRatePerBlock:0,
         usdtKink:0,
-        filKink:0,
+        WETHKink:0,
         closeFactorMantissa:0,
-        filUtilizationRate: 0,
+        WETHUtilizationRate: 0,
         usdtUtilizationRate: 0,
         supplyFilApy: 0,
         borrowFilApy: 0,
@@ -732,30 +727,30 @@ export default {
         borrowFilRatePerBlock:0,
         supplyFilRatePerBlock:0,
         usdtReserveFactorMantissa:0,
-        filReserveFactorMantissa:0,
+        WETHReserveFactorMantissa:0,
         borrowUsdtApy: 0,
-        filPrice: 0,
+        WETHPrice: 0,
         usdtPrice: 0,
-        filCollateralFactor: 0,
+        WETHCollateralFactor: 0,
         usdtCollateralFactor: 0,
         supplyBalance: 0,
         borrowBalance: 0,
         blockNumber: 0,
         usdtTotalCash: 0,
-        filTotalCash: 0,
-        filBalance: 0,
+        WETHTotalCash: 0,
+        WETHBalance: 0,
         usdtBalance: 0,
-        efilBalance: 0,
+        eETHBalance: 0,
         eusdtBalance: 0,
         accrualUsdtBlockNumber: 0,
         accrualFilBlockNumber: 0,
         totalBorrowsInfo: 0,
         usdtTotalReservesInfo: 0,
-        filTotalReservesInfo: 0,
+        WETHTotalReservesInfo: 0,
         usdtTotalBorrowsInfo: 0,
-        filTotalBorrowsInfo: 0,
+        WETHTotalBorrowsInfo: 0,
         usdtExchangeRate: 0,
-        filExchangeRate: 0,
+        WETHExchangeRate: 0,
         activeName: 'first',
       },
       supplyFil: {
@@ -805,13 +800,16 @@ export default {
           "Comptroller": '',
           "Unitroller": '',
           "UsdtJumpRateModel": '',
-          "FilJumpRateModel": '',
+          "ETHJumpRateModel": '',
+          "BaseJumpRateModel": '',
           "Oracle": '',
           "USDT": '',
           "eUSDT": '',
-          "FIL": '',
-          "eFIL": '',
-          "FilChainlink":''
+          "ETH": '',
+          "eETH": '',
+          "BNB": '',
+          "eBNB": '',
+          "WETHChainlink":''
         },
       }
     };
@@ -819,7 +817,7 @@ export default {
   beforeDestroy() {
     clearInterval(this.timer);
   },
-  filters: {
+  WETHters: {
     toEther: (amount) => {
       let balance = new Decimal(amount)
       return balance.div(exp).toPrecision(18)
@@ -840,6 +838,7 @@ export default {
       }else if (this.$store.state.wallet.networkId === 97){
         //bsc测试网
         this.addressInfo.current = address.mhxw
+        console.log(this.addressInfo.current)
       }else if (this.$store.state.wallet.networkId === 56){
         //bsc主网
         this.addressInfo.current = address.bsc_pig
@@ -863,9 +862,9 @@ export default {
       }
       let assetAddress
       let assetToken
-      if (tokenName === constants.FIL) {
-        assetAddress = this.addressInfo.current.FIL
-        assetToken = this.addressInfo.current.eFIL
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
@@ -881,8 +880,8 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName === constants.FIL) {
-          this.supplyFil.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        if (tokenName === constants.ETH) {
+          this.supplyFil.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.USDT) {
           this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
@@ -901,8 +900,8 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName === constants.FIL) {
-          this.supplyFil.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        if (tokenName === constants.ETH) {
+          this.supplyFil.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eETH)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.USDT) {
           this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
@@ -910,7 +909,7 @@ export default {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
-      if (tokenName === constants.FIL) {
+      if (tokenName === constants.ETH) {
         this.filSupplyDialogVisible = true
       } else if (tokenName === constants.USDT) {
         this.usdtSupplyDialogVisible = true
@@ -922,7 +921,7 @@ export default {
       }
       erc20BalanceOf(
           this.$store.state.wallet,
-          this.addressInfo.current.FIL,
+          this.addressInfo.current.ETH,
           data => {
             this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
@@ -931,16 +930,16 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(18)
+        this.supplyUsdt.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(18)
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
       erc20BalanceOf(
           this.$store.state.wallet,
-          this.addressInfo.current.eFIL,
+          this.addressInfo.current.eETH,
       ).then(res => {
-        this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eFIL)).toFixed(18)
+        this.supplyUsdt.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eETH)).toFixed(18)
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1019,10 +1018,10 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let mintAmount
-      if (tokenName === constants.FIL) {
-        assetAddress = this.addressInfo.current.FIL
-        assetToken = this.addressInfo.current.eFIL
-        mintAmount = new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
+        mintAmount = new Decimal(this.supplyFil.mintAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
         assetAddress = this.addressInfo.current.USDT
@@ -1070,10 +1069,10 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let redeemAmount
-      if (tokenName === constants.FIL) {
-        assetAddress = this.addressInfo.current.FIL
-        assetToken = this.addressInfo.current.eFIL
-        redeemAmount = new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
+        redeemAmount = new Decimal(this.supplyFil.redeemAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
@@ -1117,10 +1116,10 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let redeemToken
-      if (tokenName === constants.FIL) {
-        assetAddress = this.addressInfo.current.FIL
-        assetToken = this.addressInfo.current.eFIL
-        redeemToken = new Decimal(this.panel.efilBalance).mul(Decimal.pow(10, decimals.eFIL)).toFixed(0, Decimal.ROUND_DOWN)
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
+        redeemToken = new Decimal(this.panel.eETHBalance).mul(Decimal.pow(10, decimals.eETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
@@ -1218,9 +1217,9 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let borrowAmount
-      if (tokenName === constants.FIL) {
-        assetToken = this.addressInfo.current.eFIL
-        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.FIL)).toFixed(0, Decimal.ROUND_DOWN)
+      if (tokenName === constants.ETH) {
+        assetToken = this.addressInfo.current.eETH
+        borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
         borrowAmount = new Decimal(this.borrowUsdt.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
@@ -1263,7 +1262,7 @@ export default {
       let assetToken
       //获取到存款数量之后转换为小单位wei
       let repayAmount
-      if (tokenName === constants.FIL) {
+      if (tokenName === constants.ETH) {
 
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
@@ -1311,7 +1310,7 @@ export default {
       let repayAmount = (BigInt(Math.pow(2, 256)) - 1n).toString()
       console.log("repayAmount：", repayAmount)
       //let repayAmount="115792089237316195423570985008687907853269984665640564039457584007913129639935"
-      if (tokenName === constants.FIL) {
+      if (tokenName === constants.ETH) {
 
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
@@ -1347,8 +1346,8 @@ export default {
         return
       }
       let assetAddress
-      if (tokenName === constants.FIL) {
-        assetAddress = this.addressInfo.current.FIL
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
       }
@@ -1363,8 +1362,8 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        if (tokenName === constants.FIL) {
-          this.supplyFil.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        if (tokenName === constants.ETH) {
+          this.supplyFil.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.USDT) {
           this.supplyUsdt.mintAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         }
@@ -1378,12 +1377,12 @@ export default {
         return
       }
       let that = this
-      if (tokenName === constants.FIL) {
+      if (tokenName === constants.ETH) {
         //先判断是否有借款金额，没有设置为最大
         if (new Decimal(that.borrowUsdt.alreadyCashPercent).eq(new Decimal(0)) === true) {
-          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.count).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.count).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         } else {
-          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.userCanRedeemCount).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+          this.supplyFil.redeemAmount = new Decimal(that.supplyFil.userCanRedeemCount).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }
       } else if (tokenName === constants.USDT) {
         this.supplyUsdt.redeemAmount = new Decimal(that.supplyUsdt.count).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
@@ -1412,9 +1411,9 @@ export default {
       }
       let assetAddress
       let assetToken
-      if (tokenName === constants.FIL) {
-        assetToken = this.addressInfo.current.eFIL
-        assetAddress = this.addressInfo.current.FIL
+      if (tokenName === constants.ETH) {
+        assetToken = this.addressInfo.current.eETH
+        assetAddress = this.addressInfo.current.ETH
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
         assetAddress = this.addressInfo.current.USDT
@@ -1450,7 +1449,7 @@ export default {
         return
       }
       this.getApy(constants.eUSDT)
-      this.getApy(constants.eFIL)
+      this.getApy(constants.eETH)
       //this.getBSCApy()
       this.viewPrice()
       //检查本地址的fil抵押状态
@@ -1462,7 +1461,7 @@ export default {
 
       this.getSupplyPage(constants.eUSDT)
       this.getBorrowPage(constants.eUSDT)
-      this.getSupplyPage(constants.eFIL)
+      this.getSupplyPage(constants.eETH)
     },
     viewPrice() {
       //获取用户USDT余额
@@ -1478,10 +1477,10 @@ export default {
       //获取用户FIL余额
       balanceOf(
           this.$store.state.wallet,
-          this.addressInfo.current.FIL,
+          this.addressInfo.current.ETH,
       ).then(res => {
         let amount = new Decimal(res)
-        this.panel.filBalance = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        this.panel.filBalance = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1490,8 +1489,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取用户USDT借贷金额
@@ -1510,8 +1509,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取用户eUSDT数量
@@ -1524,8 +1523,8 @@ export default {
         console.log("获取eToken数量",res)
         if (tokenName === constants.eUSDT) {
           this.panel.eusdtBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.efilBalance = amount.div(Decimal.pow(10, decimals.eFIL)).toFixed(decimals.eFIL, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eETH) {
+          this.panel.eETHBalance = amount.div(Decimal.pow(10, decimals.eETH)).toFixed(decimals.eETH, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1536,8 +1535,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取USDT池子最新计算高度
@@ -1548,7 +1547,7 @@ export default {
         result = res
         if (tokenName === constants.eUSDT) {
           this.panel.accrualUsdtBlockNumber = res
-        } else if (tokenName === constants.eFIL) {
+        } else if (tokenName === constants.eETH) {
           this.panel.accrualFilBlockNumber = res
         }
       }).catch(err => {
@@ -1573,8 +1572,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取最后一次合约触发时的总储备金
@@ -1586,8 +1585,8 @@ export default {
 
         if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eETH) {
+          this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1600,8 +1599,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1614,8 +1613,8 @@ export default {
         let amount = new Decimal(res)
         if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eETH) {
+          this.panel.filTotalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1627,8 +1626,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1646,8 +1645,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取USDT资金池余额
@@ -1659,8 +1658,8 @@ export default {
 
         if (tokenName === constants.eUSDT) {
           this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eETH) {
+          this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1672,8 +1671,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取USDT资金池余额
@@ -1691,8 +1690,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取USDT资金池余额
@@ -1710,8 +1709,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取eUSDT供应量
@@ -1729,8 +1728,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1752,8 +1751,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
 
       let result = 0
@@ -1777,8 +1776,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1801,8 +1800,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       await viewPrice(
           this.$store.state.wallet,
@@ -1817,8 +1816,8 @@ export default {
           mantissa = 36 - decimals.USDT
           result = balance.div(Decimal.pow(10, mantissa))
           this.panel.usdtPrice = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          mantissa = 36 - decimals.FIL
+        } else if (tokenName === constants.eETH) {
+          mantissa = 36 - decimals.ETH
           result = balance.div(Decimal.pow(10, mantissa))
           this.panel.filPrice = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
         }
@@ -1839,7 +1838,7 @@ export default {
       this.$parent.flag3 = false;
       this.filSupplyDialogVisible = false;
       this.usdtSupplyDialogVisible = false;
-      let assetToken = this.addressInfo.current.eFIL
+      let assetToken = this.addressInfo.current.eETH
       let assetArray = new Array(assetToken)
       //先判断当前是开启抵押还是关闭抵押
       //如果开启，查看用户是否抵押
@@ -1894,8 +1893,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       //获取抵押因子 用于计算抵押存款
       await markets(
@@ -1908,7 +1907,7 @@ export default {
         if (tokenName === constants.eUSDT) {
           result = collateralFactorMantissa
           this.panel.usdtCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
-        } else if (tokenName === constants.eFIL) {
+        } else if (tokenName === constants.eETH) {
           result = collateralFactorMantissa
           this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         }
@@ -1921,7 +1920,7 @@ export default {
       let isSuccess = false;
       await checkMembership(
           this.$store.state.wallet,
-          this.addressInfo.current.eFIL,
+          this.addressInfo.current.eETH,
           this.addressInfo.current.Unitroller
       ).then(res => {
         this.supplyFil.isEnterMarket = res
@@ -1950,8 +1949,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       await kink(
           this.$store.state.wallet,
@@ -1960,7 +1959,7 @@ export default {
         result=res
         if (tokenName === constants.eUSDT) {
           this.panel.usdtKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-        }else if (tokenName === constants.eFIL){
+        }else if (tokenName === constants.eETH){
           this.panel.filKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
         }
       }).catch(err => {
@@ -1973,8 +1972,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       await blocksPerYear(
           this.$store.state.wallet,
@@ -1983,7 +1982,7 @@ export default {
         result=res
         if (tokenName === constants.eUSDT) {
           this.panel.usdtBlocksPerYear = res
-        }else if (tokenName === constants.eFIL){
+        }else if (tokenName === constants.eETH){
           this.panel.filBlocksPerYear = res
         }
       }).catch(err => {
@@ -1997,8 +1996,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       await jumpMultiplierPerBlock(
           this.$store.state.wallet,
@@ -2007,7 +2006,7 @@ export default {
         result=res
         if (tokenName === constants.eUSDT) {
           this.panel.usdtJumpMultiplierPerBlock = res
-        }else if (tokenName === constants.eFIL){
+        }else if (tokenName === constants.eETH){
           this.panel.filJumpMultiplierPerBlock = res
         }
       }).catch(err => {
@@ -2020,8 +2019,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       await multiplierPerBlock(
           this.$store.state.wallet,
@@ -2030,7 +2029,7 @@ export default {
         result=res
         if (tokenName === constants.eUSDT) {
           this.panel.usdtMultiplierPerBlock = res
-        }else if (tokenName === constants.eFIL){
+        }else if (tokenName === constants.eETH){
           this.panel.filMultiplierPerBlock = res
         }
       }).catch(err => {
@@ -2043,8 +2042,8 @@ export default {
       let interestModelAddr
       if (tokenName === constants.eUSDT) {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
-      }else if (tokenName === constants.eFIL){
-        interestModelAddr = this.addressInfo.current.FilJumpRateModel
+      }else if (tokenName === constants.eETH){
+        interestModelAddr = this.addressInfo.current.ETHJumpRateModel
       }
       await baseRatePerBlock(
           this.$store.state.wallet,
@@ -2053,7 +2052,7 @@ export default {
         result=res
         if (tokenName === constants.eUSDT) {
           this.panel.usdtBaseRatePerBlock = res
-        }else if (tokenName === constants.eFIL){
+        }else if (tokenName === constants.eETH){
           this.panel.filBaseRatePerBlock = res
         }
       }).catch(err => {
@@ -2071,7 +2070,7 @@ export default {
       let utilizationRate= await this.utilizationRatePage(tokenName,totalCash, totalBorrows, totalReserves)
       if (tokenName === constants.eUSDT) {
         this.panel.usdtUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
-      } else if (tokenName === constants.eFIL) {
+      } else if (tokenName === constants.eETH) {
         this.panel.filUtilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       }
       let borrowRate = await this.getBorrowRatePage(tokenName, totalCash, totalBorrows, totalReserves)
@@ -2108,8 +2107,8 @@ export default {
         if (tokenName === constants.eUSDT) {
           mantissa = 18 + decimals.USDT - cTokenDecimals
           this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
-        } else if (tokenName === constants.eFIL) {
-          mantissa = 18 + decimals.FIL - cTokenDecimals
+        } else if (tokenName === constants.eETH) {
+          mantissa = 18 + decimals.ETH - cTokenDecimals
           this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         }
         return exchangeRate
@@ -2119,13 +2118,13 @@ export default {
       // oneCTokenInUnderlying = exchangeRateCurrent / (1 * 10 ^ (18 + underlyingDecimals - cTokenDecimals))
 
       if (tokenName === constants.eUSDT) {
-        //18+18-8=28 efil 6
+        //18+18-8=28 eETH 6
         mantissa = 18 + decimals.USDT - cTokenDecimals
         exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
         this.panel.usdtExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
-      } else if (tokenName === constants.eFIL) {
-        //18+18-8=28 efil 18
-        mantissa = 18 + decimals.FIL - cTokenDecimals
+      } else if (tokenName === constants.eETH) {
+        //18+18-8=28 eETH 18
+        mantissa = 18 + decimals.ETH - cTokenDecimals
         exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
         this.panel.filExchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
       }
@@ -2154,12 +2153,12 @@ export default {
 
         this.supplyUsdt.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
 
-      } else if (tokenName === constants.eFIL) {
+      } else if (tokenName === constants.eETH) {
         //fil存款数量
-        console.log("fil exchangeRateMantissa",exchangeRateMantissa)
-        console.log("fil redeemTokensIn",redeemTokensIn)
-        redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.FIL)).toFixed(decimals.FIL, Decimal.ROUND_DOWN)
-        console.log("fil redeemAmount",redeemAmount)
+        console.log("WETH exchangeRateMantissa",exchangeRateMantissa)
+        console.log("WETH redeemTokensIn",redeemTokensIn)
+        redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        console.log("WETH redeemAmount",redeemAmount)
         this.supplyFil.count = redeemAmount.toString()
         //fil存款金额
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
@@ -2226,7 +2225,7 @@ export default {
         let recentBorrowBalance = new Decimal(borrowBalance).mul(list.borrowIndexNew).div(list.borrowIndex).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         this.borrowUsdt.count = recentBorrowBalance
         this.borrowUsdt.balance = new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8, Decimal.ROUND_DOWN)
-      } else if (tokenName === constants.eFIL) {
+      } else if (tokenName === constants.eETH) {
 
       }
     },
@@ -2241,7 +2240,7 @@ export default {
         let daysPerYear = 365
 
         //储备金率：抽取借款利息的百分比
-        //efilhom为0 方便扩展可取合约
+        //eETHhom为0 方便扩展可取合约
         //let reserveFactorMantissa=0
         let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
 
@@ -2268,7 +2267,7 @@ export default {
           this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
           this.panel.supplyUsdtApy = supplyApy
           this.panel.borrowUsdtApy = borrowApy
-        }else if (tokenName===constants.eFIL){
+        }else if (tokenName===constants.eETH){
           this.panel.filReserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
           this.panel.borrowFilRatePerBlock=borrowRatePerBlock
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
@@ -2299,7 +2298,7 @@ export default {
           this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
           this.panel.supplyUsdtApy = supplyApy
           this.panel.borrowUsdtApy = borrowApy
-        }else if (tokenName===constants.eFIL){
+        }else if (tokenName===constants.eETH){
           this.panel.borrowFilRatePerBlock=borrowRatePerBlock
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
           this.panel.supplyFilApy = supplyApy
@@ -2312,7 +2311,7 @@ export default {
         let daysPerYear = 365
 
         //储备金率：抽取借款利息的百分比
-        //efilhom为0 方便扩展可取合约
+        //eETHhom为0 方便扩展可取合约
         //let reserveFactorMantissa=0
         let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
 
@@ -2336,7 +2335,7 @@ export default {
           this.panel.supplyUsdtRatePerBlock=supplyRatePerBlock
           this.panel.supplyUsdtApy = supplyApy
           this.panel.borrowUsdtApy = borrowApy
-        }else if (tokenName===constants.eFIL){
+        }else if (tokenName===constants.eETH){
           this.panel.filReserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
           this.panel.borrowFilRatePerBlock=borrowRatePerBlock
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
@@ -2410,8 +2409,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取每一个区块的存款利率
@@ -2429,8 +2428,8 @@ export default {
       let eTokenAddress
       if (tokenName === constants.eUSDT) {
         eTokenAddress = this.addressInfo.current.eUSDT
-      } else if (tokenName === constants.eFIL) {
-        eTokenAddress = this.addressInfo.current.eFIL
+      } else if (tokenName === constants.eETH) {
+        eTokenAddress = this.addressInfo.current.eETH
       }
       let result = 0
       //获取每一个区块的借款利率
@@ -2507,20 +2506,20 @@ export default {
       this.panel.r1Usdt=r1
       this.panel.r2Usdt=r2
 
-      blocksPerYear =await this.blocksPerYearPage(constants.eFIL)
-      baseRatePerBlock =await this.baseRatePerBlockPage(constants.eFIL)
-      multiplierPerBlock =await this.multiplierPerBlockPage(constants.eFIL)
-      jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eFIL)
-      kink =await this.kinkPage(constants.eFIL)
+      blocksPerYear =await this.blocksPerYearPage(constants.eETH)
+      baseRatePerBlock =await this.baseRatePerBlockPage(constants.eETH)
+      multiplierPerBlock =await this.multiplierPerBlockPage(constants.eETH)
+      jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eETH)
+      kink =await this.kinkPage(constants.eETH)
       r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       this.panel.filBaseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       this.panel.filMultiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       this.panel.filJumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.r0Fil=r0
-      this.panel.r1Fil=r1
-      this.panel.r2Fil=r2
+      this.panel.r0WETH=r0
+      this.panel.r1WETH=r1
+      this.panel.r2WETH=r2
     }
   },
 };
