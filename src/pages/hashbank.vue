@@ -11,71 +11,104 @@
                   <span>市场概况</span>
                 </div>
                 <el-col :span="24" style="margin-bottom: 20px;">
-                  <el-descriptions title="USDT" direction="vertical" :column="6" border size="medium" style="margin-bottom: 15px;">
-                    <el-descriptions-item label="每年的区块数">{{ panel.usdtBlocksPerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="基准区块利率">{{ panel.usdtBaseRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点">{{ panel.usdtKink }} %</el-descriptions-item>
-                    <el-descriptions-item label="区块斜率">{{ panel.usdtMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点后区块斜率">{{ panel.usdtJumpMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="USDT储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
-                    <el-descriptions-item label="基准年利率">{{ panel.usdtBaseRatePerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.usdtMultiplierPerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点后年斜率">{{ panel.usdtJumpMultiplierPerYear}}</el-descriptions-item>
-                    <el-descriptions-item label="R0">{{ panel.r0Usdt}} %</el-descriptions-item>
-                    <el-descriptions-item label="R1">{{ panel.r1Usdt }} %</el-descriptions-item>
-                    <el-descriptions-item label="R2">{{ panel.r2Usdt }} %</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT合约最新触发高度">{{ panel.accrualUsdtBlockNumber}}</el-descriptions-item>
-                    <el-descriptions-item label="eUSDT合约最新触发的借款总额">{{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
-                    <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="Unitroller清算系数">{{ panel.closeFactorMantissa }} %</el-descriptions-item>
-                  </el-descriptions>
-                  <el-descriptions title="WETH" direction="vertical" :column="6" border size="medium" >
-                    <el-descriptions-item label="每年的区块数">{{ panel.filBlocksPerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="基准区块利率">{{ panel.filBaseRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点">{{ panel.filKink }} %</el-descriptions-item>
-                    <el-descriptions-item label="区块斜率">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点后区块斜率">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="WETH储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
-                    <el-descriptions-item label="基准年利率">{{ panel.filBaseRatePerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.filMultiplierPerYear }}</el-descriptions-item>
-                    <el-descriptions-item label="拐点后年斜率">{{ panel.filJumpMultiplierPerYear}}</el-descriptions-item>
-                    <el-descriptions-item label="R0">{{ panel.r0WETH}} %</el-descriptions-item>
-                    <el-descriptions-item label="R1">{{ panel.r1WETH}} %</el-descriptions-item>
-                    <el-descriptions-item label="R2">{{ panel.r2WETH}} %</el-descriptions-item>
-                    <el-descriptions-item label="eETH合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
-                    <el-descriptions-item label="eETH合约最新触发的借款总额">{{ panel.filTotalReservesInfo }} USDT</el-descriptions-item>
-                  </el-descriptions>
+                  <el-collapse v-model="collapseActiveNames" @change="handleChange">
+                    <el-collapse-item title="USDT" name="1">
+                      <div>
+                        <el-descriptions  direction="vertical" :column="6" border size="medium" style="margin-bottom: 15px;">
+                          <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.usdtBaseRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.usdtKink }} %</el-descriptions-item>
+                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.usdtMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.usdtJumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
+                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.usdtBaseRatePerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.usdtMultiplierPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.usdtJumpMultiplierPerYear}}</el-descriptions-item>
+                          <el-descriptions-item label="R0">{{ panel.r0Usdt}} %</el-descriptions-item>
+                          <el-descriptions-item label="R1">{{ panel.r1Usdt }} %</el-descriptions-item>
+                          <el-descriptions-item label="R2">{{ panel.r2Usdt }} %</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.accrualUsdtBlockNumber}}</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
+                          <el-descriptions-item label="当前高度">{{ panel.blockNumber }}</el-descriptions-item>
+                          <el-descriptions-item label="Unitroller清算系数">{{ panel.closeFactorMantissa }} %</el-descriptions-item>
+                        </el-descriptions>
+                      </div>
+                    </el-collapse-item>
+                    <el-collapse-item title="WETH" name="2">
+                      <div>
+                        <el-descriptions direction="vertical" :column="6" border size="medium" >
+                          <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.filBaseRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.filKink }} %</el-descriptions-item>
+                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
+                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.filBaseRatePerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.filMultiplierPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.filJumpMultiplierPerYear}}</el-descriptions-item>
+                          <el-descriptions-item label="R0">{{ panel.r0WETH}} %</el-descriptions-item>
+                          <el-descriptions-item label="R1">{{ panel.r1WETH}} %</el-descriptions-item>
+                          <el-descriptions-item label="R2">{{ panel.r2WETH}} %</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.accrualFilBlockNumber }}</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.filTotalReservesInfo }} USDT</el-descriptions-item>
+                        </el-descriptions>
+                      </div>
+                    </el-collapse-item>
+                    <el-collapse-item title="BNB" name="3">
+                      <div>
+                        <el-descriptions direction="vertical" :column="6" border size="medium" >
+                          <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.wBNB.baseRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.wBNB.kink }} %</el-descriptions-item>
+                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.wBNB.multiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.wBNB.jumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="储备金率">{{ panel.wBNB.reserveFactorMantissa }} %</el-descriptions-item>
+                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.wBNB.baseRatePerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.wBNB.multiplierPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.wBNB.jumpMultiplierPerYear}}</el-descriptions-item>
+                          <el-descriptions-item label="R0">{{ panel.wBNB.r0}} %</el-descriptions-item>
+                          <el-descriptions-item label="R1">{{ panel.wBNB.r1}} %</el-descriptions-item>
+                          <el-descriptions-item label="R2">{{ panel.wBNB.r2}} %</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.wBNB.accrualBlockNumber }}</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.wBNB.totalReservesInfo }} USDT</el-descriptions-item>
+                        </el-descriptions>
+                      </div>
+                    </el-collapse-item>
+                    <el-collapse-item title="参数" name="4">
+                      <el-col :span="12">
+                        <el-descriptions title="USDT" direction="horizontal" :column="1" border size="medium" >
+                          <el-descriptions-item label="USDT价格"> $ {{ panel.usdtPrice }}</el-descriptions-item>
+                          <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
+                          <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
+                          <el-descriptions-item label="USDT储备金"> {{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
+                          <el-descriptions-item label="USDT利用率"> {{ panel.usdtUtilizationRate }} %</el-descriptions-item>
+                          <el-descriptions-item label="USDT每个区块借款利率">{{ panel.borrowUsdtRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="USDT每个区块存款利率">{{ panel.supplyUsdtRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="USDT借款年APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="USDT存款年APY">{{ panel.supplyUsdtApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="USDT兑换率"> 1 USDT ={{ panel.usdtExchangeRate }} eUSDT</el-descriptions-item>
+                          <el-descriptions-item label="USDT最大抵押系数"> {{ panel.usdtCollateralFactor }} %</el-descriptions-item>
+                        </el-descriptions>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-descriptions title="WETH" direction="horizontal" :column="1" border size="medium">
+                          <el-descriptions-item label="WETH价格"> $ {{ panel.filPrice }} </el-descriptions-item>
+                          <el-descriptions-item label="WETH资金池余额"> {{ panel.filTotalCash }} WETH</el-descriptions-item>
+                          <el-descriptions-item label="WETH借款总数量"> {{ panel.filTotalBorrowsInfo }} WETH</el-descriptions-item>
+                          <el-descriptions-item label="WETH储备金"> {{ panel.filTotalReservesInfo }} WETH</el-descriptions-item>
+                          <el-descriptions-item label="WETH利用率"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
+                          <el-descriptions-item label="WETH每个区块借款利率">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="WETH每个区块存款利率">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="WETH借款年APY">{{ panel.borrowFilApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="WETH存款年APY">{{ panel.supplyFilApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="WETH兑换率"> 1 WETH={{ panel.filExchangeRate }} eETH</el-descriptions-item>
+                          <el-descriptions-item label="WETH最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
+                        </el-descriptions>
+                      </el-col>
+                    </el-collapse-item>
+                  </el-collapse>
                 </el-col>
-                <el-col :span="12">
-                  <el-descriptions title="USDT" direction="horizontal" :column="1" border size="medium" >
-                    <el-descriptions-item label="USDT价格"> $ {{ panel.usdtPrice }}</el-descriptions-item>
-                    <el-descriptions-item label="USDT资金池余额"> {{ panel.usdtTotalCash }} USDT</el-descriptions-item>
-                    <el-descriptions-item label="USDT借款总数量"> {{ panel.usdtTotalBorrowsInfo }} USDT</el-descriptions-item>
-                    <el-descriptions-item label="USDT储备金"> {{ panel.usdtTotalReservesInfo }} USDT</el-descriptions-item>
-                    <el-descriptions-item label="USDT利用率"> {{ panel.usdtUtilizationRate }} %</el-descriptions-item>
-                    <el-descriptions-item label="USDT每个区块借款利率">{{ panel.borrowUsdtRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="USDT每个区块存款利率">{{ panel.supplyUsdtRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="USDT借款年APY">{{ panel.borrowUsdtApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="USDT存款年APY">{{ panel.supplyUsdtApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="USDT兑换率"> 1 USDT ={{ panel.usdtExchangeRate }} eUSDT</el-descriptions-item>
-                    <el-descriptions-item label="USDT最大抵押系数"> {{ panel.usdtCollateralFactor }} %</el-descriptions-item>
-                  </el-descriptions>
-                </el-col>
-                <el-col :span="12">
-                  <el-descriptions title="WETH" direction="horizontal" :column="1" border size="medium">
-                    <el-descriptions-item label="WETH价格"> $ {{ panel.filPrice }} </el-descriptions-item>
-                    <el-descriptions-item label="WETH资金池余额"> {{ panel.filTotalCash }} WETH</el-descriptions-item>
-                    <el-descriptions-item label="WETH借款总数量"> {{ panel.filTotalBorrowsInfo }} WETH</el-descriptions-item>
-                    <el-descriptions-item label="WETH储备金"> {{ panel.filTotalReservesInfo }} WETH</el-descriptions-item>
-                    <el-descriptions-item label="WETH利用率"> {{ panel.filUtilizationRate }} %</el-descriptions-item>
-                    <el-descriptions-item label="WETH每个区块借款利率">{{ panel.borrowFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="WETH每个区块存款利率">{{ panel.supplyFilRatePerBlock }}</el-descriptions-item>
-                    <el-descriptions-item label="WETH借款年APY">{{ panel.borrowFilApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="WETH存款年APY">{{ panel.supplyFilApy }} %</el-descriptions-item>
-                    <el-descriptions-item label="WETH兑换率"> 1 WETH={{ panel.filExchangeRate }} eETH</el-descriptions-item>
-                    <el-descriptions-item label="WETH最大抵押系数"> {{ panel.filCollateralFactor }} %</el-descriptions-item>
-                  </el-descriptions>
-                </el-col>
+
               </el-card>
             </el-col>
           </el-tab-pane>
@@ -649,6 +682,7 @@ import {erc20Approval, erc20BalanceOf} from "../utils/web3/index";
 export default {
   data() {
     return {
+      collapseActiveNames: ['1'],
       formInline: {
         user: '',
         region: ''
@@ -694,6 +728,28 @@ export default {
         ],
       },
       panel: {
+        common:{
+          blocksPerYear:0,
+        },
+        wBNB:{
+          r0:0,
+          r1:0,
+          r2:0,
+          kink:0,
+          baseRatePerBlock:0,
+          baseRatePerYear:0,
+          multiplierPerBlock:0,
+          multiplierPerYear:0,
+          jumpMultiplierPerBlock:0,
+          jumpMultiplierPerYear:0,
+          reserveFactorMantissa:0,
+          borrowRatePerBlock:0,
+          supplyRatePerBlock:0,
+          supplyApy:0,
+          borrowApy:0,
+          accrualBlockNumber:0,
+          totalReservesInfo:0,
+        },
         usdtBaseRatePerYear:0,
         usdtMultiplierPerYear:0,
         usdtJumpMultiplierPerYear:0,
@@ -706,8 +762,6 @@ export default {
         r0WETH:0,
         r1WETH:0,
         r2WETH:0,
-        usdtBlocksPerYear:0,
-        WETHBlocksPerYear:0,
         usdtJumpMultiplierPerBlock:0,
         WETHJumpMultiplierPerBlock:0,
         usdtMultiplierPerBlock:0,
@@ -1951,16 +2005,21 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       await kink(
           this.$store.state.wallet,
           interestModelAddr,
       ).then(res => {
         result=res
+        let kink=new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
         if (tokenName === constants.eUSDT) {
-          this.panel.usdtKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.usdtKink = kink
         }else if (tokenName === constants.eETH){
-          this.panel.filKink = new Decimal(res).div(Decimal.pow(10,16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.filKink = kink
+        }else if (tokenName === constants.eBNB){
+          this.panel.wBNB.kink = kink
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1974,17 +2033,22 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       await blocksPerYear(
           this.$store.state.wallet,
           interestModelAddr,
       ).then(res => {
         result=res
-        if (tokenName === constants.eUSDT) {
-          this.panel.usdtBlocksPerYear = res
-        }else if (tokenName === constants.eETH){
-          this.panel.filBlocksPerYear = res
-        }
+        this.panel.common.blocksPerYear = res
+        // if (tokenName === constants.eUSDT) {
+        //   this.panel.common.blocksPerYear = res
+        // }else if (tokenName === constants.eETH){
+        //   this.panel.common.blocksPerYear = res
+        // }else if (tokenName === constants.eBNB){
+        //   this.panel.common.blocksPerYear = res
+        // }
       }).catch(err => {
         console.log("err blocksPerYearPage")
         this.getErrorInfo(err)
@@ -1998,6 +2062,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       await jumpMultiplierPerBlock(
           this.$store.state.wallet,
@@ -2008,6 +2074,8 @@ export default {
           this.panel.usdtJumpMultiplierPerBlock = res
         }else if (tokenName === constants.eETH){
           this.panel.filJumpMultiplierPerBlock = res
+        }else if (tokenName === constants.eBNB){
+          this.panel.wBNB.jumpMultiplierPerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2021,6 +2089,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       await multiplierPerBlock(
           this.$store.state.wallet,
@@ -2031,6 +2101,8 @@ export default {
           this.panel.usdtMultiplierPerBlock = res
         }else if (tokenName === constants.eETH){
           this.panel.filMultiplierPerBlock = res
+        }else if (tokenName === constants.eBNB){
+          this.panel.wBNB.multiplierPerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2044,6 +2116,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       await baseRatePerBlock(
           this.$store.state.wallet,
@@ -2054,6 +2128,8 @@ export default {
           this.panel.usdtBaseRatePerBlock = res
         }else if (tokenName === constants.eETH){
           this.panel.filBaseRatePerBlock = res
+        }else if (tokenName === constants.eETH){
+          this.panel.wBNB.baseRatePerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2273,6 +2349,12 @@ export default {
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
           this.panel.supplyFilApy = supplyApy
           this.panel.borrowFilApy = borrowApy
+        }else if (tokenName===constants.eBNB){
+          this.panel.wBNB.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.wBNB.borrowRatePerBlock=borrowRatePerBlock
+          this.panel.wBNB.supplyRatePerBlock=supplyRatePerBlock
+          this.panel.wBNB.supplyApy = supplyApy
+          this.panel.wBNB.borrowApy = borrowApy
         }
       } else if (this.$store.state.wallet.networkId === 3476) {
         //bhp主网和测试网为 每块15s
@@ -2506,7 +2588,7 @@ export default {
       this.panel.r1Usdt=r1
       this.panel.r2Usdt=r2
 
-      blocksPerYear =await this.blocksPerYearPage(constants.eETH)
+      //blocksPerYear =await this.blocksPerYearPage(constants.eETH)
       baseRatePerBlock =await this.baseRatePerBlockPage(constants.eETH)
       multiplierPerBlock =await this.multiplierPerBlockPage(constants.eETH)
       jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eETH)
@@ -2520,6 +2602,21 @@ export default {
       this.panel.r0WETH=r0
       this.panel.r1WETH=r1
       this.panel.r2WETH=r2
+
+      //blocksPerYear =await this.blocksPerYearPage(constants.eBNB)
+      baseRatePerBlock =await this.baseRatePerBlockPage(constants.eBNB)
+      multiplierPerBlock =await this.multiplierPerBlockPage(constants.eBNB)
+      jumpMultiplierPerBlock =await this.jumpMultiplierPerBlockPage(constants.eBNB)
+      kink =await this.kinkPage(constants.eBNB)
+      r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.wBNB.baseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.wBNB.multiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.wBNB.jumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.wBNB.r0=r0
+      this.panel.wBNB.r1=r1
+      this.panel.wBNB.r2=r2
     }
   },
 };
