@@ -31,7 +31,7 @@
         <el-col :span="12" style="margin:1.5em auto auto;" :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div style="text-align:center;margin: 0 auto;">
             <el-button type="success" round @click="centerDialogVisible = true" >{{ addressMsg }}</el-button>
-            <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BHPTest`)" >添加并切换到 BHP Testnet</el-button>
+            <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`KCCTest`)" >添加并切换到 KCC Testnet</el-button>
             <el-button type="success" v-show="networkId===-1" round @click="addNetwork(`BSCTest`)" >添加并切换到 BSC Testnet</el-button>
             <el-button type="success" v-show="networkId!==-1" round @click="openAndClose" >退出钱包</el-button>
             <el-button type="success" v-show="networkId!==-1" round @click="$refs.son.updatePanel()" >刷新数据</el-button>

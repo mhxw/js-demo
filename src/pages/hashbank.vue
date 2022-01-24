@@ -17,9 +17,9 @@
                         <el-descriptions  direction="vertical" :column="6" border size="medium" style="margin-bottom: 15px;">
                           <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
                           <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.usdtBaseRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点kink">{{ panel.usdtKink }} %</el-descriptions-item>
                           <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.usdtMultiplierPerBlock }}</el-descriptions-item>
                           <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.usdtJumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.usdtKink }} %</el-descriptions-item>
                           <el-descriptions-item label="储备金率">{{ panel.usdtReserveFactorMantissa }} %</el-descriptions-item>
                           <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.usdtBaseRatePerYear }}</el-descriptions-item>
                           <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.usdtMultiplierPerYear }}</el-descriptions-item>
@@ -39,9 +39,9 @@
                         <el-descriptions direction="vertical" :column="6" border size="medium" >
                           <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
                           <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.filBaseRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点kink">{{ panel.filKink }} %</el-descriptions-item>
                           <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.filMultiplierPerBlock }}</el-descriptions-item>
                           <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.filJumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.filKink }} %</el-descriptions-item>
                           <el-descriptions-item label="储备金率">{{ panel.filReserveFactorMantissa }} %</el-descriptions-item>
                           <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.filBaseRatePerYear }}</el-descriptions-item>
                           <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.filMultiplierPerYear }}</el-descriptions-item>
@@ -749,6 +749,8 @@ export default {
           borrowApy:0,
           accrualBlockNumber:0,
           totalReservesInfo:0,
+          totalCash:0,
+          TotalReservesInfo:0,
         },
         usdtBaseRatePerYear:0,
         usdtMultiplierPerYear:0,
@@ -1504,6 +1506,7 @@ export default {
       }
       this.getApy(constants.eUSDT)
       this.getApy(constants.eETH)
+      this.getApy(constants.eBNB)
       //this.getBSCApy()
       this.viewPrice()
       //检查本地址的fil抵押状态
@@ -1545,6 +1548,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取用户USDT借贷金额
@@ -1565,6 +1570,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取用户eUSDT数量
@@ -1591,6 +1598,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取USDT池子最新计算高度
@@ -1628,6 +1637,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取最后一次合约触发时的总储备金
@@ -1641,6 +1652,8 @@ export default {
           this.panel.usdtTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
           this.panel.filTotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eBNB) {
+          this.panel.wBNB.TotalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1655,6 +1668,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1682,6 +1697,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取最后一次合约触发时的借款总额
@@ -1701,6 +1718,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取USDT资金池余额
@@ -1714,9 +1733,12 @@ export default {
           this.panel.usdtTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
           this.panel.filTotalCash = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        }else if (tokenName === constants.eETH) {
+          this.panel.wBNB.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
+        console.log('getcash err')
         this.getErrorInfo(err)
       })
       return result
@@ -1727,6 +1749,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取USDT资金池余额
@@ -1746,6 +1770,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取USDT资金池余额
@@ -1755,6 +1781,7 @@ export default {
       ).then(res => {
         result = res
       }).catch(err => {
+        console.log('reserveFactorMantissa err')
         this.getErrorInfo(err)
       })
       return result
@@ -1765,6 +1792,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      } else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取eUSDT供应量
@@ -1774,6 +1803,7 @@ export default {
       ).then(res => {
         result = res
       }).catch(err => {
+        console.log('totalSupplyPage err')
         this.getErrorInfo(err)
       })
       return result
@@ -1784,6 +1814,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1807,6 +1839,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
 
       let result = 0
@@ -1832,6 +1866,8 @@ export default {
         interestModelAddr = this.addressInfo.current.UsdtJumpRateModel
       }else if (tokenName === constants.eETH){
         interestModelAddr = this.addressInfo.current.ETHJumpRateModel
+      }else if (tokenName === constants.eBNB){
+        interestModelAddr = this.addressInfo.current.BaseJumpRateModel
       }
       let result = 0
       //获取USDT资金池余额
@@ -1856,6 +1892,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       await viewPrice(
           this.$store.state.wallet,
@@ -1949,6 +1987,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       //获取抵押因子 用于计算抵押存款
       await markets(
@@ -1957,15 +1997,16 @@ export default {
           this.addressInfo.current.Unitroller
       ).then(res => {
         let collateralFactorMantissa = res.collateralFactorMantissa
-
+        result = collateralFactorMantissa
         if (tokenName === constants.eUSDT) {
-          result = collateralFactorMantissa
           this.panel.usdtCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         } else if (tokenName === constants.eETH) {
-          result = collateralFactorMantissa
+          this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
+        }else if (tokenName === constants.eBNB) {
           this.panel.filCollateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         }
       }).catch(err => {
+        console.log('err getCollateralFactor')
         this.getErrorInfo(err)
       })
       return result
@@ -2350,6 +2391,7 @@ export default {
           this.panel.supplyFilApy = supplyApy
           this.panel.borrowFilApy = borrowApy
         }else if (tokenName===constants.eBNB){
+          console.log('reserveFactorMantissa',reserveFactorMantissa)
           this.panel.wBNB.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
           this.panel.wBNB.borrowRatePerBlock=borrowRatePerBlock
           this.panel.wBNB.supplyRatePerBlock=supplyRatePerBlock
@@ -2493,6 +2535,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取每一个区块的存款利率
@@ -2512,6 +2556,8 @@ export default {
         eTokenAddress = this.addressInfo.current.eUSDT
       } else if (tokenName === constants.eETH) {
         eTokenAddress = this.addressInfo.current.eETH
+      }else if (tokenName === constants.eBNB) {
+        eTokenAddress = this.addressInfo.current.eBNB
       }
       let result = 0
       //获取每一个区块的借款利率
