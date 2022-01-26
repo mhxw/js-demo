@@ -31,7 +31,7 @@ export const address = {
         "eUSDT": "0xf251c4E42521288A570f1B18e80F4F7f87abD9E2",
         "USDT": '0xA49B57d0D3c933F182E3107a9Fd92092669F3530',
         "Unitroller": '0x62c9406AE27ac285c649cAA65F69cb36cde1D798',
-        "Oracle": '0x85fB71af964a1B9C4eAbA8323cc6B0bAD1aaedf7',
+        "Oracle": '0x49b6318eB1E58dbdDA993916c31F14242AA52769',
         "UsdtJumpRateModel": '0x9482d8FB97e7233fafAFaCC37c8734d51C0b6F07',
         "ETHJumpRateModel": '0xe0932911b49aA9f76dC9B60F8D24bB2ce49d86e7',
         "BaseJumpRateModel": '0x6F23dd4f99C54854cFc40cD94a658c19174d69E7',
