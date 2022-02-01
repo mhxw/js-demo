@@ -30,31 +30,31 @@
                         </el-descriptions>
                         <el-descriptions title="BTC/ETH" direction="vertical" :column="6" border size="mini" >
                           <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.wETH.baseRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.wETH.multiplierPerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.wETH.multiplierPerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点kink">{{ panel.wETH.kink }} %</el-descriptions-item>
-                          <el-descriptions-item label="储备金率">{{ panel.wETH.reserveFactorMantissa }} %</el-descriptions-item>
-                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.wETH.baseRatePerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.wETH.multiplierPerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.wETH.jumpMultiplierPerYear}}</el-descriptions-item>
-                          <el-descriptions-item label="R0">{{ panel.wETH.r0}} %</el-descriptions-item>
-                          <el-descriptions-item label="R1">{{ panel.wETH.r1}} %</el-descriptions-item>
-                          <el-descriptions-item label="R2">{{ panel.wETH.r2}} %</el-descriptions-item>
+                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.WETH.baseRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.WETH.multiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.WETH.multiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.WETH.kink }} %</el-descriptions-item>
+                          <el-descriptions-item label="储备金率">{{ panel.WETH.reserveFactorMantissa }} %</el-descriptions-item>
+                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.WETH.baseRatePerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.WETH.multiplierPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.WETH.jumpMultiplierPerYear}}</el-descriptions-item>
+                          <el-descriptions-item label="R0">{{ panel.WETH.r0}} %</el-descriptions-item>
+                          <el-descriptions-item label="R1">{{ panel.WETH.r1}} %</el-descriptions-item>
+                          <el-descriptions-item label="R2">{{ panel.WETH.r2}} %</el-descriptions-item>
                         </el-descriptions>
                         <el-descriptions title="BNB" direction="vertical" :column="6" border size="mini" >
                           <el-descriptions-item label="每年的区块数blocksPerYear">{{ panel.common.blocksPerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.wBNB.baseRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.wBNB.multiplierPerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.wBNB.jumpMultiplierPerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点kink">{{ panel.wBNB.kink }} %</el-descriptions-item>
-                          <el-descriptions-item label="储备金率">{{ panel.wBNB.reserveFactorMantissa }} %</el-descriptions-item>
-                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.wBNB.baseRatePerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.wBNB.multiplierPerYear }}</el-descriptions-item>
-                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.wBNB.jumpMultiplierPerYear}}</el-descriptions-item>
-                          <el-descriptions-item label="R0">{{ panel.wBNB.r0}} %</el-descriptions-item>
-                          <el-descriptions-item label="R1">{{ panel.wBNB.r1}} %</el-descriptions-item>
-                          <el-descriptions-item label="R2">{{ panel.wBNB.r2}} %</el-descriptions-item>
+                          <el-descriptions-item label="基准区块利率baseRatePerBlock">{{ panel.WBNB.baseRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="区块斜率multiplierPerBlock">{{ panel.WBNB.multiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后区块斜率jumpMultiplierPerBlock">{{ panel.WBNB.jumpMultiplierPerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点kink">{{ panel.WBNB.kink }} %</el-descriptions-item>
+                          <el-descriptions-item label="储备金率">{{ panel.WBNB.reserveFactorMantissa }} %</el-descriptions-item>
+                          <el-descriptions-item label="基准年利率baseRatePerYear">{{ panel.WBNB.baseRatePerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="年斜率(区块斜率*每年的区块数*拐点利用率)">{{ panel.WBNB.multiplierPerYear }}</el-descriptions-item>
+                          <el-descriptions-item label="拐点后年斜率jumpMultiplierPerYear">{{ panel.WBNB.jumpMultiplierPerYear}}</el-descriptions-item>
+                          <el-descriptions-item label="R0">{{ panel.WBNB.r0}} %</el-descriptions-item>
+                          <el-descriptions-item label="R1">{{ panel.WBNB.r1}} %</el-descriptions-item>
+                          <el-descriptions-item label="R2">{{ panel.WBNB.r2}} %</el-descriptions-item>
                         </el-descriptions>
                       </div>
                     </el-collapse-item>
@@ -67,11 +67,11 @@
                           <el-descriptions-item label="cToken合约最新触发高度">{{ panel.USDT.accrualBlockNumber}}</el-descriptions-item>
                           <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.USDT.totalBorrowsInfo }} USDT</el-descriptions-item>
 
-                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.wETH.accrualBlockNumber }}</el-descriptions-item>
-                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.wETH.totalBorrowsInfo }} ETH</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.WETH.accrualBlockNumber }}</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.WETH.totalBorrowsInfo }} ETH</el-descriptions-item>
 
-                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.wBNB.accrualBlockNumber }}</el-descriptions-item>
-                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.wBNB.totalBorrowsInfo }} BNB</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发高度">{{ panel.WBNB.accrualBlockNumber }}</el-descriptions-item>
+                          <el-descriptions-item label="cToken合约最新触发的借款总额">{{ panel.WBNB.totalBorrowsInfo }} BNB</el-descriptions-item>
                         </el-descriptions>
                       </div>
                     </el-collapse-item>
@@ -93,32 +93,32 @@
                       </el-col>
                       <el-col :span="8">
                         <el-descriptions title="wETH" direction="horizontal" :column="1" border size="mini" >
-                          <el-descriptions-item label="wETH价格"> $ {{ panel.wETH.price }}</el-descriptions-item>
-                          <el-descriptions-item label="wETH资金池余额"> {{ panel.wETH.totalCash }} wETH</el-descriptions-item>
-                          <el-descriptions-item label="wETH借款总数量"> {{ panel.wETH.totalBorrowsInfo }} wETH</el-descriptions-item>
-                          <el-descriptions-item label="wETH储备金"> {{ panel.wETH.totalReservesInfo }} wETH</el-descriptions-item>
-                          <el-descriptions-item label="wETH利用率"> {{ panel.wETH.utilizationRate }} %</el-descriptions-item>
-                          <el-descriptions-item label="wETH每个区块借款利率">{{ panel.wETH.borrowRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="wETH每个区块存款利率">{{ panel.wETH.supplyRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="wETH借款年APY">{{ panel.wETH.borrowApy }} %</el-descriptions-item>
-                          <el-descriptions-item label="wETH存款年APY">{{ panel.wETH.supplyApy }} %</el-descriptions-item>
-                          <el-descriptions-item label="wETH兑换率"> 1 wETH ={{ panel.wETH.exchangeRate }} ewETH</el-descriptions-item>
-                          <el-descriptions-item label="wETH最大抵押系数"> {{ panel.wETH.collateralFactor }} %</el-descriptions-item>
+                          <el-descriptions-item label="wETH价格"> $ {{ panel.WETH.price }}</el-descriptions-item>
+                          <el-descriptions-item label="wETH资金池余额"> {{ panel.WETH.totalCash }} wETH</el-descriptions-item>
+                          <el-descriptions-item label="wETH借款总数量"> {{ panel.WETH.totalBorrowsInfo }} wETH</el-descriptions-item>
+                          <el-descriptions-item label="wETH储备金"> {{ panel.WETH.totalReservesInfo }} wETH</el-descriptions-item>
+                          <el-descriptions-item label="wETH利用率"> {{ panel.WETH.utilizationRate }} %</el-descriptions-item>
+                          <el-descriptions-item label="wETH每个区块借款利率">{{ panel.WETH.borrowRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="wETH每个区块存款利率">{{ panel.WETH.supplyRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="wETH借款年APY">{{ panel.WETH.borrowApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="wETH存款年APY">{{ panel.WETH.supplyApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="wETH兑换率"> 1 wETH ={{ panel.WETH.exchangeRate }} eETH</el-descriptions-item>
+                          <el-descriptions-item label="wETH最大抵押系数"> {{ panel.WETH.collateralFactor }} %</el-descriptions-item>
                         </el-descriptions>
                       </el-col>
                       <el-col :span="8">
                         <el-descriptions title="wBNB" direction="horizontal" :column="1" border size="mini" >
-                          <el-descriptions-item label="wBNB价格"> $ {{ panel.wBNB.price }}</el-descriptions-item>
-                          <el-descriptions-item label="wBNB资金池余额"> {{ panel.wBNB.totalCash }} wBNB</el-descriptions-item>
-                          <el-descriptions-item label="wBNB借款总数量"> {{ panel.wBNB.totalBorrowsInfo }} wBNB</el-descriptions-item>
-                          <el-descriptions-item label="wBNB储备金"> {{ panel.wBNB.totalReservesInfo }} wBNB</el-descriptions-item>
-                          <el-descriptions-item label="wBNB利用率"> {{ panel.wBNB.utilizationRate }} %</el-descriptions-item>
-                          <el-descriptions-item label="wBNB每个区块借款利率">{{ panel.wBNB.borrowRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="wBNB每个区块存款利率">{{ panel.wBNB.supplyRatePerBlock }}</el-descriptions-item>
-                          <el-descriptions-item label="wBNB借款年APY">{{ panel.wBNB.borrowApy }} %</el-descriptions-item>
-                          <el-descriptions-item label="wBNB存款年APY">{{ panel.wBNB.supplyApy }} %</el-descriptions-item>
-                          <el-descriptions-item label="wBNB兑换率"> 1 wBNB ={{ panel.wBNB.exchangeRate }} ewBNB</el-descriptions-item>
-                          <el-descriptions-item label="wBNB最大抵押系数"> {{ panel.wBNB.collateralFactor }} %</el-descriptions-item>
+                          <el-descriptions-item label="wBNB价格"> $ {{ panel.WBNB.price }}</el-descriptions-item>
+                          <el-descriptions-item label="wBNB资金池余额"> {{ panel.WBNB.totalCash }} wBNB</el-descriptions-item>
+                          <el-descriptions-item label="wBNB借款总数量"> {{ panel.WBNB.totalBorrowsInfo }} wBNB</el-descriptions-item>
+                          <el-descriptions-item label="wBNB储备金"> {{ panel.WBNB.totalReservesInfo }} wBNB</el-descriptions-item>
+                          <el-descriptions-item label="wBNB利用率"> {{ panel.WBNB.utilizationRate }} %</el-descriptions-item>
+                          <el-descriptions-item label="wBNB每个区块借款利率">{{ panel.WBNB.borrowRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="wBNB每个区块存款利率">{{ panel.WBNB.supplyRatePerBlock }}</el-descriptions-item>
+                          <el-descriptions-item label="wBNB借款年APY">{{ panel.WBNB.borrowApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="wBNB存款年APY">{{ panel.WBNB.supplyApy }} %</el-descriptions-item>
+                          <el-descriptions-item label="wBNB兑换率"> 1 wBNB ={{ panel.WBNB.exchangeRate }} eBNB</el-descriptions-item>
+                          <el-descriptions-item label="wBNB最大抵押系数"> {{ panel.WBNB.collateralFactor }} %</el-descriptions-item>
                         </el-descriptions>
                       </el-col>
                     </el-collapse-item>
@@ -134,9 +134,11 @@
               <el-descriptions class="margin-top" title="用户" :column="6" direction="vertical" border size="mini" style="margin-top: 10px;">
                 <el-descriptions-item label="钱包USDT数量">{{ panel.USDT.balance }} USDT</el-descriptions-item>
                 <el-descriptions-item label="凭证eUSDT数量">{{ panel.USDT.eBalance }} eUSDT</el-descriptions-item>
-                <el-descriptions-item label="钱包WETH数量">{{ panel.wETH.balance }} WETH</el-descriptions-item>
-                <el-descriptions-item label="凭证eETH数量">{{ panel.wETH.eBalance }} eETH</el-descriptions-item>
-                <el-descriptions-item label="用户存款总额(USDT+FIL)"> ${{ market.WETH.supply.balance }}+ ${{ market.USDT.supply.balance}}</el-descriptions-item>
+                <el-descriptions-item label="钱包WETH数量">{{ panel.WETH.balance }} WETH</el-descriptions-item>
+                <el-descriptions-item label="凭证eETH数量">{{ panel.WETH.eBalance }} eETH</el-descriptions-item>
+                <el-descriptions-item label="钱包WBNB数量">{{ panel.WBNB.balance }} WBNB</el-descriptions-item>
+                <el-descriptions-item label="凭证eBNB数量">{{ panel.WBNB.eBalance }} eBNB</el-descriptions-item>
+                <el-descriptions-item label="用户存款总额(USDT+ETH+BNB)"> ${{ market.WETH.supply.balance }}+ ${{ market.USDT.supply.balance}}</el-descriptions-item>
                 <el-descriptions-item label="用户借款总额(USDT)"> $ {{ market.USDT.borrow.balance }}</el-descriptions-item>
               </el-descriptions>
             </el-col>
@@ -159,10 +161,10 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply(`USDT`)" type="success">存取</el-button>
-                    <el-button size="small" v-show="!market.USDT.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="!market.USDT.supply.isEnterMarket" @click="switchMarketStatus('USDT')"
                                type="success">开启抵押
                     </el-button>
-                    <el-button size="small" v-show="market.USDT.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="market.USDT.supply.isEnterMarket" @click="switchMarketStatus('USDT')"
                                type="success">关闭抵押
                     </el-button>
                   </el-descriptions-item>
@@ -171,7 +173,7 @@
                 <el-descriptions size="mini" :column="3" border>
                   <el-descriptions-item label="资产">WETH</el-descriptions-item>
                   <el-descriptions-item label="存款数量">{{ market.WETH.supply.count }} WETH</el-descriptions-item>
-                  <el-descriptions-item label="存款APY"> {{ panel.wETH.supplyApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="存款APY"> {{ panel.WETH.supplyApy }} %</el-descriptions-item>
                   <el-descriptions-item label="存款金额">$ {{ market.WETH.supply.balance }}</el-descriptions-item>
                   <el-descriptions-item label="抵押开关">
                     <el-switch
@@ -182,10 +184,10 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply('ETH')" type="success">存取</el-button>
-                    <el-button size="small" v-show="!market.WETH.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="!market.WETH.supply.isEnterMarket" @click="switchMarketStatus('ETH')"
                                type="success">开启抵押
                     </el-button>
-                    <el-button size="small" v-show="market.WETH.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="market.WETH.supply.isEnterMarket" @click="switchMarketStatus('ETH')"
                                type="success">关闭抵押
                     </el-button>
                   </el-descriptions-item>
@@ -194,7 +196,7 @@
                 <el-descriptions size="mini" :column="3" border>
                   <el-descriptions-item label="资产">WBNB</el-descriptions-item>
                   <el-descriptions-item label="存款数量">{{ market.WBNB.supply.count }} WBNB</el-descriptions-item>
-                  <el-descriptions-item label="存款APY"> {{ panel.wBNB.supplyApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="存款APY"> {{ panel.WBNB.supplyApy }} %</el-descriptions-item>
                   <el-descriptions-item label="存款金额">$ {{ market.WBNB.supply.balance }}</el-descriptions-item>
                   <el-descriptions-item label="抵押开关">
                     <el-switch
@@ -205,10 +207,10 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openSupply('BNB')" type="success">存取</el-button>
-                    <el-button size="small" v-show="!market.WBNB.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="!market.WBNB.supply.isEnterMarket" @click="switchMarketStatus('BNB')"
                                type="success">开启抵押
                     </el-button>
-                    <el-button size="small" v-show="market.WBNB.supply.isEnterMarket" @click="switchMarketStatus()"
+                    <el-button size="small" v-show="market.WBNB.supply.isEnterMarket" @click="switchMarketStatus('BNB')"
                                type="success">关闭抵押
                     </el-button>
                   </el-descriptions-item>
@@ -234,7 +236,7 @@
                 <el-descriptions size="mini" :column="3" border>
                   <el-descriptions-item label="资产">WETH</el-descriptions-item>
                   <el-descriptions-item label="借款数量">{{ market.WETH.borrow.count }} WETH</el-descriptions-item>
-                  <el-descriptions-item label="借款APY">{{ panel.wETH.borrowApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="借款APY">{{ panel.WETH.borrowApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ market.WETH.borrow.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
@@ -244,7 +246,7 @@
                 <el-descriptions size="mini" :column="3" border>
                   <el-descriptions-item label="资产">WBNB</el-descriptions-item>
                   <el-descriptions-item label="借款数量">{{ market.WBNB.borrow.count }} WBNB</el-descriptions-item>
-                  <el-descriptions-item label="借款APY">{{ panel.wBNB.borrowApy }} %</el-descriptions-item>
+                  <el-descriptions-item label="借款APY">{{ panel.WBNB.borrowApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ market.WBNB.borrow.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
                     <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
@@ -264,8 +266,8 @@
                     <el-descriptions title="借款限额" :column="6" direction="vertical" border style="margin-top: 20px;">
                       <el-descriptions-item label="币种" label-class-name="my-label"> WETH</el-descriptions-item>
                       <el-descriptions-item label="数量">  {{ market.WETH.supply.count }}</el-descriptions-item>
-                      <el-descriptions-item label="币价">$ {{ panel.wETH.price }}</el-descriptions-item>
-                      <el-descriptions-item label="抵押率">{{ panel.wETH.collateralFactor }}</el-descriptions-item>
+                      <el-descriptions-item label="币价">$ {{ panel.WETH.price }}</el-descriptions-item>
+                      <el-descriptions-item label="抵押率">{{ panel.WETH.collateralFactor }}</el-descriptions-item>
                       <el-descriptions-item label="抵押品价值(FIL抵押品+存款利息)">$ {{ market.WETH.supply.balance }}</el-descriptions-item>
                       <el-descriptions-item label="A(借款限额)=抵押品价值x抵押率(FIL)">$ {{
                           liquidity.sumCollateral
@@ -497,6 +499,71 @@
         </el-tabs>
       </el-row>
     </el-tabs>
+    <!--   WBNB存取 -->
+    <el-dialog
+        title="WBNB"
+        :visible.sync="WBNBSupplyDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName">
+        <el-tab-pane label="存款" name="first">
+          <el-form label-position="top" label-width="80px" :model="market.WBNB.supply">
+            <el-form-item label="存款数量">
+              <el-input v-model="market.WBNB.supply.mintAmount" placeholder="请输入存款数量" clearable>
+                <el-button slot="prepend" @click="getSupplyBalance('BNB')">最大值</el-button>
+                <el-button slot="append">WBNB</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ market.WBNB.supply.count }}
+                WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 WBNB
+                ={{ panel.WBNB.exchangeRate }} eBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包WBNB数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WBNB.balance }} WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包eBNB数量" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WBNB.eBalance }} eBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WBNB.totalCash }} WBNB
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="supplyToken('BNB')">存款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="取款" name="second">
+          <el-form label-position="top" label-width="80px" :model="market.WBNB.supply">
+            <el-form-item label="取款数量">
+              <el-input v-model="market.WBNB.supply.redeemAmount" clearable>
+                <el-button slot="prepend" @click="getRedeemBalance('BNB')">安全最大值（80%）</el-button>
+                <el-button slot="append">WBNB</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ market.WBNB.supply.count }}
+                WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="借款限额" :contentStyle="{'text-align': 'right'}">$ {{
+                  market.WBNB.borrow.balance
+                }} -> $ {{ market.WBNB.borrow.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ market.WBNB.borrow.alreadyCashPercent + ' %' }} -> {{ market.WBNB.borrow.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="redeemUnderlying('BNB')">取款</el-button>
+              <el-button type="success" @click="redeemAllToken('BNB')">取款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
     <!--   WETH存取 -->
     <el-dialog
         title="WETH"
@@ -507,26 +574,26 @@
         <el-tab-pane label="存款" name="first">
           <el-form label-position="top" label-width="80px" :model="market.WETH.supply">
             <el-form-item label="存款数量">
-              <el-input v-model="market.WETH.supply.supplyToken" placeholder="请输入存款数量" clearable>
+              <el-input v-model="market.WETH.supply.mintAmount" placeholder="请输入存款数量" clearable>
                 <el-button slot="prepend" @click="getSupplyBalance('ETH')">最大值</el-button>
-                <el-button slot="append">FIL</el-button>
+                <el-button slot="append">WETH</el-button>
               </el-input>
             </el-form-item>
             <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
               <el-descriptions-item label="存款数量" :contentStyle="{'text-align': 'right'}">{{ market.WETH.supply.count }}
                 WETH
               </el-descriptions-item>
-              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 eETH
-                ={{ panel.wETH.exchangeRate }} eETH
+              <el-descriptions-item label="兑换率" :contentStyle="{'text-align': 'right'}">1 WETH
+                ={{ panel.WETH.exchangeRate }} eETH
               </el-descriptions-item>
               <el-descriptions-item label="钱包WETH数量" :contentStyle="{'text-align': 'right'}">
-                {{ panel.wETH.balance }} WETH
+                {{ panel.WETH.balance }} WETH
               </el-descriptions-item>
               <el-descriptions-item label="钱包eETH数量" :contentStyle="{'text-align': 'right'}">
-                {{ panel.wETH.balance }} eETH
+                {{ panel.WETH.eBalance }} eETH
               </el-descriptions-item>
               <el-descriptions-item label="市场剩余可取" :contentStyle="{'text-align': 'right'}">
-                {{ panel.wETH.totalCash }} WETH
+                {{ panel.WETH.totalCash }} WETH
               </el-descriptions-item>
             </el-descriptions>
             <el-form-item label="" style="margin-top: 20px;">
@@ -540,7 +607,7 @@
             <el-form-item label="取款数量">
               <el-input v-model="market.WETH.supply.redeemAmount" clearable>
                 <el-button slot="prepend" @click="getRedeemBalance('ETH')">安全最大值（80%）</el-button>
-                <el-button slot="append">FIL</el-button>
+                <el-button slot="append">WETH</el-button>
               </el-input>
             </el-form-item>
             <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
@@ -733,7 +800,7 @@
 <script>
 import {
   accrualBlockNumber,
-  balanceOf, baseRatePerBlock, blocksPerYear,
+  balanceOf, baseMint, baseRatePerBlock, blocksPerYear,
   borrow,
   borrowBalanceStored,
   borrowIndex,
@@ -774,6 +841,7 @@ export default {
       account: "",
       WETHSupplyDialogVisible: false,
       USDTSupplyDialogVisible: false,
+      WBNBSupplyDialogVisible: false,
       dialogResultVisible: false,
       USDTBorrowDialogVisible: false,
       dialogWidth: 0,
@@ -815,7 +883,7 @@ export default {
         common:{
           blocksPerYear:0,
         },
-        wBNB:{
+        WBNB:{
           r0:0,
           r1:0,
           r2:0,
@@ -842,7 +910,7 @@ export default {
           balance:0,
           eBalance:0,
         },
-        wETH:{
+        WETH:{
           r0:0,
           r1:0,
           r2:0,
@@ -1124,7 +1192,11 @@ export default {
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
+      }else if (tokenName === constants.BNB) {
+        assetAddress = ""
+        assetToken = this.addressInfo.current.eBNB
       }
+
       erc20BalanceOf(
           this.$store.state.wallet,
           assetAddress,
@@ -1140,7 +1212,10 @@ export default {
           this.market.WETH.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.USDT) {
           this.market.USDT.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        }else if (tokenName === constants.BNB) {
+          this.market.WBNB.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
+
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
@@ -1169,6 +1244,8 @@ export default {
         this.WETHSupplyDialogVisible = true
       } else if (tokenName === constants.USDT) {
         this.USDTSupplyDialogVisible = true
+      }else if (tokenName === constants.BNB) {
+        this.WBNBSupplyDialogVisible = true
       }
     },
     openUsdtBorrow() {
@@ -1270,6 +1347,7 @@ export default {
       }
       this.WETHSupplyDialogVisible = false;
       this.USDTSupplyDialogVisible = false;
+      this.WBNBSupplyDialogVisible = false;
       let assetAddress
       let assetToken
       //获取到存款数量之后转换为小单位wei
@@ -1279,13 +1357,10 @@ export default {
         assetToken = this.addressInfo.current.eETH
         mintAmount = new Decimal(this.market.WETH.supply.mintAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
-        assetToken = this.addressInfo.current.eUSDT
         assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
         mintAmount = new Decimal(this.market.USDT.supply.mintAmount ).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
       }
-      console.log("mintAmount", mintAmount)
-      //先判断是否满足逻辑
-      //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
 
       this.verifyConnect()
       // 查看是否授权
@@ -1293,26 +1368,54 @@ export default {
       this.$parent.flag1 = true;
       this.$parent.flag2 = false;
       this.$parent.flag3 = false;
+      if (tokenName === constants.BNB) {
+        assetAddress = this.addressInfo.current.WBNB
+        assetToken = this.addressInfo.current.eBNB
+        mintAmount = new Decimal(this.market.WBNB.supply.mintAmount ).mul(Decimal.pow(10, decimals.BNB)).toFixed(0, Decimal.ROUND_DOWN)
+        baseMint(
+            this.$store.state.wallet,
+            mintAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.getSuccessInfo(this.$parent.url)
 
-      mint(
-          this.$store.state.wallet,
-          mintAmount,
-          assetToken,
-          data => {
-            this.$parent.url = this.addressInfo.current.tx_url + data.message;
-            this.$parent.flag2 = true;
-            this.$parent.flag1 = false;
-            this.$parent.flag3 = false;
-          }
-      ).then(res => {
-        this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
+        }).catch(err => {
+          console.log("baseMint error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      } else{
+        mint(
+            this.$store.state.wallet,
+            mintAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.getSuccessInfo(this.$parent.url)
 
-      }).catch(err => {
-        console.log("mint error")
-        this.$parent.loading = false;
-        this.getErrorInfo(err)
-      })
+        }).catch(err => {
+          console.log("mint error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      }
+      console.log("mintAmount", mintAmount)
+      //先判断是否满足逻辑
+      //比如用户输入的存款数量是否小于其钱包余额，等等其他校验
+
     },
     redeemUnderlying(tokenName) {
       if (!this.verifyConnect()) {
@@ -1375,7 +1478,7 @@ export default {
       if (tokenName === constants.ETH) {
         assetAddress = this.addressInfo.current.ETH
         assetToken = this.addressInfo.current.eETH
-        redeemToken = new Decimal(this.panel.wETH.balance).mul(Decimal.pow(10, decimals.eETH)).toFixed(0, Decimal.ROUND_DOWN)
+        redeemToken = new Decimal(this.panel.WETH.eBalance).mul(Decimal.pow(10, decimals.eETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
@@ -1607,7 +1710,7 @@ export default {
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
       }
-      balanceOf(
+      erc20BalanceOf(
           this.$store.state.wallet,
           assetAddress,
           data => {
@@ -1626,6 +1729,7 @@ export default {
           this.market.WBNB.supply.mintAmount  = new Decimal(res).dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
+        console.log('balanceOf err')
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
@@ -1711,8 +1815,10 @@ export default {
       this.getApy(constants.eBNB)
       //this.getBSCApy()
       this.viewPrice()
-      //检查本地址的fil抵押状态
-      this.checkMemberShipPage()
+      //检查本地址抵押状态
+      this.checkMemberShipPage(constants.USDT)
+      this.checkMemberShipPage(constants.ETH)
+      this.checkMemberShipPage(constants.BNB)
       //清算系数
       this.closeFactorMantissaPage()
 
@@ -1726,7 +1832,7 @@ export default {
     },
     viewPrice() {
       //获取用户USDT余额
-      balanceOf(
+      erc20BalanceOf(
           this.$store.state.wallet,
           this.addressInfo.current.USDT,
       ).then(res => {
@@ -1735,13 +1841,23 @@ export default {
       }).catch(err => {
         this.getErrorInfo(err)
       })
-      //获取用户FIL余额
-      balanceOf(
+      //获取用户ETH余额
+      erc20BalanceOf(
           this.$store.state.wallet,
           this.addressInfo.current.ETH,
       ).then(res => {
         let amount = new Decimal(res)
-        this.panel.wBNB.balance = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        this.panel.WETH.balance = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+      }).catch(err => {
+        this.getErrorInfo(err)
+      })
+      //获取用户BNB余额
+      erc20BalanceOf(
+          this.$store.state.wallet,
+          "",
+      ).then(res => {
+        let amount = new Decimal(res)
+        this.panel.WBNB.balance = amount.dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
       }).catch(err => {
         this.getErrorInfo(err)
       })
@@ -1789,7 +1905,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.eBalance = amount.div(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.eUSDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
-          this.panel.wETH.balance = amount.div(Decimal.pow(10, decimals.eETH)).toFixed(decimals.eETH, Decimal.ROUND_DOWN)
+          this.panel.WETH.eBalance = amount.div(Decimal.pow(10, decimals.eETH)).toFixed(decimals.eETH, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.eBNB) {
+          this.panel.WBNB.eBalance = amount.div(Decimal.pow(10, decimals.eBNB)).toFixed(decimals.eBNB, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1815,9 +1933,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.accrualBlockNumber = res
         } else if (tokenName === constants.eETH) {
-          this.panel.wETH.accrualBlockNumber = res
+          this.panel.WETH.accrualBlockNumber = res
         } else if (tokenName === constants.eBNB) {
-          this.panel.wBNB.accrualBlockNumber = res
+          this.panel.WBNB.accrualBlockNumber = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -1857,9 +1975,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.totalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
-          this.panel.wETH.totalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+          this.panel.WETH.totalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eBNB) {
-          this.panel.wBNB.totalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+          this.panel.WBNB.totalReservesInfo = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1889,9 +2007,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.totalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
-          this.panel.wETH.totalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+          this.panel.WETH.totalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }else if (tokenName === constants.eBNB) {
-          this.panel.wBNB.totalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+          this.panel.WBNB.totalBorrowsInfo = amount.dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -1940,9 +2058,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
-          this.panel.wETH.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+          this.panel.WETH.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         }else if (tokenName === constants.eBNB) {
-          this.panel.wBNB.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+          this.panel.WBNB.totalCash = new Decimal(res).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -2120,11 +2238,11 @@ export default {
         } else if (tokenName === constants.eETH) {
           mantissa = 36 - decimals.ETH
           result = balance.div(Decimal.pow(10, mantissa))
-          this.panel.wETH.price = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
+          this.panel.WETH.price = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eBNB) {
           mantissa = 36 - decimals.BNB
           result = balance.div(Decimal.pow(10, mantissa))
-          this.panel.wBNB.price = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
+          this.panel.WBNB.price = balance.div(Decimal.pow(10, mantissa)).toFixed(4,Decimal.ROUND_DOWN)
         }
 
       }).catch(err => {
@@ -2133,7 +2251,7 @@ export default {
       })
       return result
     },
-    switchMarketStatus() {
+    switchMarketStatus(tokenName) {
       if (!this.verifyConnect()) {
         return
       }
@@ -2143,13 +2261,21 @@ export default {
       this.$parent.flag3 = false;
       this.WETHSupplyDialogVisible = false;
       this.USDTSupplyDialogVisible = false;
-      let assetToken = this.addressInfo.current.eETH
-      let assetArray = new Array(assetToken)
+      this.WBNBSupplyDialogVisible = false;
       //先判断当前是开启抵押还是关闭抵押
       //如果开启，查看用户是否抵押
       //如果抵押计算另一个币种是否满足借款
+      let assetToken
+      if (tokenName === constants.USDT) {
+        assetToken = this.addressInfo.current.eUSDT
+      } else if (tokenName === constants.ETH) {
+        assetToken = this.addressInfo.current.eETH
+      }else if (tokenName === constants.BNB) {
+        assetToken = this.addressInfo.current.eBNB
+      }
+      let assetArray = new Array(assetToken)
       //如果满足
-      this.checkMemberShipPage().then(result => {
+      this.checkMemberShipPage(tokenName).then(result => {
         if (!result) {
           console.log("enterMarkets")
           enterMarkets(
@@ -2164,9 +2290,16 @@ export default {
               }
           ).then(res => {
             this.$parent.loading = false;
-            this.market.WETH.supply.isEnterMarket = true;
+            if (tokenName === constants.USDT) {
+              this.market.USDT.supply.isEnterMarket = true;
+            } else if (tokenName === constants.ETH) {
+              this.market.WETH.supply.isEnterMarket = true;
+            }else if (tokenName === constants.BNB) {
+              this.market.WBNB.supply.isEnterMarket = true;
+            }
             this.getSuccessInfo(this.$parent.url)
           }).catch(err => {
+            console.log("enterMarket err")
             this.$parent.loading = false;
             this.getErrorInfo(err)
           })
@@ -2184,10 +2317,17 @@ export default {
               }
           ).then(res => {
             this.$parent.loading = false;
-            this.market.WETH.supply.isEnterMarket = false;
+            if (tokenName === constants.USDT) {
+              this.market.USDT.supply.isEnterMarket = false;
+            } else if (tokenName === constants.ETH) {
+              this.market.WETH.supply.isEnterMarket = false;
+            }else if (tokenName === constants.BNB) {
+              this.market.WBNB.supply.isEnterMarket = false;
+            }
             this.getSuccessInfo(this.$parent.url)
           }).catch(err => {
             this.$parent.loading = false;
+            console.log("exitMarket err")
             this.getErrorInfo(err)
           })
         }
@@ -2216,10 +2356,10 @@ export default {
           this.panel.USDT.collateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         } else if (tokenName === constants.eETH) {
 
-          this.panel.wETH.collateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
+          this.panel.WETH.collateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         }else if (tokenName === constants.eBNB) {
           console.log('collateralFactorMantissa',collateralFactorMantissa)
-          this.panel.wBNB.collateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
+          this.panel.WBNB.collateralFactor = new Decimal(collateralFactorMantissa).div(Decimal.pow(10, 16))
         }
       }).catch(err => {
         console.log('err getCollateralFactor')
@@ -2227,16 +2367,32 @@ export default {
       })
       return result
     },
-    async checkMemberShipPage() {
+    async checkMemberShipPage(tokenName) {
       let isSuccess = false;
+      let assetToken
+      if (tokenName === constants.USDT) {
+        assetToken = this.addressInfo.current.eUSDT
+      } else if (tokenName === constants.ETH) {
+        assetToken = this.addressInfo.current.eETH
+      }else if (tokenName === constants.BNB) {
+        assetToken = this.addressInfo.current.eBNB
+      }
+      let assetArray = new Array(assetToken)
       await checkMembership(
           this.$store.state.wallet,
-          this.addressInfo.current.eETH,
+          assetToken,
           this.addressInfo.current.Unitroller
       ).then(res => {
-        this.market.WETH.supply.isEnterMarket = res
         isSuccess = res
+        if (tokenName === constants.USDT) {
+          this.market.USDT.supply.isEnterMarket = res;
+        } else if (tokenName === constants.ETH) {
+          this.market.WETH.supply.isEnterMarket = res;
+        }else if (tokenName === constants.BNB) {
+          this.market.WBNB.supply.isEnterMarket = res;
+        }
       }).catch(err => {
+        console.log('checkMemberShipPage err')
         this.getErrorInfo(err)
       })
       return isSuccess
@@ -2274,9 +2430,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.kink = kink
         }else if (tokenName === constants.eETH){
-          this.panel.wETH.kink = kink
+          this.panel.WETH.kink = kink
         }else if (tokenName === constants.eBNB){
-          this.panel.wBNB.kink = kink
+          this.panel.WBNB.kink = kink
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2330,9 +2486,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.jusdtJumpMultiplierPerBlock = res
         }else if (tokenName === constants.eETH){
-          this.panel.wETH.jumpMultiplierPerBlock = res
+          this.panel.WETH.jumpMultiplierPerBlock = res
         }else if (tokenName === constants.eBNB){
-          this.panel.wBNB.jumpMultiplierPerBlock = res
+          this.panel.WBNB.jumpMultiplierPerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2357,9 +2513,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.multiplierPerBlock = res
         }else if (tokenName === constants.eETH){
-          this.panel.wETH.multiplierPerBlock = res
+          this.panel.WETH.multiplierPerBlock = res
         }else if (tokenName === constants.eBNB){
-          this.panel.wBNB.multiplierPerBlock = res
+          this.panel.WBNB.multiplierPerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2384,9 +2540,9 @@ export default {
         if (tokenName === constants.eUSDT) {
           this.panel.USDT.baseRatePerBlock = res
         }else if (tokenName === constants.eETH){
-          this.panel.wETH.baseRatePerBlock = res
+          this.panel.WETH.baseRatePerBlock = res
         }else if (tokenName === constants.eETH){
-          this.panel.wBNB.baseRatePerBlock = res
+          this.panel.WBNB.baseRatePerBlock = res
         }
       }).catch(err => {
         this.getErrorInfo(err)
@@ -2404,10 +2560,10 @@ export default {
       if (tokenName === constants.eUSDT) {
         this.panel.USDT.utilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eETH) {
-        this.panel.wETH.utilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
+        this.panel.WETH.utilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eBNB) {
         console.log('wBNB utilizationRate',utilizationRate)
-        this.panel.wBNB.utilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
+        this.panel.WBNB.utilizationRate = new Decimal(utilizationRate).div(Decimal.pow(10, 16)).toFixed(16, Decimal.ROUND_DOWN)
       }
       let borrowRate = await this.getBorrowRatePage(tokenName, totalCash, totalBorrows, totalReserves)
       let reserveFactorMantissa = await this.getReserveFactorMantissaPage(tokenName)
@@ -2445,10 +2601,10 @@ export default {
           this.panel.USDT.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eETH) {
           mantissa = 18 + decimals.ETH - cTokenDecimals
-          this.panel.wETH.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+          this.panel.WETH.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.eBNB) {
           mantissa = 18 + decimals.BNB - cTokenDecimals
-          this.panel.wBNB.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+          this.panel.WBNB.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
         }
         return exchangeRate
       }
@@ -2465,12 +2621,12 @@ export default {
         //18+18-8=28 eETH 18
         mantissa = 18 + decimals.ETH - cTokenDecimals
         exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-        this.panel.wETH.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+        this.panel.WETH.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eBNB) {
         //18+18-8=28 eETH 18
         mantissa = 18 + decimals.BNB - cTokenDecimals
         exchangeRate = cashPlusBorrowsMinusReserves.mul(Decimal.pow(10, 18)).div(new Decimal(totalSupply)).toFixed(0, Decimal.ROUND_DOWN)
-        this.panel.wBNB.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
+        this.panel.WBNB.exchangeRate = new Decimal(1).div(new Decimal(exchangeRate).div(Decimal.pow(10, mantissa))).toFixed(18, Decimal.ROUND_DOWN)
       }
 
       return exchangeRate
@@ -2494,9 +2650,12 @@ export default {
 
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         //金额保留8位
-
         this.market.USDT.supply.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
-
+      } else if (tokenName === constants.eBNB) {
+        redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        this.market.WBNB.supply.count = redeemAmount.toString()
+        redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
+        this.market.WBNB.supply.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eETH) {
         //fil存款数量
         console.log("WETH exchangeRateMantissa",exchangeRateMantissa)
@@ -2504,7 +2663,7 @@ export default {
         redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         console.log("WETH redeemAmount",redeemAmount)
         this.market.WETH.supply.count = redeemAmount.toString()
-        //fil存款金额
+        //存款金额
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         this.market.WETH.supply.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
         // 可抵押价值=存款数量xfil价格x抵押率
@@ -2612,18 +2771,18 @@ export default {
           this.panel.USDT.supplyApy = supplyApy
           this.panel.USDT.borrowApy = borrowApy
         }else if (tokenName===constants.eETH){
-          this.panel.wETH.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-          this.panel.wETH.borrowRatePerBlock=borrowRatePerBlock
-          this.panel.wETH.supplyRatePerBlock=supplyRatePerBlock
-          this.panel.wETH.supplyApy = supplyApy
-          this.panel.wETH.borrowApy = borrowApy
+          this.panel.WETH.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.WETH.borrowRatePerBlock=borrowRatePerBlock
+          this.panel.WETH.supplyRatePerBlock=supplyRatePerBlock
+          this.panel.WETH.supplyApy = supplyApy
+          this.panel.WETH.borrowApy = borrowApy
         }else if (tokenName===constants.eBNB){
           console.log('reserveFactorMantissa',reserveFactorMantissa)
-          this.panel.wBNB.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-          this.panel.wBNB.borrowRatePerBlock=borrowRatePerBlock
-          this.panel.wBNB.supplyRatePerBlock=supplyRatePerBlock
-          this.panel.wBNB.supplyApy = supplyApy
-          this.panel.wBNB.borrowApy = borrowApy
+          this.panel.WBNB.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.WBNB.borrowRatePerBlock=borrowRatePerBlock
+          this.panel.WBNB.supplyRatePerBlock=supplyRatePerBlock
+          this.panel.WBNB.supplyApy = supplyApy
+          this.panel.WBNB.borrowApy = borrowApy
         }
       } else if (this.$store.state.wallet.networkId === 3476) {
         //bhp主网和测试网为 每块15s
@@ -2687,7 +2846,7 @@ export default {
           this.panel.USDT.supplyApy = supplyApy
           this.panel.USDT.borrowApy = borrowApy
         }else if (tokenName===constants.eETH){
-          this.panel.wETH.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+          this.panel.WETH.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
           this.panel.borrowFilRatePerBlock=borrowRatePerBlock
           this.panel.supplyFilRatePerBlock=supplyRatePerBlock
           this.panel.supplyFilApy = supplyApy
@@ -2801,7 +2960,7 @@ export default {
     async searchLiquidity() {
       let that = this
       this.account = that.$store.state.wallet.address
-      this.liquidity.sumCollateral = new Decimal(that.market.WETH.supply.balance).mul(new Decimal(that.panel.wETH.collateralFactor).div(new Decimal(100))).toFixed(18,Decimal.ROUND_DOWN)
+      this.liquidity.sumCollateral = new Decimal(that.market.WETH.supply.balance).mul(new Decimal(that.panel.WETH.collateralFactor).div(new Decimal(100))).toFixed(18,Decimal.ROUND_DOWN)
       this.liquidity.sumBorrowPlusEffects = that.market.USDT.borrow.balance
     },
     handleLiquid(index, row) {
@@ -2869,12 +3028,12 @@ export default {
       r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wETH.baseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wETH.multiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wETH.jumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wETH.r0=r0
-      this.panel.wETH.r1=r1
-      this.panel.wETH.r2=r2
+      this.panel.WETH.baseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WETH.multiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WETH.jumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WETH.r0=r0
+      this.panel.WETH.r1=r1
+      this.panel.WETH.r2=r2
 
       //blocksPerYear =await this.blocksPerYearPage(constants.eBNB)
       baseRatePerBlock =await this.baseRatePerBlockPage(constants.eBNB)
@@ -2884,12 +3043,12 @@ export default {
       r0 = new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r1 = new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
       r2 = new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(Decimal.pow(10, 18).sub(new Decimal(kink))).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wBNB.baseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wBNB.multiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wBNB.jumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-      this.panel.wBNB.r0=r0
-      this.panel.wBNB.r1=r1
-      this.panel.wBNB.r2=r2
+      this.panel.WBNB.baseRatePerYear=new Decimal(baseRatePerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WBNB.multiplierPerYear=new Decimal(multiplierPerBlock).mul(new Decimal(blocksPerYear)).mul(new Decimal(kink)).div(new Decimal(Decimal.pow(10, 18+16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WBNB.jumpMultiplierPerYear=new Decimal(jumpMultiplierPerBlock).mul(new Decimal(blocksPerYear)).div(new Decimal(Decimal.pow(10, 16))).toDecimalPlaces(18,Decimal.ROUND_DOWN)
+      this.panel.WBNB.r0=r0
+      this.panel.WBNB.r1=r1
+      this.panel.WBNB.r2=r2
     }
   },
 };

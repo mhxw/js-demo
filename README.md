@@ -2,6 +2,7 @@
 
 ## Project setup
 ```
+source ~/.zsh_profile
 yarn install
 ```
 

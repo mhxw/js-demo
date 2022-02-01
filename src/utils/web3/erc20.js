@@ -39,7 +39,7 @@ export async function erc20Allowance(wallet, tokenAddress, contractAddress) {
 }
 
 export async function erc20BalanceOf(wallet, tokenAddress) {
-    if (!tokenAddress) {
+    if (!tokenAddress||tokenAddress==="") {
         return await wallet.web3.eth.getBalance(wallet.address)
     }
     const contract = new wallet.web3.eth.Contract(erc20.abi, tokenAddress)

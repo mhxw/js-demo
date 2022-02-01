@@ -17,6 +17,24 @@ export async function mint(wallet,mintAmount, asset,callback){
     return Utils.callContract(contract.methods.mint(mintAmount).send({from: wallet.address}), callback)
 }
 
+export async function baseMint(wallet,mintAmount,asset,callback){
+    const contract = new wallet.web3.eth.Contract(abi.CEther, asset)
+    await baseMintEstimateGas(contract,wallet.web3,wallet.address,mintAmount,asset)
+    return Utils.callContract(contract.methods.mint().send({from: wallet.address,value:mintAmount}), callback)
+}
+
+export async function baseMintEstimateGas(contract,web3,userAddress,mintAmount, asset) {
+    let txObject = {
+        from: userAddress,
+        to: asset,
+        data: contract.methods.mint().encodeABI(),
+        value:mintAmount
+    }
+    return Utils.callContractEstimateGas(web3,txObject)
+}
+
+
+
 export async function mintEstimateGas(contract,web3,userAddress,mintAmount, asset) {
     let txObject = {
         from: userAddress,
