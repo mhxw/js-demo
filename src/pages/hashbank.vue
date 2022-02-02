@@ -229,7 +229,7 @@
                   <el-descriptions-item label="借款APY">{{ panel.USDT.borrowApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ market.USDT.borrow.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
-                    <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
+                    <el-button size="small" @click="openBorrow('USDT')" type="success">借还</el-button>
                   </el-descriptions-item>
                 </el-descriptions>
                 <el-divider></el-divider>
@@ -239,7 +239,7 @@
                   <el-descriptions-item label="借款APY">{{ panel.WETH.borrowApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ market.WETH.borrow.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
-                    <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
+                    <el-button size="small" @click="openBorrow('ETH')" type="success">借还</el-button>
                   </el-descriptions-item>
                 </el-descriptions>
                 <el-divider></el-divider>
@@ -249,7 +249,7 @@
                   <el-descriptions-item label="借款APY">{{ panel.WBNB.borrowApy }} %</el-descriptions-item>
                   <el-descriptions-item label="借款金额">$ {{ market.WBNB.borrow.balance }}</el-descriptions-item>
                   <el-descriptions-item label="操作">
-                    <el-button size="small" @click="openUsdtBorrow()" type="success">借还</el-button>
+                    <el-button size="small" @click="openBorrow('BNB')" type="success">借还</el-button>
                   </el-descriptions-item>
                 </el-descriptions>
               </el-card>
@@ -268,8 +268,8 @@
                       <el-descriptions-item label="数量">  {{ market.WETH.supply.count }}</el-descriptions-item>
                       <el-descriptions-item label="币价">$ {{ panel.WETH.price }}</el-descriptions-item>
                       <el-descriptions-item label="抵押率">{{ panel.WETH.collateralFactor }}</el-descriptions-item>
-                      <el-descriptions-item label="抵押品价值(FIL抵押品+存款利息)">$ {{ market.WETH.supply.balance }}</el-descriptions-item>
-                      <el-descriptions-item label="A(借款限额)=抵押品价值x抵押率(FIL)">$ {{
+                      <el-descriptions-item label="抵押品价值(WETH抵押品+存款利息)">$ {{ market.WETH.supply.balance }}</el-descriptions-item>
+                      <el-descriptions-item label="A(借款限额)=抵押品价值x抵押率(WETH)">$ {{
                           liquidity.sumCollateral
                         }}
                       </el-descriptions-item>
@@ -290,7 +290,7 @@
                       <el-descriptions-item label="清算系数" label-class-name="my-label"> 50% </el-descriptions-item>
                       <el-descriptions-item label="清算奖励"> 8% </el-descriptions-item>
                       <el-descriptions-item label="偿还usdt数量" label-class-name="my-label"> 0 </el-descriptions-item>
-                      <el-descriptions-item label="得到的fil数量"> 0 </el-descriptions-item>
+                      <el-descriptions-item label="得到的WETH数量"> 0 </el-descriptions-item>
                     </el-descriptions>
 
                     <el-form :inline="true" :model="formInline" class="demo-form-inline">
@@ -701,7 +701,7 @@
     <!--   USDT借还 -->
     <el-dialog
         title="USDT"
-        :visible.sync="USDTBorrowDialogVisible"
+        :visible.sync="market.USDT.borrowDialogVisible"
         width="36em"
         center>
       <el-tabs v-model="dialogActiveName">
@@ -778,6 +778,166 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
+    <!--   WETH借还 -->
+    <el-dialog
+        title="WETH"
+        :visible.sync="market.WETH.borrowDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName">
+        <el-tab-pane label="借款" name="first">
+          <el-form label-position="top" label-width="80px" :model="market.WETH.supply">
+            <el-form-item label="借款数量">
+              <el-input v-model="market.WETH.borrow.borrowAmount" placeholder="请输入借款数量" clearable>
+                <el-button slot="prepend" @click="getBorrowBalance(`ETH`)">（80%限制）</el-button>
+                <el-button slot="append">WETH</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ market.WETH.borrow.balance }} -> $ {{ market.WETH.borrow.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  market.WETH.borrow.count
+                }} WETH -> {{ market.WETH.borrow.borrowCountLimit }} WETH
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ market.WETH.borrow.alreadyCashPercent + ' %' }} -> {{ market.WETH.borrow.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ market.WETH.borrow.count }}
+                WETH
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WETH.totalCash }} WETH
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="borrowToken(`ETH`)">借款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="还款" name="second">
+          <el-form label-position="top" label-width="80px" :model="market.WETH.borrow">
+            <el-form-item label="还款数量">
+              <el-input v-model="market.WETH.borrow.repayAmount" placeholder="请输入还款数量" clearable>
+                <el-button slot="prepend" @click="getRepayMaxBalance(`ETH`)">最大值</el-button>
+                <el-button slot="append">WETH</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ market.WETH.borrow.balance }} -> $ {{ market.WETH.borrow.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  market.WETH.borrow.count
+                }} WETH -> {{ market.WETH.borrow.borrowCountLimit }} WETH
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ market.WETH.borrow.alreadyCashPercent + ' %' }} -> {{ market.WETH.borrow.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ market.WETH.borrow.count }}
+                WETH
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WETH.totalCash }} WETH
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}">{{ panel.WETH.balance }}
+                WETH
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="erc20Approve(`ETH`)">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="repayToken(`ETH`)">还款</el-button>
+              <el-button type="success" @click="repayAllToken(`ETH`)">还款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+    <!--   WBNB借还 -->
+    <el-dialog
+        title="WBNB"
+        :visible.sync="market.WBNB.borrowDialogVisible"
+        width="36em"
+        center>
+      <el-tabs v-model="dialogActiveName">
+        <el-tab-pane label="借款" name="first">
+          <el-form label-position="top" label-width="80px" :model="market.WBNB.supply">
+            <el-form-item label="借款数量">
+              <el-input v-model="market.WBNB.borrow.borrowAmount" placeholder="请输入借款数量" clearable>
+                <el-button slot="prepend" @click="getBorrowBalance(`BNB`)">（80%限制）</el-button>
+                <el-button slot="append">WBNB</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ market.WBNB.borrow.balance }} -> $ {{ market.WBNB.borrow.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  market.WBNB.borrow.count
+                }} WBNB -> {{ market.WBNB.borrow.borrowCountLimit }} WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ market.WBNB.borrow.alreadyCashPercent + ' %' }} -> {{ market.WBNB.borrow.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ market.WBNB.borrow.count }}
+                WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WBNB.totalCash }} WBNB
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="borrowToken(`BNB`)">借款</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="还款" name="second">
+          <el-form label-position="top" label-width="80px" :model="market.WBNB.borrow">
+            <el-form-item label="还款数量">
+              <el-input v-model="market.WBNB.borrow.repayAmount" placeholder="请输入还款数量" clearable>
+                <el-button slot="prepend" @click="getRepayMaxBalance(`BNB`)">最大值</el-button>
+                <el-button slot="append">WBNB</el-button>
+              </el-input>
+            </el-form-item>
+            <el-descriptions :column="1" size="mini" border>
+              <el-descriptions-item label="借款金额限额" :contentStyle="{'text-align': 'right'}">$
+                {{ market.WBNB.borrow.balance }} -> $ {{ market.WBNB.borrow.borrowAmountLimit }}
+              </el-descriptions-item>
+              <el-descriptions-item label="借款数量限额" :contentStyle="{'text-align': 'right'}">{{
+                  market.WBNB.borrow.count
+                }} WBNB -> {{ market.WBNB.borrow.borrowCountLimit }} WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="限额已使用" :contentStyle="{'text-align': 'right'}">
+                {{ market.WBNB.borrow.alreadyCashPercent + ' %' }} -> {{ market.WBNB.borrow.borrowlimitPercent }} %
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-descriptions :column="1" size="mini" border style="margin-top: 1em;">
+              <el-descriptions-item label="目前已借" :contentStyle="{'text-align': 'right'}">{{ market.WBNB.borrow.count }}
+                WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="市场可用余额" :contentStyle="{'text-align': 'right'}">
+                {{ panel.WBNB.totalCash }} WBNB
+              </el-descriptions-item>
+              <el-descriptions-item label="钱包余额" :contentStyle="{'text-align': 'right'}">{{ panel.WBNB.balance }}
+                WBNB
+              </el-descriptions-item>
+            </el-descriptions>
+            <el-form-item label="" style="margin-top: 20px;">
+              <el-button type="success" @click="erc20Approve(`BNB`)">{{ supplyButton }}</el-button>
+              <el-button type="success" @click="repayToken(`BNB`)">还款</el-button>
+              <el-button type="success" @click="repayAllToken(`BNB`)">还款全部</el-button>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
     <!--   返回结果 -->
     <el-dialog
         :visible.sync="dialogResultVisible"
@@ -818,6 +978,7 @@ import {
   redeem,
   redeemUnderlying,
   repayBorrow,
+  baseRepayBorrow,
   reserveFactorMantissa,
   supplyRatePerBlock,
   totalBorrows,
@@ -843,7 +1004,6 @@ export default {
       USDTSupplyDialogVisible: false,
       WBNBSupplyDialogVisible: false,
       dialogResultVisible: false,
-      USDTBorrowDialogVisible: false,
       dialogWidth: 0,
       address: '',
       supplyButton: '授权',
@@ -1002,6 +1162,8 @@ export default {
       },
       market:{
         USDT:{
+          dialogActiveName: 'first',
+          borrowDialogVisible: false,
           supply:{
             userCanRedeemCount: 0,
             borrowRate: '',
@@ -1034,6 +1196,8 @@ export default {
           }
         },
         WETH:{
+          dialogActiveName: 'first',
+          borrowDialogVisible: false,
           supply:{
             userCanRedeemCount: 0,
             borrowRate: '',
@@ -1066,6 +1230,8 @@ export default {
           }
         },
         WBNB:{
+          dialogActiveName: 'first',
+          borrowDialogVisible: false,
           supply:{
             userCanRedeemCount: 0,
             borrowRate: '',
@@ -1235,6 +1401,8 @@ export default {
           this.market.WETH.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
         } else if (tokenName === constants.USDT) {
           this.market.USDT.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.BNB) {
+          this.market.WBNB.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eBNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
         }
       }).catch(err => {
         this.$parent.loading = false;
@@ -1248,13 +1416,25 @@ export default {
         this.WBNBSupplyDialogVisible = true
       }
     },
-    openUsdtBorrow() {
+    openBorrow(tokenName) {
       if (!this.verifyConnect()) {
         return
       }
+      let assetAddress
+      let assetToken
+      if (tokenName === constants.ETH) {
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
+      } else if (tokenName === constants.USDT) {
+        assetAddress = this.addressInfo.current.USDT
+        assetToken = this.addressInfo.current.eUSDT
+      }else if (tokenName === constants.BNB) {
+        assetAddress = ""
+        assetToken = this.addressInfo.current.eBNB
+      }
       erc20BalanceOf(
           this.$store.state.wallet,
-          this.addressInfo.current.ETH,
+          assetAddress,
           data => {
             this.$parent.url = this.addressInfo.current.tx_url + data.message;
             this.$parent.flag2 = true;
@@ -1263,20 +1443,38 @@ export default {
           }
       ).then(res => {
         this.$parent.loading = false;
-        this.market.USDT.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(18)
+        if (tokenName === constants.ETH) {
+          this.market.WETH.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.USDT) {
+          this.market.USDT.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.USDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        }else if (tokenName === constants.BNB) {
+          this.market.WBNB.supply.supplyAmount = new Decimal(res).dividedBy(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+        }
       }).catch(err => {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
       erc20BalanceOf(
           this.$store.state.wallet,
-          this.addressInfo.current.eETH,
+          assetToken,
       ).then(res => {
-        this.market.USDT.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eETH)).toFixed(18)
+        if (tokenName === constants.ETH) {
+          this.market.WETH.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.USDT) {
+          this.market.USDT.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eUSDT)).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+        } else if (tokenName === constants.BNB) {
+          this.market.WBNB.supply.supplyToken = new Decimal(res).dividedBy(Decimal.pow(10, decimals.eBNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+        }
       }).catch(err => {
         this.getErrorInfo(err)
       })
-      this.USDTBorrowDialogVisible = true
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrowDialogVisible = true
+      } else if (tokenName === constants.USDT) {
+        this.market.USDT.borrowDialogVisible = true
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrowDialogVisible = true
+      }
     },
     getSuccessInfo(result) {
       this.info.title = "成功提示"
@@ -1436,6 +1634,10 @@ export default {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
         redeemAmount = new Decimal(this.market.USDT.supply.redeemAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.BNB) {
+        assetAddress = this.addressInfo.current.BNB
+        assetToken = this.addressInfo.current.eBNB
+        redeemAmount = new Decimal(this.market.WBNB.supply.redeemAmount).mul(Decimal.pow(10, decimals.BNB)).toFixed(0, Decimal.ROUND_DOWN)
       }
 
       //获取到存款数量之后转换为小单位wei
@@ -1445,6 +1647,7 @@ export default {
       this.$parent.flag3 = false;
       this.WETHSupplyDialogVisible = false;
       this.USDTSupplyDialogVisible = false;
+      this.WBNBSupplyDialogVisible = false;
       redeemUnderlying(
           this.$store.state.wallet,
           redeemAmount,
@@ -1483,6 +1686,10 @@ export default {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
         redeemToken = new Decimal(this.panel.USDT.eBalance).mul(Decimal.pow(10, decimals.eUSDT)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.BNB) {
+        assetAddress = this.addressInfo.current.BNB
+        assetToken = this.addressInfo.current.eBNB
+        redeemToken = new Decimal(this.panel.WBNB.eBalance).mul(Decimal.pow(10, decimals.BNB)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("redeemToken", redeemToken)
 
@@ -1493,6 +1700,7 @@ export default {
       this.$parent.flag3 = false;
       this.WETHSupplyDialogVisible = false;
       this.USDTSupplyDialogVisible = false;
+      this.WBNBSupplyDialogVisible = false;
       redeem(
           this.$store.state.wallet,
           redeemToken,
@@ -1568,7 +1776,7 @@ export default {
       }
     },
     borrowToken(tokenName) {
-      //usdt 借款之前先判断是否存入了fil并开启了抵押
+      //usdt 借款之前先判断是否存入了WETH并开启了抵押
       if (!this.verifyConnect()) {
         return
       }
@@ -1578,10 +1786,13 @@ export default {
       let borrowAmount
       if (tokenName === constants.ETH) {
         assetToken = this.addressInfo.current.eETH
-        borrowAmount = new Decimal(this.market.USDT.borrow.borrowAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
+        borrowAmount = new Decimal(this.market.WETH.borrow.borrowAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
         borrowAmount = new Decimal(this.market.USDT.borrow.borrowAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.BNB) {
+        assetToken = this.addressInfo.current.eBNB
+        borrowAmount = new Decimal(this.market.WBNB.borrow.borrowAmount).mul(Decimal.pow(10, decimals.BNB)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("borrowAmount", borrowAmount)
       this.verifyConnect()
@@ -1608,7 +1819,13 @@ export default {
         this.$parent.loading = false;
         this.getErrorInfo(err)
       })
-      this.USDTBorrowDialogVisible = false;
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrowDialogVisible = false
+      } else if (tokenName === constants.USDT) {
+        this.market.USDT.borrowDialogVisible = false
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrowDialogVisible = false
+      }
     },
     repayToken(tokenName) {
       if (!this.verifyConnect()) {
@@ -1622,11 +1839,17 @@ export default {
       //获取到存款数量之后转换为小单位wei
       let repayAmount
       if (tokenName === constants.ETH) {
-
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
+        repayAmount = new Decimal(this.market.WETH.borrow.repayAmount).mul(Decimal.pow(10, decimals.ETH)).toFixed(0, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
         repayAmount = new Decimal(this.market.USDT.borrow.repayAmount).mul(Decimal.pow(10, decimals.USDT)).toFixed(0, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.BNB) {
+        assetAddress = this.addressInfo.current.BNB
+        assetToken = this.addressInfo.current.eBNB
+        repayAmount = new Decimal(this.market.WBNB.borrow.repayAmount).mul(Decimal.pow(10, decimals.BNB)).toFixed(0, Decimal.ROUND_DOWN)
       }
       console.log("repayAmount", repayAmount.toString())
       //获取到存款数量之后转换为小单位wei
@@ -1634,26 +1857,55 @@ export default {
       this.$parent.flag1 = true;
       this.$parent.flag2 = false;
       this.$parent.flag3 = false;
-      this.USDTBorrowDialogVisible = false;
-      repayBorrow(
-          this.$store.state.wallet,
-          repayAmount,
-          assetToken,
-          data => {
-            this.$parent.url = this.addressInfo.current.tx_url + data.message;
-            this.$parent.flag2 = true;
-            this.$parent.flag1 = false;
-            this.$parent.flag3 = false;
-          }
-      ).then(res => {
-        this.$parent.loading = false;
-        this.verifyContractResult(res, this.$parent.url)
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrowDialogVisible = false
+      } else if (tokenName === constants.USDT) {
+        this.market.USDT.borrowDialogVisible = false
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrowDialogVisible = false
+      }
 
-      }).catch(err => {
-        console.log("repayToken error")
-        this.$parent.loading = false;
-        this.getErrorInfo(err)
-      })
+      if (tokenName === constants.BNB) {
+        baseRepayBorrow(
+            this.$store.state.wallet,
+            repayAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.verifyContractResult(res, this.$parent.url)
+
+        }).catch(err => {
+          console.log("repayToken error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      }else{
+        repayBorrow(
+            this.$store.state.wallet,
+            repayAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.verifyContractResult(res, this.$parent.url)
+
+        }).catch(err => {
+          console.log("repayToken error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      }
     },
     repayAllToken(tokenName) {
       if (!this.verifyConnect()) {
@@ -1667,38 +1919,71 @@ export default {
       //获取到存款数量之后转换为小单位wei
       //2的256次方-1
       let repayAmount = (BigInt(Math.pow(2, 256)) - 1n).toString()
-      console.log("repayAmount：", repayAmount)
+      console.log("repayAmount：",tokenName,repayAmount)
       //let repayAmount="115792089237316195423570985008687907853269984665640564039457584007913129639935"
       if (tokenName === constants.ETH) {
-
+        assetAddress = this.addressInfo.current.ETH
+        assetToken = this.addressInfo.current.eETH
       } else if (tokenName === constants.USDT) {
         assetAddress = this.addressInfo.current.USDT
         assetToken = this.addressInfo.current.eUSDT
+      } else if (tokenName === constants.BNB) {
+        assetAddress = this.addressInfo.current.BNB
+        assetToken = this.addressInfo.current.eBNB
       }
       //获取到存款数量之后转换为小单位wei
       this.$parent.loading = true;
       this.$parent.flag1 = true;
       this.$parent.flag2 = false;
       this.$parent.flag3 = false;
-      this.USDTBorrowDialogVisible = false;
-      repayBorrow(
-          this.$store.state.wallet,
-          repayAmount,
-          assetToken,
-          data => {
-            this.$parent.url = this.addressInfo.current.tx_url + data.message;
-            this.$parent.flag2 = true;
-            this.$parent.flag1 = false;
-            this.$parent.flag3 = false;
-          }
-      ).then(res => {
-        this.$parent.loading = false;
-        this.getSuccessInfo(this.$parent.url)
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrowDialogVisible = false
+      } else if (tokenName === constants.USDT) {
+        this.market.USDT.borrowDialogVisible = false
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrowDialogVisible = false
+      }
+      if (tokenName === constants.BNB) {
+        baseRepayBorrow(
+            this.$store.state.wallet,
+            repayAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.verifyContractResult(res, this.$parent.url)
 
-      }).catch(err => {
-        this.$parent.loading = false;
-        this.getErrorInfo(err)
-      })
+        }).catch(err => {
+          console.log("repayToken error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      }else {
+        repayBorrow(
+            this.$store.state.wallet,
+            repayAmount,
+            assetToken,
+            data => {
+              this.$parent.url = this.addressInfo.current.tx_url + data.message;
+              this.$parent.flag2 = true;
+              this.$parent.flag1 = false;
+              this.$parent.flag3 = false;
+            }
+        ).then(res => {
+          this.$parent.loading = false;
+          this.verifyContractResult(res, this.$parent.url)
+
+        }).catch(err => {
+          console.log("repayAllToken error")
+          this.$parent.loading = false;
+          this.getErrorInfo(err)
+        })
+      }
     },
     getSupplyBalance(tokenName) {
       if (!this.verifyConnect()) {
@@ -1748,6 +2033,8 @@ export default {
         }
       } else if (tokenName === constants.USDT) {
         this.market.USDT.supply.redeemAmount = new Decimal(that.market.USDT.supply.count).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.BNB) {
+        this.market.WBNB.supply.redeemAmount = new Decimal(that.market.WBNB.supply.count).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
       }
     },
     getBorrowBalance(tokenName) {
@@ -1755,8 +2042,12 @@ export default {
         return
       }
       let that = this
-      if (tokenName===constants.USDT){
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrow.borrowAmount = new Decimal(that.market.WETH.borrow.canBorrowCountLimit).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.USDT) {
         this.market.USDT.borrow.borrowAmount = new Decimal(that.market.USDT.borrow.canBorrowCountLimit).toFixed(decimals.USDT, Decimal.ROUND_DOWN)
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrow.borrowAmount = new Decimal(that.market.WBNB.borrow.canBorrowCountLimit).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
       }
     },
     getRepayMaxBalance(tokenName) {
@@ -1765,7 +2056,13 @@ export default {
       }
       let that = this
       console.log("getRepayMaxBalance", that.market.USDT.borrow.count)
-      this.market.USDT.borrow.repayAmount = new Decimal(that.market.USDT.borrow.count).toString()
+      if (tokenName === constants.ETH) {
+        this.market.WETH.borrow.repayAmount = new Decimal(that.market.WETH.borrow.count).toString()
+      } else if (tokenName === constants.USDT) {
+        this.market.USDT.borrow.repayAmount = new Decimal(that.market.USDT.borrow.count).toString()
+      }else if (tokenName === constants.BNB) {
+        this.market.WBNB.borrow.repayAmount = new Decimal(that.market.WBNB.borrow.count).toString()
+      }
     },
     erc20Approve(tokenName) {
       if (!this.verifyConnect()) {
@@ -1779,6 +2076,9 @@ export default {
       } else if (tokenName === constants.USDT) {
         assetToken = this.addressInfo.current.eUSDT
         assetAddress = this.addressInfo.current.USDT
+      } else if (tokenName === constants.BNB) {
+        assetToken = this.addressInfo.current.eBNB
+        assetAddress = this.addressInfo.current.BNB
       }
       console.log("tokenName", tokenName, assetAddress)
       // 查看是否授权
@@ -1828,7 +2128,8 @@ export default {
       this.getSupplyPage(constants.eETH)
       this.getSupplyPage(constants.eBNB)
       this.getBorrowPage(constants.eUSDT)
-      this.getBorrowPage(constants.eUSDT)
+      this.getBorrowPage(constants.eETH)
+      this.getBorrowPage(constants.eBNB)
     },
     viewPrice() {
       //获取用户USDT余额
@@ -2657,7 +2958,7 @@ export default {
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         this.market.WBNB.supply.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eETH) {
-        //fil存款数量
+        //WETH存款数量
         console.log("WETH exchangeRateMantissa",exchangeRateMantissa)
         console.log("WETH redeemTokensIn",redeemTokensIn)
         redeemAmount = new Decimal(new Decimal(exchangeRateMantissa).mul(new Decimal(redeemTokensIn)).div(Decimal.pow(10, 18)).toFixed(0, Decimal.ROUND_DOWN)).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
@@ -2666,10 +2967,10 @@ export default {
         //存款金额
         redeemBalance = new Decimal(redeemAmount).mul(new Decimal(price))
         this.market.WETH.supply.balance = redeemBalance.toFixed(8, Decimal.ROUND_DOWN)
-        // 可抵押价值=存款数量xfil价格x抵押率
+        // 可抵押价值=存款数量xWETH价格x抵押率
         // 借款限额（数量）
         let enterCash = redeemBalance.mul(new Decimal(collateralFactor).div(Decimal.pow(10, 18)))
-        // 用户最少存多少FIL的数量=当前借贷总额/（FIL抵押因子/1Ether）/fil价格
+        // 用户最少存多少WETH的数量=当前借贷总额/（WETH抵押因子/1Ether）/WETH价格
         let limitPercent = new Decimal(0.8)
         // 借款USDT最大额度金额(80%限额)
         let borrowAmountLimit = enterCash.mul(limitPercent)
@@ -2704,10 +3005,10 @@ export default {
         if (alreadyCashPercent.cmp(new Decimal(0.8))> -1){
           this.market.USDT.supply.userCanRedeemCount = 0
         }else{
-          //剩余FIL可取80%-已使用的百分比
+          //剩余WETH可取80%-已使用的百分比
           // 最多可贷-已经贷的=可取的
           let userCanRedeem = enterCash.sub(new Decimal(this.market.USDT.borrow.balance))
-          //用户可取的金额/fil价格=可取的fil数量
+          //用户可取的金额/WETH价格=可取的WETH数量
           let userCanRedeemCount = userCanRedeem.div(new Decimal(price))
           this.market.USDT.supply.userCanRedeemCount = userCanRedeemCount
         }
@@ -2729,7 +3030,13 @@ export default {
         this.market.USDT.borrow.count = recentBorrowBalance
         this.market.USDT.borrow.balance = new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8, Decimal.ROUND_DOWN)
       } else if (tokenName === constants.eETH) {
-
+        let recentBorrowBalance = new Decimal(borrowBalance).mul(list.borrowIndexNew).div(list.borrowIndex).div(Decimal.pow(10, decimals.ETH)).toFixed(decimals.ETH, Decimal.ROUND_DOWN)
+        this.market.WETH.borrow.count = recentBorrowBalance
+        this.market.WETH.borrow.balance = new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8, Decimal.ROUND_DOWN)
+      } else if (tokenName === constants.eBNB) {
+        let recentBorrowBalance = new Decimal(borrowBalance).mul(list.borrowIndexNew).div(list.borrowIndex).div(Decimal.pow(10, decimals.BNB)).toFixed(decimals.BNB, Decimal.ROUND_DOWN)
+        this.market.WBNB.borrow.count = recentBorrowBalance
+        this.market.WBNB.borrow.balance = new Decimal(recentBorrowBalance).mul(new Decimal(price)).toFixed(8, Decimal.ROUND_DOWN)
       }
     },
     async getApy(tokenName) {
@@ -2809,10 +3116,10 @@ export default {
           this.panel.USDT.supplyApy = supplyApy
           this.panel.USDT.borrowApy = borrowApy
         }else if (tokenName===constants.eETH){
-          this.panel.borrowFilRatePerBlock=borrowRatePerBlock
-          this.panel.supplyFilRatePerBlock=supplyRatePerBlock
-          this.panel.supplyFilApy = supplyApy
-          this.panel.borrowFilApy = borrowApy
+          this.panel.borrowWETHRatePerBlock=borrowRatePerBlock
+          this.panel.supplyWETHRatePerBlock=supplyRatePerBlock
+          this.panel.supplyWETHApy = supplyApy
+          this.panel.borrowWETHApy = borrowApy
         }
       } else if (this.$store.state.wallet.networkId === 1||this.$store.state.wallet.networkId === 2) {
         //eth主网 每13.15一个区块
@@ -2847,10 +3154,10 @@ export default {
           this.panel.USDT.borrowApy = borrowApy
         }else if (tokenName===constants.eETH){
           this.panel.WETH.reserveFactorMantissa=new Decimal(reserveFactorMantissa).div(Decimal.pow(10, 16)).toDecimalPlaces(18,Decimal.ROUND_DOWN)
-          this.panel.borrowFilRatePerBlock=borrowRatePerBlock
-          this.panel.supplyFilRatePerBlock=supplyRatePerBlock
-          this.panel.supplyFilApy = supplyApy
-          this.panel.borrowFilApy = borrowApy
+          this.panel.borrowWETHRatePerBlock=borrowRatePerBlock
+          this.panel.supplyWETHRatePerBlock=supplyRatePerBlock
+          this.panel.supplyWETHApy = supplyApy
+          this.panel.borrowWETHApy = borrowApy
         }
       }
     },

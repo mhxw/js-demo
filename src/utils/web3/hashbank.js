@@ -17,6 +17,16 @@ export async function mint(wallet,mintAmount, asset,callback){
     return Utils.callContract(contract.methods.mint(mintAmount).send({from: wallet.address}), callback)
 }
 
+
+export async function mintEstimateGas(contract,web3,userAddress,mintAmount, asset) {
+    let txObject = {
+        from: userAddress,
+        to: asset,
+        data: contract.methods.mint(mintAmount).encodeABI()
+    }
+    return Utils.callContractEstimateGas(web3,txObject)
+}
+
 export async function baseMint(wallet,mintAmount,asset,callback){
     const contract = new wallet.web3.eth.Contract(abi.CEther, asset)
     await baseMintEstimateGas(contract,wallet.web3,wallet.address,mintAmount,asset)
@@ -29,17 +39,6 @@ export async function baseMintEstimateGas(contract,web3,userAddress,mintAmount, 
         to: asset,
         data: contract.methods.mint().encodeABI(),
         value:mintAmount
-    }
-    return Utils.callContractEstimateGas(web3,txObject)
-}
-
-
-
-export async function mintEstimateGas(contract,web3,userAddress,mintAmount, asset) {
-    let txObject = {
-        from: userAddress,
-        to: asset,
-        data: contract.methods.mint(mintAmount).encodeABI()
     }
     return Utils.callContractEstimateGas(web3,txObject)
 }
@@ -143,6 +142,22 @@ export async function repayBorrowEstimateGas(contract,web3,userAddress,repayAmou
         from: userAddress,
         to: asset,
         data: contract.methods.repayBorrow(repayAmount).encodeABI()
+    }
+    return Utils.callContractEstimateGas(web3,txObject)
+}
+
+export async function baseRepayBorrow(wallet,repayAmount, asset,callback){
+    const contract = new wallet.web3.eth.Contract(abi.CEther, asset)
+    await baseRepayBorrowEstimateGas(contract,wallet.web3,wallet.address,repayAmount, asset)
+    return Utils.callContract(contract.methods.repayBorrow().send({from: wallet.address,value:repayAmount}), callback)
+}
+
+export async function baseRepayBorrowEstimateGas(contract,web3,userAddress,repayAmount, asset) {
+    let txObject = {
+        from: userAddress,
+        to: asset,
+        data: contract.methods.repayBorrow().encodeABI(),
+        value:repayAmount
     }
     return Utils.callContractEstimateGas(web3,txObject)
 }
